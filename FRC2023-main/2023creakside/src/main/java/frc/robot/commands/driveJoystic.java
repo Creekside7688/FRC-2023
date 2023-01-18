@@ -22,12 +22,18 @@ public class driveJoystic extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    m_DriveTrain.reset_encoders();
+    m_DriveTrain.reset_Yaw();;
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
     m_DriveTrain.arcadeDrive(joystick.getRawAxis(OperatorConstants.LEFT_Y_AXIS), joystick.getRawAxis(OperatorConstants.RIGHT_X_AXIS));
+    System.out.print("Left cm: "+m_DriveTrain.getLeft_enc_dis());
+    System.out.print("Right cm: " +m_DriveTrain.getRight_enc_dis());
+    System.out.print("Gyro yaw: "+m_DriveTrain.get_Yaw());
+    System.out.print("Gyro pitch: "+ m_DriveTrain.get_Pitch());
 
   }
 
