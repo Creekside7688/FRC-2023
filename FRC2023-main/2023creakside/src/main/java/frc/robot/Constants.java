@@ -31,8 +31,20 @@ public final class Constants {
     public static final int B_BUTTON = 2;
   }
   public static class DriveTrainConstants{
+    /*
+     * 
+     * Left motor ID
+     * 
+     * LF : Left Front
+     * LB : Left Back
+     */
     public static final int KLF_MOTOR = 1;
     public static final int KLB_MOTOR = 2;
+    /*
+     * Right motor ID
+     * RF : Right Front
+     * RB : Right Back
+     */
     public static final int KRF_MOTOR = 3;
     public static final int KRB_MOTOR = 4;
     
