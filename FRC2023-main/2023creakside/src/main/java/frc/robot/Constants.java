@@ -35,15 +35,15 @@ public final class Constants {
      * 
      * Left motor ID
      * 
-     * LF : Left Front
-     * LB : Left Back
+     * LF : Left Front Talon
+     * LB : Left Back Victor
      */
     public static final int KLF_MOTOR = 1;
     public static final int KLB_MOTOR = 2;
     /*
      * Right motor ID
-     * RF : Right Front
-     * RB : Right Back
+     * RF : Right Front Talon
+     * RB : Right Back Victor
      */
     public static final int KRF_MOTOR = 3;
     public static final int KRB_MOTOR = 4;
