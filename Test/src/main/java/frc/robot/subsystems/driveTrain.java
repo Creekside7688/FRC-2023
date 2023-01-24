@@ -88,7 +88,7 @@ public class driveTrain extends SubsystemBase {
   /*
   
   public void reset_encoders(){
-    lEncoder.reset();
+    lEncoder.reset(); 
     rEncoder.reset();
   }
   

@@ -35,18 +35,26 @@ public final class Constants {
      * 
      * Left motor ID
      * 
-     * LF : Left Front Talon
-     * LB : Left Back Victor
+     * TLF :Top Left Front Talon
+     * TLB :Top Left Back Victor
+     * BLF :Bottom Left Front Victor
+     * BLB :Bottom Left Back Vivtor
      */
-    public static final int KLF_MOTOR = 1;
-    public static final int KLB_MOTOR = 8;
+    public static final int TLF_MOTOR = 1;
+    public static final int TLB_MOTOR = 8;
+    public static final int BLF_MOTOR = 0;
+    public static final int BLB_MOTOR = 0;
     /*
      * Right motor ID
-     * RF : Right Front Talon
-     * RB : Right Back Victor
+     * TRF : Top Right Front Talon
+     * TRB : Top Right Back Victor
+     * BRF : Bottom Right Front Victor
+     * BRB : Bottom Right Back Victor
      */
-    public static final int KRF_MOTOR = 5;
-    public static final int KRB_MOTOR = 3;
+    public static final int TRF_MOTOR = 5;
+    public static final int TRB_MOTOR = 3;
+    public static final int BRF_MOTOR = 0;
+    public static final int BRB_MOTOR = 0;
     
     public static final int[] LEFT_ENCODER= new int[]{0,1};
     public static final int[] RIGHT_ENCODER = new int[]{2,3};
