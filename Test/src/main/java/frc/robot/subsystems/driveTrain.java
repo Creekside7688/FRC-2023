@@ -19,11 +19,15 @@ import frc.robot.Constants.DriveTrainConstants;
 public class driveTrain extends SubsystemBase {
   /** Creates a new driveTrain. */
   // Left motors
-  private final WPI_TalonSRX LFmotor;
-  private final WPI_VictorSPX LBmotor;
+  private final WPI_TalonSRX TLFmotor;
+  private final WPI_VictorSPX TLBmotor;
+  private final WPI_VictorSPX BLFmotor;
+  private final WPI_VictorSPX BLBmotor;
 // Right motors
-  private final WPI_TalonSRX RFmotor;
-  private final WPI_VictorSPX RBmotor;
+  private final WPI_TalonSRX TRFmotor;
+  private final WPI_VictorSPX TRBmotor;
+  private final WPI_VictorSPX BRBmotor;
+  private final WPI_VictorSPX BRFmotor;
 
   private final MotorControllerGroup leftmotor;
   private final MotorControllerGroup rightmotor;
@@ -39,16 +43,20 @@ public class driveTrain extends SubsystemBase {
   private final SlewRateLimiter filter;
   
   public driveTrain() {
-    LFmotor = new WPI_TalonSRX(DriveTrainConstants.KLF_MOTOR);
-    LBmotor = new WPI_VictorSPX(DriveTrainConstants.KLB_MOTOR);
-    LBmotor.follow(LFmotor);
+    TLFmotor = new WPI_TalonSRX(DriveTrainConstants.TLF_MOTOR);
+    TLBmotor = new WPI_VictorSPX(DriveTrainConstants.TLB_MOTOR);
+    BLFmotor = new WPI_VictorSPX(DriveTrainConstants.BLF_MOTOR);
+    BLBmotor = new WPI_VictorSPX(DriveTrainConstants.BLB_MOTOR);
 
-    RFmotor = new WPI_TalonSRX(DriveTrainConstants.KRF_MOTOR);
-    RBmotor = new WPI_VictorSPX(DriveTrainConstants.KRB_MOTOR);
-    RBmotor.follow(RFmotor);
 
-    leftmotor = new MotorControllerGroup(LFmotor);
-    rightmotor = new MotorControllerGroup(RFmotor);
+    TRFmotor = new WPI_TalonSRX(DriveTrainConstants.TRF_MOTOR);
+    TRBmotor = new WPI_VictorSPX(DriveTrainConstants.TRB_MOTOR);
+    BRFmotor = new WPI_VictorSPX(DriveTrainConstants.BRF_MOTOR);
+    BRBmotor = new WPI_VictorSPX(DriveTrainConstants.BRB_MOTOR);
+    
+
+    leftmotor = new MotorControllerGroup(TLFmotor,TLBmotor,BLFmotor,BLBmotor);
+    rightmotor = new MotorControllerGroup(TRFmotor,TRBmotor,BRBmotor,BRFmotor);
     leftmotor.setInverted(true);
     rightmotor.setInverted(false);
 
