@@ -40,10 +40,10 @@ public final class Constants {
      * BLF :Bottom Left Front Victor
      * BLB :Bottom Left Back Vivtor
      */
-    public static final int TLF_MOTOR = 1;
-    public static final int TLB_MOTOR = 8;
-    public static final int BLF_MOTOR = 0;
-    public static final int BLB_MOTOR = 0;
+    public static final int TLF_MOTOR = 0;
+    public static final int TLB_MOTOR = 1;
+    public static final int BLF_MOTOR = 2;
+    public static final int BLB_MOTOR = 3;
     /*
      * Right motor ID
      * TRF : Top Right Front Talon
@@ -51,10 +51,10 @@ public final class Constants {
      * BRF : Bottom Right Front Victor
      * BRB : Bottom Right Back Victor
      */
-    public static final int TRF_MOTOR = 5;
-    public static final int TRB_MOTOR = 3;
-    public static final int BRF_MOTOR = 0;
-    public static final int BRB_MOTOR = 0;
+    public static final int TRF_MOTOR = 4;
+    public static final int TRB_MOTOR = 5;
+    public static final int BRF_MOTOR = 6;
+    public static final int BRB_MOTOR = 7;
     
     public static final int[] LEFT_ENCODER= new int[]{0,1};
     public static final int[] RIGHT_ENCODER = new int[]{2,3};
@@ -63,6 +63,13 @@ public final class Constants {
     public static final double DISTENCEPERPULS = WHEELPERIMETERCM / 2048;
 
     public static final double LIMITSPEED = 1;
+
+  }
+  public static class HandMotor{
+    public static final int HANDPORT = 8;
+    public static final double H_OPENSPEED = 0.5;
+    public static final double H_CLOSESPEED = -0.5;
+    //mode brake
 
   }
 }
