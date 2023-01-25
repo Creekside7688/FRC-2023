@@ -6,12 +6,15 @@ package frc.robot;
 
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Autos;
+import frc.robot.commands.CloseH;
 import frc.robot.commands.driveJoystick;
 import frc.robot.subsystems.driveTrain;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.commands.ExampleCommand;
+import frc.robot.commands.OpenH;
 import frc.robot.subsystems.ExampleSubsystem;
+import frc.robot.subsystems.Hand;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -28,9 +31,14 @@ public class RobotContainer {
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
-  private final Joystick m_driverController =new Joystick(OperatorConstants.JOYSTICK_PORT);
+  public static  Joystick m_driverController =new Joystick(OperatorConstants.JOYSTICK_PORT);
   private final Trigger rb_Button = new JoystickButton(m_driverController, OperatorConstants.RB_BUTTON);
+  private final Trigger x_Button = new JoystickButton(m_driverController, OperatorConstants.X_BUTTON);
+  private final Trigger y_Button = new JoystickButton(m_driverController, OperatorConstants.Y_BUTTON);
   private final driveTrain dt = new driveTrain();
+  private final Hand hd = new Hand();
+  private final OpenH open = new OpenH(hd);
+  private final CloseH close = new CloseH(hd);
   private final driveJoystick drive = new driveJoystick(dt);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
@@ -51,6 +59,8 @@ public class RobotContainer {
   private void configureBindings() {
     // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
     rb_Button.whileTrue(drive);
+    x_Button.whileTrue(open);
+    y_Button.whileTrue(close);
   }
 
   /**

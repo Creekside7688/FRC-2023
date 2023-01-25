@@ -4,14 +4,13 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.RobotContainer;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.subsystems.driveTrain;
 
 public class driveJoystick extends CommandBase {
   private final driveTrain m_DriveTrain;
-  private final Joystick joystick = new Joystick(OperatorConstants.JOYSTICK_PORT);
 
   /** Creates a new driveJoystick. */
   public driveJoystick(driveTrain d) {
@@ -34,7 +33,7 @@ public class driveJoystick extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_DriveTrain.arcadeDrive(joystick.getRawAxis(OperatorConstants.LEFT_Y_AXIS), joystick.getRawAxis(OperatorConstants.RIGHT_X_AXIS));
+    m_DriveTrain.arcadeDrive(RobotContainer.m_driverController.getRawAxis(OperatorConstants.LEFT_Y_AXIS), RobotContainer.m_driverController.getRawAxis(OperatorConstants.RIGHT_X_AXIS));
     /*
      * System.out.print("Left cm: "+m_DriveTrain.getLeft_enc_dis());
      * System.out.print("Right cm: " +m_DriveTrain.getRight_enc_dis());
