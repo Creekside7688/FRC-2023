@@ -23,11 +23,6 @@ public class driveJoystick extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-     /*
-     * m_DriveTrain.reset_encoders();
-     * m_DriveTrain.reset_Yaw();;
-     */
-    
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -42,6 +37,12 @@ public class driveJoystick extends CommandBase {
      * 
      * 
      */
+
+     System.out.println("Gyro: (" + m_DriveTrain.getRoll() + ", " + m_DriveTrain.getPitch() + ", " + m_DriveTrain.getYaw() + ")");
+
+     double[] encoderDistance = m_DriveTrain.getEncoders();
+
+     System.out.println("Encoders: (" + encoderDistance[0] + ", " + encoderDistance[1] + ")");
   }
 
   // Called once the command ends or is interrupted.

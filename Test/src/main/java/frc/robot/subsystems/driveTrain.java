@@ -3,13 +3,14 @@
 // the WPILib BSD license file in the root directory of this project.
 
 package frc.robot.subsystems;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.wpilibj.Encoder;
-import edu.wpi.first.wpilibj.SPI;
+import edu.wpi.first.wpilibj.SerialPort.Port;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -33,13 +34,12 @@ public class driveTrain extends SubsystemBase {
   private final MotorControllerGroup rightmotor;
 
   private final DifferentialDrive diffdrive;
-  /*
-   * private final Encoder rEncoder;
-   * private final Encoder lEncoder;
-   * 
-   */
- 
-  //1/x 
+
+  AHRS gyro = new AHRS(Port.kUSB1);
+
+  private final Encoder lEncoder;
+  private final Encoder rEncoder;
+
   private final SlewRateLimiter filter;
   
   public driveTrain() {
@@ -47,12 +47,20 @@ public class driveTrain extends SubsystemBase {
     TLBmotor = new WPI_VictorSPX(DriveTrainConstants.TLB_MOTOR);
     BLFmotor = new WPI_VictorSPX(DriveTrainConstants.BLF_MOTOR);
     BLBmotor = new WPI_VictorSPX(DriveTrainConstants.BLB_MOTOR);
+    TLFmotor.setNeutralMode(NeutralMode.Coast);
+    TLBmotor.setNeutralMode(NeutralMode.Coast);
+    BLFmotor.setNeutralMode(NeutralMode.Coast);
+    BLBmotor.setNeutralMode(NeutralMode.Coast);
 
 
     TRFmotor = new WPI_TalonSRX(DriveTrainConstants.TRF_MOTOR);
     TRBmotor = new WPI_VictorSPX(DriveTrainConstants.TRB_MOTOR);
     BRFmotor = new WPI_VictorSPX(DriveTrainConstants.BRF_MOTOR);
     BRBmotor = new WPI_VictorSPX(DriveTrainConstants.BRB_MOTOR);
+    TRFmotor.setNeutralMode(NeutralMode.Coast);
+    TRBmotor.setNeutralMode(NeutralMode.Coast);
+    BRFmotor.setNeutralMode(NeutralMode.Coast);
+    BRBmotor.setNeutralMode(NeutralMode.Coast);
     
 
     leftmotor = new MotorControllerGroup(TLFmotor,TLBmotor,BLFmotor,BLBmotor);
@@ -60,21 +68,15 @@ public class driveTrain extends SubsystemBase {
     leftmotor.setInverted(true);
     rightmotor.setInverted(false);
 
-    filter = new SlewRateLimiter(4);
+    filter = new SlewRateLimiter(2);
     diffdrive = new DifferentialDrive(leftmotor, rightmotor);
-    /*
-     * 
-     * rEncoder = new Encoder(DriveTrainConstants.RIGHT_ENCODER[0], DriveTrainConstants.RIGHT_ENCODER[1]);
-     * lEncoder = new Encoder(DriveTrainConstants.LEFT_ENCODER[0],DriveTrainConstants.LEFT_ENCODER[1]);
-     * rEncoder.setDistancePerPulse(DriveTrainConstants.DISTENCEPERPULS);
-     * lEncoder.setDistancePerPulse(DriveTrainConstants.DISTENCEPERPULS);
-     * 
-     * 
-     */
-    
-    //gyro = new AHRS(SPI.Port.kMXP);
 
+    rEncoder = new Encoder(DriveTrainConstants.RIGHT_ENCODER[0], DriveTrainConstants.RIGHT_ENCODER[1], false);
+    lEncoder = new Encoder(DriveTrainConstants.LEFT_ENCODER[0],DriveTrainConstants.LEFT_ENCODER[1], true);
+    lEncoder.setDistancePerPulse(DriveTrainConstants.DISTENCEPERPULS);
+    rEncoder.setDistancePerPulse(DriveTrainConstants.DISTENCEPERPULS);
 
+    this.reset();
   }
 
   public void Stop(){
@@ -82,33 +84,28 @@ public class driveTrain extends SubsystemBase {
   }
 
   public void arcadeDrive(double speed, double rotation){
-    diffdrive.arcadeDrive(filter.calculate(speed*DriveTrainConstants.LIMITSPEED), rotation);
-
-  }
-  /*
-  
-  public void reset_encoders(){
-    lEncoder.reset(); 
-    rEncoder.reset();
+    diffdrive.arcadeDrive(filter.calculate(speed * DriveTrainConstants.LIMITSPEED), rotation);
   }
   
-  
-  public double getRight_enc_dis(){
-    return rEncoder.getDistance();
-  }
-  public double getLeft_enc_dis(){
-    return lEncoder.getDistance();
-  }
-  public double get_Yaw(){
+  public double getYaw(){
     return gyro.getAngle();
   }
-  public double get_Pitch(){
+  public double getPitch(){
     return gyro.getPitch();
   }
-  public void reset_Yaw(){
-    gyro.reset();
+  public double getRoll() {
+    return gyro.getRoll();
   }
-  */
+
+  public double[] getEncoders() {
+    return new double[] {lEncoder.getDistance(), rEncoder.getDistance() };
+  }
+
+  public void reset(){
+    gyro.calibrate();
+    lEncoder.reset();
+    rEncoder.reset();
+  }
 
   @Override
   public void periodic() {

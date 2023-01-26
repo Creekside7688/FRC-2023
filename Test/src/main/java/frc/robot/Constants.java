@@ -56,13 +56,19 @@ public final class Constants {
     public static final int BRF_MOTOR = 6;
     public static final int BRB_MOTOR = 7;
     
-    public static final int[] LEFT_ENCODER= new int[]{0,1};
+    public static final int[] LEFT_ENCODER = new int[]{0,1};
     public static final int[] RIGHT_ENCODER = new int[]{2,3};
 
     public static final double WHEELPERIMETERCM = 15.24 * Math.PI;
     public static final double DISTENCEPERPULS = WHEELPERIMETERCM / 2048;
 
     public static final double LIMITSPEED = 1;
+  }
+  public static class HandMotor{
+    public static final int HANDPORT = 8;
+    public static final double H_OPENSPEED = 0.5;
+    public static final double H_CLOSESPEED = -0.5;
+    //mode brake
 
   }
   public static class HandMotor{
