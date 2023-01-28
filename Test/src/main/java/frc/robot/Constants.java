@@ -71,11 +71,4 @@ public final class Constants {
     //mode brake
 
   }
-  public static class HandMotor{
-    public static final int HANDPORT = 8;
-    public static final double H_OPENSPEED = 0.5;
-    public static final double H_CLOSESPEED = -0.5;
-    //mode brake
-
-  }
 }

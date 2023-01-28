@@ -19,12 +19,15 @@ public class CloseH extends CommandBase {
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+    hk.resetEncoder();
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
     hk.runMotor(HandMotor.H_CLOSESPEED);
+    hk.get_encoder();
   }
 
   // Called once the command ends or is interrupted.
