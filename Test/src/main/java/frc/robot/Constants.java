@@ -30,7 +30,8 @@ public final class Constants {
     public static final int A_BUTTON = 1;
     public static final int B_BUTTON = 2;
   }
-  public static class DriveTrainConstants{
+
+  public static class DriveTrainConstants {
     /*
      * 
      * Left motor ID
@@ -64,18 +65,18 @@ public final class Constants {
 
     public static final double LIMITSPEED = 1;
   }
-  public static class HandMotor{
+
+  public static class HandMotor {
     public static final int HANDPORT = 8;
     public static final double H_OPENSPEED = 0.5;
     public static final double H_CLOSESPEED = -0.5;
     //mode brake
 
   }
-  public static class HandMotor{
-    public static final int HANDPORT = 8;
-    public static final double H_OPENSPEED = 0.5;
-    public static final double H_CLOSESPEED = -0.5;
-    //mode brake
 
+  public static class PIDConstants {
+    public static final double kP = 1;
+    public static final double kI = 0;
+    public static final double kD = 0;
   }
 }
