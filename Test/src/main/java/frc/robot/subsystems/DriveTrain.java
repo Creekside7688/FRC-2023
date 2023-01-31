@@ -83,8 +83,8 @@ public class DriveTrain extends SubsystemBase {
     diffdrive.stopMotor();
   }
 
-  public void arcadeDrive(double speed, double rotation, boolean inputSquaring){
-    diffdrive.arcadeDrive(filter.calculate(speed * DriveTrainConstants.LIMITSPEED), rotation, inputSquaring);
+  public void arcadeDrive(double speed, double rotation){
+    diffdrive.arcadeDrive(filter.calculate(speed * DriveTrainConstants.LIMITSPEED), rotation);
   }
   
   // public double getYaw(){
