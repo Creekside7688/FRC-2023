@@ -28,7 +28,7 @@ public class driveJoystick extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_DriveTrain.arcadeDrive(RobotContainer.m_driverController.getRawAxis(OperatorConstants.LEFT_Y_AXIS), RobotContainer.m_driverController.getRawAxis(OperatorConstants.RIGHT_X_AXIS), true);
+    m_DriveTrain.arcadeDrive(RobotContainer.m_driverController.getRawAxis(OperatorConstants.LEFT_Y_AXIS), RobotContainer.m_driverController.getRawAxis(OperatorConstants.RIGHT_X_AXIS));
     /*
      * System.out.print("Left cm: "+m_DriveTrain.getLeft_enc_dis());
      * System.out.print("Right cm: " +m_DriveTrain.getRight_enc_dis());
