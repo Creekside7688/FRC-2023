@@ -4,10 +4,10 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Constants.DriveTrainConstants;
 import frc.robot.Constants.PIDConstants;
 import frc.robot.subsystems.DriveTrain;
 
@@ -27,8 +27,8 @@ public class DriveDistance extends CommandBase {
   public void initialize() {
     m_DriveTrain.reset();
     pidController = new PIDController(PIDConstants.kP, PIDConstants.kI, PIDConstants.kD);
-    pidController.setSetpoint(50);
-    pidController.setTolerance(1, 3);
+    pidController.setSetpoint(Distance);
+    pidController.setTolerance(0, 0.1);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -36,13 +36,11 @@ public class DriveDistance extends CommandBase {
   public void execute() {
     double encoderDistance = m_DriveTrain.getEncoderAverage();
     double output = pidController.calculate(encoderDistance);
-    m_DriveTrain.arcadeDrive(output, 0);
+    m_DriveTrain.arcadeDrive(MathUtil.clamp(-output, -0.3, 0.3), 0);
     SmartDashboard.putNumber("Distance :", encoderDistance);
-    SmartDashboard.putNumber("Motor Output :", output);
-
-    SmartDashboard.putNumber("Position Error :", pidController.getPositionError());
-    // SmartDashboard.putNumber("kI", pidController.getI());
-    // SmartDashboard.putNumber("kD", pidController.getD());
+    SmartDashboard.putNumber("Motor Output :", output * -0.2);
+    SmartDashboard.putNumber("Position Error", pidController.getPositionError());
+    SmartDashboard.putBoolean("Finished", pidController.atSetpoint());
   }
 
   // Called once the command ends or is interrupted.

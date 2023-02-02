@@ -35,7 +35,7 @@ public class DriveTrain extends SubsystemBase {
 
   private final DifferentialDrive diffdrive;
 
-  // AHRS gyro = new AHRS(Port.kUSB1);
+  AHRS gyro = new AHRS(Port.kUSB1);
 
   private final Encoder lEncoder;
   private final Encoder rEncoder;
