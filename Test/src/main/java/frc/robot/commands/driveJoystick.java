@@ -39,8 +39,6 @@ public class driveJoystick extends CommandBase {
      */
 
     //  System.out.println("Gyro: (" + m_DriveTrain.getRoll() + ", " + m_DriveTrain.getPitch() + ", " + m_DriveTrain.getYaw() + ")");
-
-     double[] encoderDistance = m_DriveTrain.getEncoders();
   }
 
   // Called once the command ends or is interrupted.
