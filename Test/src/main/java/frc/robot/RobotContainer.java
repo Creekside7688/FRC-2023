@@ -31,7 +31,7 @@ public class RobotContainer {
   private final CloseH close = new CloseH(hd);
   private final driveJoystick drive = new driveJoystick(dt);
 
-  private final DriveDistance driveDistance = new DriveDistance(50, dt);
+  // private final DriveDistance driveDistance = new DriveDistance(50, dt);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -43,7 +43,7 @@ public class RobotContainer {
     rb_Button.whileTrue(drive);
     x_Button.whileTrue(open);
     y_Button.whileTrue(close);
-    a_Button.whileTrue(driveDistance);
+    a_Button.whileTrue(new DriveDistance(100, dt));
   }
 
   /**

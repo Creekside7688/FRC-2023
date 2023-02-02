@@ -15,10 +15,13 @@ public class DriveDistance extends CommandBase {
   private final DriveTrain m_DriveTrain;
   private PIDController pidController;
   private final double Distance;
+  private final boolean Balance;
+  private boolean ShouldFinish = false;
 
-  public DriveDistance(double distance, DriveTrain d) {
+  public DriveDistance(double distance, DriveTrain d, boolean balance) {
     m_DriveTrain = d;
-    Distance = distance;
+    this.Distance = distance;
+    this.Balance = balance;
     addRequirements(m_DriveTrain);
   }
 
@@ -28,7 +31,7 @@ public class DriveDistance extends CommandBase {
     m_DriveTrain.reset();
     pidController = new PIDController(PIDConstants.kP, PIDConstants.kI, PIDConstants.kD);
     pidController.setSetpoint(Distance);
-    pidController.setTolerance(0, 0.1);
+    pidController.setTolerance(1, 0.1);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -36,11 +39,13 @@ public class DriveDistance extends CommandBase {
   public void execute() {
     double encoderDistance = m_DriveTrain.getEncoderAverage();
     double output = pidController.calculate(encoderDistance);
-    m_DriveTrain.arcadeDrive(MathUtil.clamp(-output, -0.3, 0.3), 0);
+    m_DriveTrain.arcadeDrive(MathUtil.clamp(-output, -0.4, 0.4), 0);
     SmartDashboard.putNumber("Distance :", encoderDistance);
     SmartDashboard.putNumber("Motor Output :", output * -0.2);
     SmartDashboard.putNumber("Position Error", pidController.getPositionError());
     SmartDashboard.putBoolean("Finished", pidController.atSetpoint());
+
+    
   }
 
   // Called once the command ends or is interrupted.
