@@ -6,7 +6,7 @@ package frc.robot;
 
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.CloseH;
-import frc.robot.commands.DriveDistance;
+import frc.robot.commands.Balance;
 import frc.robot.commands.driveJoystick;
 import frc.robot.subsystems.DriveTrain;
 import edu.wpi.first.wpilibj.Joystick;
@@ -43,7 +43,7 @@ public class RobotContainer {
     rb_Button.whileTrue(drive);
     x_Button.whileTrue(open);
     y_Button.whileTrue(close);
-    a_Button.whileTrue(new DriveDistance(100, dt));
+    a_Button.whileTrue(new Balance(100, dt));
   }
 
   /**
