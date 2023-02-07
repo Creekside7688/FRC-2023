@@ -68,8 +68,8 @@ public final class Constants {
 
   public static class HandMotor {
     public static final int HANDPORT = 2;
-    public static final double H_OPENSPEED = 0.1;
-    public static final double H_CLOSESPEED = -0.1;
+    public static final double H_OPENSPEED = -0.05;
+    public static final double H_CLOSESPEED = 0.05;
     public static final double GEAR_DIAMETER = 5.3;
     public static final double PULSE_PER_REV = 42;
     public static final double CM_PER_PULSE = GEAR_DIAMETER*Math.PI/PULSE_PER_REV;

@@ -8,6 +8,7 @@ import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Autos;
 import frc.robot.commands.CloseH;
 import frc.robot.commands.Balance;
+import frc.robot.commands.CloseCone;
 import frc.robot.commands.driveJoystick;
 import frc.robot.subsystems.DriveTrain;
 import edu.wpi.first.wpilibj.Joystick;
@@ -31,10 +32,8 @@ public class RobotContainer {
   private final DriveTrain dt = new DriveTrain();
   private final Hand hd = new Hand();
   private final OpenH open = new OpenH(hd);
-  private final CloseH close = new CloseH(hd);
+  private final CloseCone close = new CloseCone(hd);
   private final driveJoystick drive = new driveJoystick(dt);
-
-  private final DriveDistance driveDistance = new DriveDistance(100, dt);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
