@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.SerialPort.Port;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.DriveTrainConstants;
 
@@ -79,9 +80,10 @@ public class DriveTrain extends SubsystemBase {
     gyro = new AHRS(Port.kUSB1);
 
     this.reset();
+    gyro.calibrate();
   }
 
-  public void Stop(){
+  public void Stop() {
     diffdrive.stopMotor();
   }
 
@@ -89,27 +91,23 @@ public class DriveTrain extends SubsystemBase {
     diffdrive.arcadeDrive(filter.calculate(speed * DriveTrainConstants.LIMITSPEED), rotation);
   }
   
-  //public double getYaw() {
-  //   return gyro.getAngle();
-  //}
-  // public double getPitch(){
-  //   return gyro.getPitch();
-  // }
-  // public double getRoll() {
-  //   return gyro.getRoll();
-  // }
+  public double getYaw() {
+    return gyro.getAngle();
+  }
+  public double getPitch() {
+    return gyro.getPitch();
+  }
+  public double getRoll() {
+    return gyro.getRoll();
+  }
 
   public double[] getEncoders() {
-    return new double[] {lEncoder.getDistance(), rEncoder.getDistance() };
+    return new double[] { lEncoder.getDistance(), rEncoder.getDistance() };
   }
 
   public double getEncoderAverage() {
     return (lEncoder.getDistance() + rEncoder.getDistance()) / 2;
   }
-
-  // public void calibrateGyro() {
-  //   gyro.calibrate();
-  // }
 
   public void reset() {
     lEncoder.reset();
@@ -118,6 +116,8 @@ public class DriveTrain extends SubsystemBase {
 
   @Override
   public void periodic() {
-    // This method will be called once per scheduler run
+    SmartDashboard.putNumber("Pitch", gyro.getPitch());
+    SmartDashboard.putNumber("Yaw", gyro.getYaw());
+    SmartDashboard.putNumber("Roll", gyro.getRoll());
   }
 }
