@@ -35,7 +35,7 @@ public class DriveTrain extends SubsystemBase {
 
   private final DifferentialDrive diffdrive;
 
-  AHRS gyro = new AHRS(Port.kUSB1);
+  private final AHRS gyro;
 
   private final Encoder lEncoder;
   private final Encoder rEncoder;
@@ -76,6 +76,8 @@ public class DriveTrain extends SubsystemBase {
     lEncoder.setDistancePerPulse(DriveTrainConstants.DISTENCEPERPULS);
     rEncoder.setDistancePerPulse(DriveTrainConstants.DISTENCEPERPULS);
 
+    gyro = new AHRS(Port.kUSB1);
+
     this.reset();
   }
 
@@ -87,9 +89,9 @@ public class DriveTrain extends SubsystemBase {
     diffdrive.arcadeDrive(filter.calculate(speed * DriveTrainConstants.LIMITSPEED), rotation);
   }
   
-  // public double getYaw(){
+  //public double getYaw() {
   //   return gyro.getAngle();
-  // }
+  //}
   // public double getPitch(){
   //   return gyro.getPitch();
   // }
