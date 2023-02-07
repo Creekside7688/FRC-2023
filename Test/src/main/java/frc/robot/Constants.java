@@ -3,7 +3,7 @@
 // the WPILib BSD license file in the root directory of this project.
 
 package frc.robot;
-
+import java.lang.Math;
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
  * constants. This class should not be used for any other purpose. All constants should be declared
@@ -67,16 +67,21 @@ public final class Constants {
   }
 
   public static class HandMotor {
-    public static final int HANDPORT = 8;
-    public static final double H_OPENSPEED = 0.5;
-    public static final double H_CLOSESPEED = -0.5;
+    public static final int HANDPORT = 2;
+    public static final double H_OPENSPEED = 0.1;
+    public static final double H_CLOSESPEED = -0.1;
+    public static final double GEAR_DIAMETER = 5.3;
+    public static final double PULSE_PER_REV = 42;
+    public static final double CM_PER_PULSE = GEAR_DIAMETER*Math.PI/PULSE_PER_REV;
+    public static final double DISTANCE_TO_CLOSE_CUBE_CM = 5;
+    public static final double DISTANCE_TO_CLOSE_CONE_CM   = 7.5;
     //mode brake
 
   }
 
   public static class PIDConstants {
-    public static final double kP = 0.32;
+    public static final double kP = 1;
     public static final double kI = 0;
-    public static final double kD = 0.001;
+    public static final double kD = 0;
   }
 }

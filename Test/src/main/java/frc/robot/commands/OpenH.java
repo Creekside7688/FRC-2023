@@ -25,7 +25,11 @@ public class OpenH extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    hd.runMotor(HandMotor.H_OPENSPEED);
+    while(!hd.get_limit_switch()){
+      hd.runMotor(HandMotor.H_OPENSPEED);
+    }
+    hd.runMotor(0);
+    hd.reset_encoder();
   }
 
   // Called once the command ends or is interrupted.
