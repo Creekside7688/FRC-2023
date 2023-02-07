@@ -5,6 +5,7 @@
 package frc.robot;
 
 import frc.robot.Constants.OperatorConstants;
+import frc.robot.commands.Autos;
 import frc.robot.commands.CloseH;
 import frc.robot.commands.Balance;
 import frc.robot.commands.driveJoystick;
@@ -13,6 +14,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.commands.OpenH;
 import frc.robot.subsystems.Hand;
+import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
@@ -24,6 +26,7 @@ public class RobotContainer {
   private final Trigger x_Button = new JoystickButton(m_driverController, OperatorConstants.X_BUTTON);
   private final Trigger y_Button = new JoystickButton(m_driverController, OperatorConstants.Y_BUTTON);
   private final Trigger a_Button = new JoystickButton(m_driverController, OperatorConstants.A_BUTTON);
+  private final Trigger b_button = new JoystickButton(m_driverController, OperatorConstants.B_BUTTON);
 
   private final DriveTrain dt = new DriveTrain();
   private final Hand hd = new Hand();
@@ -31,7 +34,7 @@ public class RobotContainer {
   private final CloseH close = new CloseH(hd);
   private final driveJoystick drive = new driveJoystick(dt);
 
-  // private final DriveDistance driveDistance = new DriveDistance(50, dt);
+  private final DriveDistance driveDistance = new DriveDistance(100, dt);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
