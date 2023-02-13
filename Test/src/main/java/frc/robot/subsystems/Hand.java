@@ -15,42 +15,39 @@ import frc.robot.Constants.HandMotor;
 
 public class Hand extends SubsystemBase {
   /** Creates a new Hand. */
-  private final CANSparkMax Hmotor = new CANSparkMax(HandMotor.HANDPORT,MotorType.kBrushless);
-  private final RelativeEncoder encoder = Hmotor.getEncoder();
+  private final CANSparkMax handMotor = new CANSparkMax(HandMotor.HAND_PORT,MotorType.kBrushless);
+  private final RelativeEncoder encoder = handMotor.getEncoder();
   private final DigitalInput limitSwitch = new DigitalInput(4);
 
   public Hand() {
-    Hmotor.setIdleMode(IdleMode.kBrake);
+    handMotor.setIdleMode(IdleMode.kBrake);
   }
 
   public void runMotor(double speed){
-    Hmotor.set(speed);
+    handMotor.set(speed);
 
   }
-  public double get_encoder() {
+  public double getEncoder() {
     return encoder.getPosition();
 
   }
   
-  public boolean get_limit_switch() {
+  public boolean getLimitSwitch() {
     return limitSwitch.get();
 
   }
   
-  public void reset_encoder() {
+  public void resetEncoder() {
     encoder.setPosition(0);
 
   }
 
   public void setCoast() {
-    Hmotor.setIdleMode(IdleMode.kCoast);
-  
-  
+    handMotor.setIdleMode(IdleMode.kCoast);
   }
 
   public void setBreak() {
-    Hmotor.setIdleMode(IdleMode.kBrake);
-
+    handMotor.setIdleMode(IdleMode.kBrake);
   }
 
   @Override

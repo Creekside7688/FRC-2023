@@ -2,49 +2,44 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-//*** WARNING THIS FUNCTION SHOULD ONLY BE CALLED AFTER THE OPEN COMMAND ***/
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Hand;
-import frc.robot.Constants.HandMotor;
+import frc.robot.RobotContainer;
+import frc.robot.Constants.OperatorConstants;
+import frc.robot.subsystems.DriveTrain;
 
-public class CloseCone extends CommandBase {
-  /** Creates a new CloseCube. */
-  private final Hand hand;
-  private final double distanceToClose;
-  private final double pulsesToTravelDistance;
+public class DriveJoystick extends CommandBase {
+  private final DriveTrain driveTrain;
 
-  public CloseCone(Hand h) {
-    hand = h;
-    distanceToClose = HandMotor.DISTANCE_TO_CLOSE_CONE_CM;
-    pulsesToTravelDistance = distanceToClose/HandMotor.CM_PER_PULSE;
-    addRequirements(hand);
+  /** Creates a new driveJoystick. */
+  public DriveJoystick(DriveTrain d) {
+    driveTrain = d;
+    addRequirements(driveTrain);
+
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {
-    hand.resetEncoder();
-  }
+  public void initialize() { }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    hand.runMotor(HandMotor.H_CLOSESPEED);
+    driveTrain.arcadeDrive(RobotContainer.m_driverController.getRawAxis(OperatorConstants.LEFT_Y_AXIS), RobotContainer.m_driverController.getRawAxis(OperatorConstants.RIGHT_X_AXIS));
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    hand.runMotor(0);
-
+    driveTrain.resetEncoders();
+    driveTrain.Stop();
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return hand.getEncoder() > pulsesToTravelDistance;
+    return false;
   }
 }
