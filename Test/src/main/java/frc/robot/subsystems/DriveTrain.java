@@ -74,12 +74,12 @@ public class DriveTrain extends SubsystemBase {
 
     rEncoder = new Encoder(DriveTrainConstants.RIGHT_ENCODER[0], DriveTrainConstants.RIGHT_ENCODER[1], false);
     lEncoder = new Encoder(DriveTrainConstants.LEFT_ENCODER[0],DriveTrainConstants.LEFT_ENCODER[1], true);
-    lEncoder.setDistancePerPulse(DriveTrainConstants.DISTENCEPERPULS);
-    rEncoder.setDistancePerPulse(DriveTrainConstants.DISTENCEPERPULS);
+    lEncoder.setDistancePerPulse(DriveTrainConstants.DISTENCE_PER_PULS);
+    rEncoder.setDistancePerPulse(DriveTrainConstants.DISTENCE_PER_PULS);
 
     gyro = new AHRS(Port.kUSB1);
 
-    this.reset();
+    this.resetEncoders();
     gyro.calibrate();
   }
 
@@ -88,7 +88,7 @@ public class DriveTrain extends SubsystemBase {
   }
 
   public void arcadeDrive(double speed, double rotation){
-    diffdrive.arcadeDrive(filter.calculate(speed * DriveTrainConstants.LIMITSPEED), rotation);
+    diffdrive.arcadeDrive(filter.calculate(speed * DriveTrainConstants.LIMIT_SPEED), rotation);
   }
   
   public double getYaw() {
@@ -101,15 +101,15 @@ public class DriveTrain extends SubsystemBase {
     return gyro.getRoll();
   }
 
-  public double[] getEncoders() {
-    return new double[] { lEncoder.getDistance(), rEncoder.getDistance() };
+  public Encoder[] getEncoders() {
+    return new Encoder[] { lEncoder, rEncoder };
   }
 
   public double getEncoderAverage() {
     return (lEncoder.getDistance() + rEncoder.getDistance()) / 2;
   }
 
-  public void reset() {
+  public void resetEncoders() {
     lEncoder.reset();
     rEncoder.reset();
   }

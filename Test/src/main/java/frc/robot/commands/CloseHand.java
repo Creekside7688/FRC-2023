@@ -2,25 +2,18 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-//*** WANRING THIS FUNCTION SHOULD ONLY BE CALLED AFTER CALLING THE OPEN COMMAND ***/
-
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Hand;
 import frc.robot.Constants.HandMotor;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.subsystems.Hand;
 
-public class CloseCube extends CommandBase {
-  /** Creates a new CloseCube. */
+public class CloseHand extends CommandBase {
+  /** Creates a new CloseH. */
   private final Hand hand;
-  private final double distanceToClose;
-  private final double pulsesToTravelDistance;
 
-  public CloseCube(Hand h) {
-    hand = h;
-    distanceToClose = HandMotor.DISTANCE_TO_CLOSE_CUBE_CM;
-    pulsesToTravelDistance = distanceToClose/HandMotor.CM_PER_PULSE;
+  public CloseHand(Hand hand) {
+    this.hand = hand;
     addRequirements(hand);
     // Use addRequirements() here to declare subsystem dependencies.
   }
@@ -32,16 +25,14 @@ public class CloseCube extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    while(hand.getEncoder() < pulsesToTravelDistance){
-      SmartDashboard.putNumber("Hand encoder pos: ", hand.getEncoder());
-      hand.runMotor(HandMotor.H_CLOSESPEED);
-    }
-  
+    hand.runMotor(HandMotor.H_CLOSESPEED);
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    hand.runMotor(0);
+  }
 
   // Returns true when the command should end.
   @Override

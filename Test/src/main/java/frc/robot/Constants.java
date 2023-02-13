@@ -15,7 +15,7 @@ import java.lang.Math;
 public final class Constants {
   public static class OperatorConstants {
     //for Controller
-    public static final int kDriverControllerPort = 0;
+    public static final int DRIVER_CONTROLLER_PORT = 0;
     public static final int JOYSTICK_PORT = 0;
     public static final int LB_BUTTON = 5;
     public static final int RB_BUTTON = 6;
@@ -39,7 +39,7 @@ public final class Constants {
      * TLF :Top Left Front Talon
      * TLB :Top Left Back Victor
      * BLF :Bottom Left Front Victor
-     * BLB :Bottom Left Back Vivtor
+     * BLB :Bottom Left Back Victor
      */
     public static final int TLF_MOTOR = 1;
     public static final int TLB_MOTOR = 2;
@@ -60,23 +60,21 @@ public final class Constants {
     public static final int[] LEFT_ENCODER = new int[]{0,1};
     public static final int[] RIGHT_ENCODER = new int[]{2,3};
 
-    public static final double WHEELPERIMETERCM = 15.24 * Math.PI;
-    public static final double DISTENCEPERPULS = WHEELPERIMETERCM / 2048;
+    public static final double WHEEL_PERIMETER_CM = 15.24 * Math.PI;
+    public static final double DISTENCE_PER_PULS = WHEEL_PERIMETER_CM / 2048;
 
-    public static final double LIMITSPEED = 1;
+    public static final double LIMIT_SPEED = 1;
   }
 
   public static class HandMotor {
-    public static final int HANDPORT = 2;
+    public static final int HAND_PORT = 2;
     public static final double H_OPENSPEED = -0.05;
     public static final double H_CLOSESPEED = 0.05;
     public static final double GEAR_DIAMETER = 5.3;
     public static final double PULSE_PER_REV = 42;
-    public static final double CM_PER_PULSE = GEAR_DIAMETER*Math.PI/PULSE_PER_REV;
+    public static final double CM_PER_PULSE = GEAR_DIAMETER * Math.PI / PULSE_PER_REV;
     public static final double DISTANCE_TO_CLOSE_CUBE_CM = 5;
     public static final double DISTANCE_TO_CLOSE_CONE_CM   = 7.5;
-    //mode brake
-
   }
 
   public static class PIDConstants {
