@@ -5,7 +5,6 @@
 package frc.robot;
 
 import frc.robot.Constants.OperatorConstants;
-import frc.robot.commands.Balance;
 import frc.robot.commands.CloseCone;
 import frc.robot.commands.DriveJoystick;
 import frc.robot.subsystems.DriveTrain;
@@ -26,11 +25,11 @@ public class RobotContainer {
   private final Trigger a_Button = new JoystickButton(m_driverController, OperatorConstants.A_BUTTON);
   private final Trigger b_button = new JoystickButton(m_driverController, OperatorConstants.B_BUTTON);
 
-  private final DriveTrain drivetrain = new DriveTrain();
+  private final DriveTrain driveTrain = new DriveTrain();
   private final Hand hand = new Hand();
   private final OpenHand open = new OpenHand(hand);
   private final CloseCone close = new CloseCone(hand);
-  private final DriveJoystick drive = new DriveJoystick(drivetrain);
+  private final DriveJoystick drive = new DriveJoystick(driveTrain);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -42,7 +41,6 @@ public class RobotContainer {
     rb_Button.whileTrue(drive);
     x_Button.whileTrue(open);
     y_Button.whileTrue(close);
-    a_Button.whileTrue(new Balance(100, drivetrain));
   }
 
   /**
