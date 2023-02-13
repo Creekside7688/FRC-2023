@@ -15,7 +15,7 @@ import frc.robot.Constants.HandMotor;
 
 public class Hand extends SubsystemBase {
   /** Creates a new Hand. */
-  private final CANSparkMax handMotor = new CANSparkMax(HandMotor.HAND_PORT,MotorType.kBrushless);
+  private final CANSparkMax handMotor = new CANSparkMax(HandMotor.HAND_PORT, MotorType.kBrushless);
   private final RelativeEncoder encoder = handMotor.getEncoder();
   private final DigitalInput limitSwitch = new DigitalInput(4);
 

@@ -5,7 +5,6 @@
 package frc.robot;
 
 import frc.robot.Constants.OperatorConstants;
-import frc.robot.commands.Balance;
 import frc.robot.commands.CloseCone;
 import frc.robot.commands.DriveJoystick;
 import frc.robot.subsystems.DriveTrain;
@@ -42,7 +41,6 @@ public class RobotContainer {
     rb_Button.whileTrue(drive);
     x_Button.whileTrue(open);
     y_Button.whileTrue(close);
-    a_Button.whileTrue(new Balance(100, drivetrain));
   }
 
   /**
