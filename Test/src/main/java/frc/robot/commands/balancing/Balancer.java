@@ -4,16 +4,16 @@
 
 package frc.robot.commands.balancing;
 
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.DriveTrain;
 
-public class Balance extends CommandBase {
+public class Balancer extends CommandBase {
   private final DriveTrain driveTrain;
-  private PIDControllerDelegator pidController;
 
-  private boolean isBalanced;
+  private boolean isBalanced = false;
 
-  public Balance(DriveTrain d) {
+  public Balancer(DriveTrain d) {
     driveTrain = d;
     addRequirements(driveTrain);
   }
@@ -21,18 +21,28 @@ public class Balance extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    pidController = new PIDControllerDelegator(0, driveTrain);
+    isBalanced = false;
+    driveTrain.setBrake();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double driveTrainPitch = driveTrain.getPitch();
+    double angleError = 0 - driveTrain.getPitch();
+
+    double output = Math.min(angleError * 0.0075, 1);
+
+    output = MathUtil.clamp(-output, -0.2, 0.2);
+
+    driveTrain.arcadeDrive(output, 0);
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) { }
+  public void end(boolean interrupted) {
+    driveTrain.setCoast();
+    driveTrain.resetEncoders();
+  }
 
   // Returns true when the command should end.
   @Override

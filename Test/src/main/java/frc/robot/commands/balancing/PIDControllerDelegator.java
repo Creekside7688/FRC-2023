@@ -44,4 +44,16 @@ public class PIDControllerDelegator {
   public void setSetpoint(double setpoint) {
     pidController.setSetpoint(setpoint);
   }
+
+  public boolean atSetpoint() {
+    return pidController.atSetpoint();
+  }
+
+  public double getEncoderDistance() {
+    return driveTrain.getEncoderAverage();
+  }
+
+  public double getPositionError() {
+    return pidController.getPositionError();
+  }
 }

@@ -15,7 +15,7 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants.DriveTrainConstants;
+import static frc.robot.Constants.DriveTrainConstants.*;
 
 
 public class DriveTrain extends SubsystemBase {
@@ -44,20 +44,20 @@ public class DriveTrain extends SubsystemBase {
   private final SlewRateLimiter filter;
   
   public DriveTrain() {
-    TLFmotor = new WPI_TalonSRX(DriveTrainConstants.TLF_MOTOR);
-    TLBmotor = new WPI_VictorSPX(DriveTrainConstants.TLB_MOTOR);
-    BLFmotor = new WPI_VictorSPX(DriveTrainConstants.BLF_MOTOR);
-    BLBmotor = new WPI_VictorSPX(DriveTrainConstants.BLB_MOTOR);
+    TLFmotor = new WPI_TalonSRX(TLF_MOTOR);
+    TLBmotor = new WPI_VictorSPX(TLB_MOTOR);
+    BLFmotor = new WPI_VictorSPX(BLF_MOTOR);
+    BLBmotor = new WPI_VictorSPX(BLB_MOTOR);
     TLFmotor.setNeutralMode(NeutralMode.Coast);
     TLBmotor.setNeutralMode(NeutralMode.Coast);
     BLFmotor.setNeutralMode(NeutralMode.Coast);
     BLBmotor.setNeutralMode(NeutralMode.Coast);
 
 
-    TRFmotor = new WPI_TalonSRX(DriveTrainConstants.TRF_MOTOR);
-    TRBmotor = new WPI_VictorSPX(DriveTrainConstants.TRB_MOTOR);
-    BRFmotor = new WPI_VictorSPX(DriveTrainConstants.BRF_MOTOR);
-    BRBmotor = new WPI_VictorSPX(DriveTrainConstants.BRB_MOTOR);
+    TRFmotor = new WPI_TalonSRX(TRF_MOTOR);
+    TRBmotor = new WPI_VictorSPX(TRB_MOTOR);
+    BRFmotor = new WPI_VictorSPX(BRF_MOTOR);
+    BRBmotor = new WPI_VictorSPX(BRB_MOTOR);
     TRFmotor.setNeutralMode(NeutralMode.Coast);
     TRBmotor.setNeutralMode(NeutralMode.Coast);
     BRFmotor.setNeutralMode(NeutralMode.Coast);
@@ -72,10 +72,10 @@ public class DriveTrain extends SubsystemBase {
     filter = new SlewRateLimiter(2);
     diffdrive = new DifferentialDrive(leftmotor, rightmotor);
 
-    rEncoder = new Encoder(DriveTrainConstants.RIGHT_ENCODER[0], DriveTrainConstants.RIGHT_ENCODER[1], false);
-    lEncoder = new Encoder(DriveTrainConstants.LEFT_ENCODER[0],DriveTrainConstants.LEFT_ENCODER[1], true);
-    lEncoder.setDistancePerPulse(DriveTrainConstants.DISTENCE_PER_PULS);
-    rEncoder.setDistancePerPulse(DriveTrainConstants.DISTENCE_PER_PULS);
+    rEncoder = new Encoder(RIGHT_ENCODER[0], RIGHT_ENCODER[1], false);
+    lEncoder = new Encoder(LEFT_ENCODER[0], LEFT_ENCODER[1], true);
+    lEncoder.setDistancePerPulse(DISTENCE_PER_PULS);
+    rEncoder.setDistancePerPulse(DISTENCE_PER_PULS);
 
     gyro = new AHRS(Port.kUSB1);
 
@@ -83,12 +83,19 @@ public class DriveTrain extends SubsystemBase {
     gyro.calibrate();
   }
 
+  @Override
+  public void periodic() {
+    SmartDashboard.putNumber("Pitch", gyro.getPitch());
+    SmartDashboard.putNumber("Yaw", gyro.getYaw());
+    SmartDashboard.putNumber("Roll", gyro.getRoll());
+  }
+
   public void Stop() {
     diffdrive.stopMotor();
   }
 
   public void arcadeDrive(double speed, double rotation){
-    diffdrive.arcadeDrive(filter.calculate(speed * DriveTrainConstants.LIMIT_SPEED), rotation);
+    diffdrive.arcadeDrive(filter.calculate(speed * LIMIT_SPEED), rotation);
   }
   
   public double getYaw() {
@@ -114,10 +121,26 @@ public class DriveTrain extends SubsystemBase {
     rEncoder.reset();
   }
 
-  @Override
-  public void periodic() {
-    SmartDashboard.putNumber("Pitch", gyro.getPitch());
-    SmartDashboard.putNumber("Yaw", gyro.getYaw());
-    SmartDashboard.putNumber("Roll", gyro.getRoll());
+  public void setCoast() {
+    TLFmotor.setNeutralMode(NeutralMode.Coast);
+    TLBmotor.setNeutralMode(NeutralMode.Coast);
+    BLFmotor.setNeutralMode(NeutralMode.Coast);
+    BLBmotor.setNeutralMode(NeutralMode.Coast);
+
+    TRFmotor.setNeutralMode(NeutralMode.Coast);
+    TRBmotor.setNeutralMode(NeutralMode.Coast);
+    BRFmotor.setNeutralMode(NeutralMode.Coast);
+    BRBmotor.setNeutralMode(NeutralMode.Coast);
+  }
+
+  public void setBrake() {
+    TLFmotor.setNeutralMode(NeutralMode.Brake);
+    TLBmotor.setNeutralMode(NeutralMode.Brake);
+    BLFmotor.setNeutralMode(NeutralMode.Brake);
+    BLBmotor.setNeutralMode(NeutralMode.Brake);
+    TRFmotor.setNeutralMode(NeutralMode.Brake);
+    TRBmotor.setNeutralMode(NeutralMode.Brake);
+    BRFmotor.setNeutralMode(NeutralMode.Brake);
+    BRBmotor.setNeutralMode(NeutralMode.Brake);
   }
 }

@@ -4,14 +4,7 @@
 
 package frc.robot;
 import java.lang.Math;
-/**
- * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
- * constants. This class should not be used for any other purpose. All constants should be declared
- * globally (i.e. public static). Do not put anything functional in this class.
- *
- * <p>It is advised to statically import this class (or one of its inner classes) wherever the
- * constants are needed, to reduce verbosity.
- */
+
 public final class Constants {
   public static class OperatorConstants {
     //for Controller
@@ -32,7 +25,7 @@ public final class Constants {
   }
 
   public static class DriveTrainConstants {
-    /*
+    /**
      * 
      * Left motor ID
      * 
@@ -66,7 +59,7 @@ public final class Constants {
     public static final double LIMIT_SPEED = 1;
   }
 
-  public static class HandMotor {
+  public static class HandMotorConstants {
     public static final int HAND_PORT = 2;
     public static final double H_OPENSPEED = -0.05;
     public static final double H_CLOSESPEED = 0.05;
@@ -74,11 +67,11 @@ public final class Constants {
     public static final double PULSE_PER_REV = 42;
     public static final double CM_PER_PULSE = GEAR_DIAMETER * Math.PI / PULSE_PER_REV;
     public static final double DISTANCE_TO_CLOSE_CUBE_CM = 5;
-    public static final double DISTANCE_TO_CLOSE_CONE_CM   = 7.5;
+    public static final double DISTANCE_TO_CLOSE_CONE_CM = 7.5;
   }
 
   public static class PIDConstants {
-    public static final double kP = 0.04;
+    public static final double kP = 0.01;
     public static final double kI = 0;
     public static final double kD = 0;
   }
