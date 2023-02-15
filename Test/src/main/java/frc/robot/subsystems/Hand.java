@@ -11,11 +11,11 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import com.revrobotics.CANSparkMax.IdleMode;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants.HandMotor;
+import static frc.robot.Constants.HandMotorConstants.*;
 
 public class Hand extends SubsystemBase {
   /** Creates a new Hand. */
-  private final CANSparkMax handMotor = new CANSparkMax(HandMotor.HAND_PORT, MotorType.kBrushless);
+  private final CANSparkMax handMotor = new CANSparkMax(HAND_PORT, MotorType.kBrushless);
   private final RelativeEncoder encoder = handMotor.getEncoder();
   private final DigitalInput limitSwitch = new DigitalInput(4);
 
@@ -51,7 +51,5 @@ public class Hand extends SubsystemBase {
   }
 
   @Override
-  public void periodic() {
-    // This method will be called once per scheduler run
-  }
+  public void periodic() { }
 }

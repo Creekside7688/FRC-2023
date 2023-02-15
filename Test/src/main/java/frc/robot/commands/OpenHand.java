@@ -5,7 +5,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Constants.HandMotor;
+import static frc.robot.Constants.HandMotorConstants.*;
 import frc.robot.subsystems.Hand;
 
 public class OpenHand extends CommandBase {
@@ -14,8 +14,6 @@ public class OpenHand extends CommandBase {
   public OpenHand(Hand h) {
     hand = h;
     addRequirements(hand);
-
-    // Use addRequirements() here to declare subsystem dependencies.
   }
 
   // Called when the command is initially scheduled.
@@ -27,7 +25,7 @@ public class OpenHand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    hand.runMotor(HandMotor.H_OPENSPEED);
+    hand.runMotor(H_OPENSPEED);
   }
 
   // Called once the command ends or is interrupted.
