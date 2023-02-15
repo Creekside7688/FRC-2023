@@ -9,35 +9,36 @@ import static frc.robot.Constants.HandMotorConstants.*;
 import frc.robot.subsystems.Hand;
 
 public class OpenHand extends CommandBase {
-  /** Creates a new OpenH. */
-  private final Hand hand;
-  public OpenHand(Hand h) {
-    hand = h;
-    addRequirements(hand);
-  }
+    /** Creates a new OpenH. */
+    private final Hand hand;
 
-  // Called when the command is initially scheduled.
-  @Override
-  public void initialize() {
-    hand.resetEncoder();
-  }
+    public OpenHand(Hand h) {
+        hand = h;
+        addRequirements(hand);
+    }
 
-  // Called every time the scheduler runs while the command is scheduled.
-  @Override
-  public void execute() {
-    hand.runMotor(H_OPENSPEED);
-  }
+    // Called when the command is initially scheduled.
+    @Override
+    public void initialize() {
+        hand.resetEncoder();
+    }
 
-  // Called once the command ends or is interrupted.
-  @Override
-  public void end(boolean interrupted) {
-    hand.runMotor(0);
-    hand.resetEncoder();
-  }
+    // Called every time the scheduler runs while the command is scheduled.
+    @Override
+    public void execute() {
+        hand.runMotor(H_OPENSPEED);
+    }
 
-  // Returns true when the command should end.
-  @Override
-  public boolean isFinished() {
-    return !hand.getLimitSwitch();
-  }
+    // Called once the command ends or is interrupted.
+    @Override
+    public void end(boolean interrupted) {
+        hand.runMotor(0);
+        hand.resetEncoder();
+    }
+
+    // Returns true when the command should end.
+    @Override
+    public boolean isFinished() {
+        return !hand.getLimitSwitch();
+    }
 }

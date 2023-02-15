@@ -14,42 +14,42 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import static frc.robot.Constants.HandMotorConstants.*;
 
 public class Hand extends SubsystemBase {
-  /** Creates a new Hand. */
-  private final CANSparkMax handMotor = new CANSparkMax(HAND_PORT, MotorType.kBrushless);
-  private final RelativeEncoder encoder = handMotor.getEncoder();
-  private final DigitalInput limitSwitch = new DigitalInput(4);
+    /** Creates a new Hand. */
+    private final CANSparkMax handMotor = new CANSparkMax(HAND_PORT, MotorType.kBrushless);
+    private final RelativeEncoder encoder = handMotor.getEncoder();
+    private final DigitalInput limitSwitch = new DigitalInput(4);
 
-  public Hand() {
-    handMotor.setIdleMode(IdleMode.kBrake);
-  }
+    public Hand() {
+        handMotor.setIdleMode(IdleMode.kBrake);
+    }
 
-  public void runMotor(double speed){
-    handMotor.set(speed);
+    public void runMotor(double speed) {
+        handMotor.set(speed);
 
-  }
-  public double getEncoder() {
-    return encoder.getPosition();
+    }
 
-  }
-  
-  public boolean getLimitSwitch() {
-    return limitSwitch.get();
+    public double getEncoder() {
+        return encoder.getPosition();
+    }
 
-  }
-  
-  public void resetEncoder() {
-    encoder.setPosition(0);
+    public boolean getLimitSwitch() {
+        return limitSwitch.get();
+    }
 
-  }
+    public void resetEncoder() {
+        encoder.setPosition(0);
 
-  public void setCoast() {
-    handMotor.setIdleMode(IdleMode.kCoast);
-  }
+    }
 
-  public void setBreak() {
-    handMotor.setIdleMode(IdleMode.kBrake);
-  }
+    public void setCoast() {
+        handMotor.setIdleMode(IdleMode.kCoast);
+    }
 
-  @Override
-  public void periodic() { }
+    public void setBreak() {
+        handMotor.setIdleMode(IdleMode.kBrake);
+    }
+
+    @Override
+    public void periodic() {
+    }
 }

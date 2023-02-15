@@ -14,46 +14,46 @@ import frc.robot.Constants.PIDConstants;
 import frc.robot.subsystems.DriveTrain;
 
 public class PIDControllerDelegator {
-  private PIDController pidController;
-  private final DriveTrain driveTrain;
+    private PIDController pidController;
+    private final DriveTrain driveTrain;
 
-  private double kP = PIDConstants.kP;
-  private double kI = PIDConstants.kP;
-  private double kD = PIDConstants.kP;
+    private double kP = PIDConstants.kP;
+    private double kI = PIDConstants.kP;
+    private double kD = PIDConstants.kP;
 
-  private double distance = 0;
+    private double distance = 0;
 
-  public PIDControllerDelegator(double distance, DriveTrain d) {
-    this.distance = distance;
-    this.driveTrain = d;
+    public PIDControllerDelegator(double distance, DriveTrain d) {
+        this.distance = distance;
+        this.driveTrain = d;
 
-    pidController = new PIDController(kP, kI, kD);
+        pidController = new PIDController(kP, kI, kD);
 
-    driveTrain.resetEncoders();
+        driveTrain.resetEncoders();
 
-    pidController.setSetpoint(this.distance);
-    pidController.setTolerance(2);
-  }
+        pidController.setSetpoint(this.distance);
+        pidController.setTolerance(2);
+    }
 
-  public double calculate() {
-    double encoderDistance = driveTrain.getEncoderAverage();
-    double output = pidController.calculate(encoderDistance);
-    return MathUtil.clamp(-output, -0.4, 0.4);
-  }
+    public double calculate() {
+        double encoderDistance = driveTrain.getEncoderAverage();
+        double output = pidController.calculate(encoderDistance);
+        return MathUtil.clamp(-output, -0.4, 0.4);
+    }
 
-  public void setSetpoint(double setpoint) {
-    pidController.setSetpoint(setpoint);
-  }
+    public void setSetpoint(double setpoint) {
+        pidController.setSetpoint(setpoint);
+    }
 
-  public boolean atSetpoint() {
-    return pidController.atSetpoint();
-  }
+    public boolean atSetpoint() {
+        return pidController.atSetpoint();
+    }
 
-  public double getEncoderDistance() {
-    return driveTrain.getEncoderAverage();
-  }
+    public double getEncoderDistance() {
+        return driveTrain.getEncoderAverage();
+    }
 
-  public double getPositionError() {
-    return pidController.getPositionError();
-  }
+    public double getPositionError() {
+        return pidController.getPositionError();
+    }
 }
