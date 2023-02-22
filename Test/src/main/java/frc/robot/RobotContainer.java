@@ -33,7 +33,7 @@ public class RobotContainer {
 
     private final DriveJoystick drive = new DriveJoystick(driveTrain);
 
-    private final Search balancingSearcher = new Search(driveTrain);
+    private final Search balancingSearcher = new Search(200, driveTrain);
     private final Balancer balancer = new Balancer(driveTrain);
 
     /**

@@ -50,7 +50,7 @@ public final class Constants {
         public static final int[] RIGHT_ENCODER = new int[] { 2, 3 };
 
         public static final double WHEEL_PERIMETER_CM = 15.24 * Math.PI;
-        public static final double DISTENCE_PER_PULS = WHEEL_PERIMETER_CM / 2048;
+        public static final double DISTANCE_PER_PULS = WHEEL_PERIMETER_CM / 2048;
 
         public static final double LIMIT_SPEED = 1;
     }
@@ -67,7 +67,7 @@ public final class Constants {
     }
 
     public static class PIDConstants {
-        public static final double kP = 0.01;
+        public static final double kP = 0.05;
         public static final double kI = 0;
         public static final double kD = 0;
     }

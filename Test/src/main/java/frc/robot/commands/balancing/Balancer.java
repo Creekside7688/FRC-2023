@@ -30,9 +30,9 @@ public class Balancer extends CommandBase {
     public void execute() {
         double angleError = 0 - driveTrain.getPitch();
 
-        double output = Math.min(angleError * 0.0075, 1);
+        double output = Math.min(angleError * 0.05, 1);
 
-        output = MathUtil.clamp(-output, -0.2, 0.2);
+        output = MathUtil.clamp(-output, -0.375, 0.375);
 
         driveTrain.arcadeDrive(output, 0);
     }
