@@ -9,20 +9,46 @@
 
 package frc.robot.commands.balancing;
 
+import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.DriveTrain;
 
+import static frc.robot.Constants.PIDConstants.*;
+
 public class Search extends CommandBase {
     private final DriveTrain driveTrain;
-    private PIDControllerDelegator pidController;
+
+    private PIDController leftPIDController;
+    private PIDController rightPIDController;
+
+    private double distance;
+
+    private Encoder lEncoder;
+    private Encoder rEncoder;
 
     public boolean isFinished = false;
     public boolean runBalance = false; // Boolean that tells the program whether or not to run Balancer.java
 
-    public Search(DriveTrain d) {
-        driveTrain = d;
-        pidController = new PIDControllerDelegator(100, driveTrain);
+    public Search(double distance, DriveTrain d) {
+        this.distance = distance;
+        this.driveTrain = d;
+
+        leftPIDController = new PIDController(kP, kI, kD);
+        rightPIDController = new PIDController(kP, kI, kD);
+
+        driveTrain.resetEncoders();
+
+        leftPIDController.setSetpoint(this.distance);
+        rightPIDController.setSetpoint(this.distance);
+
+        leftPIDController.setTolerance(1);
+        rightPIDController.setTolerance(1);
+
+        this.lEncoder = driveTrain.getLeftEncoder();
+        this.rEncoder = driveTrain.getRightEncoder();
 
         addRequirements(driveTrain);
     }
@@ -33,6 +59,8 @@ public class Search extends CommandBase {
         // Reset booleans.
         isFinished = false;
         runBalance = false;
+
+        driveTrain.resetEncoders();
     }
 
     // Called every time the scheduler runs while the command is scheduled.
@@ -47,19 +75,25 @@ public class Search extends CommandBase {
             driveTrain.resetEncoders(); // This looks useless because it's already in end() but removing this line will break the auto-balancer.
         }
 
-        double output = pidController.calculate(); // Output does not need to be reversed.
-        driveTrain.arcadeDrive(output, 0);
+        double lOutput = leftPIDController.calculate(lEncoder.getDistance());
+        double rOutput = rightPIDController.calculate(rEncoder.getDistance());
 
-        // Debugging information.
-        SmartDashboard.putNumber("Distance :", pidController.getEncoderDistance());
-        SmartDashboard.putNumber("Motor Output :", output);
-        SmartDashboard.putNumber("Position Error", pidController.getPositionError());
-        SmartDashboard.putBoolean("Finished", pidController.atSetpoint());
+        lOutput = MathUtil.clamp(-lOutput, -0.4, 0.4);
+        rOutput = MathUtil.clamp(-rOutput, -0.4, 0.4);
+        driveTrain.tankDrive(lOutput, rOutput);
+
+
+        SmartDashboard.putNumber("Left Distance", lEncoder.getDistance());
+        SmartDashboard.putNumber("Right Distance", rEncoder.getDistance());
+
+        SmartDashboard.putNumber("Left Speed", lOutput);
+        SmartDashboard.putNumber("Right Speed", rOutput);
     }
 
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
+        driveTrain.Stop();
         driveTrain.resetEncoders();
     }
 
@@ -68,6 +102,6 @@ public class Search extends CommandBase {
     public boolean isFinished() {
         // End the command if it has found the charging station or if it has reached the
         // end of it's search distance.
-        return isFinished || pidController.atSetpoint();
+        return isFinished || (leftPIDController.atSetpoint() && rightPIDController.atSetpoint());
     }
 }

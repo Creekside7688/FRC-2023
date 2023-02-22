@@ -64,16 +64,18 @@ public class DriveTrain extends SubsystemBase {
 
         leftmotor = new MotorControllerGroup(TLFmotor, TLBmotor, BLFmotor, BLBmotor);
         rightmotor = new MotorControllerGroup(TRFmotor, TRBmotor, BRBmotor, BRFmotor);
+
         leftmotor.setInverted(true);
         rightmotor.setInverted(false);
 
         filter = new SlewRateLimiter(2);
         diffdrive = new DifferentialDrive(leftmotor, rightmotor);
 
-        rEncoder = new Encoder(RIGHT_ENCODER[0], RIGHT_ENCODER[1], false);
         lEncoder = new Encoder(LEFT_ENCODER[0], LEFT_ENCODER[1], true);
-        lEncoder.setDistancePerPulse(DISTENCE_PER_PULS);
-        rEncoder.setDistancePerPulse(DISTENCE_PER_PULS);
+        rEncoder = new Encoder(RIGHT_ENCODER[0], RIGHT_ENCODER[1], false);
+
+        lEncoder.setDistancePerPulse(DISTANCE_PER_PULS);
+        rEncoder.setDistancePerPulse(DISTANCE_PER_PULS);
 
         gyro = new AHRS(Port.kUSB1);
 
@@ -96,6 +98,10 @@ public class DriveTrain extends SubsystemBase {
         diffdrive.arcadeDrive(filter.calculate(speed * LIMIT_SPEED), rotation);
     }
 
+    public void tankDrive(double leftSpeed, double rightSpeed) {
+        diffdrive.tankDrive(leftSpeed, rightSpeed);
+    }
+
     public double getYaw() {
         return gyro.getAngle();
     }
@@ -108,8 +114,12 @@ public class DriveTrain extends SubsystemBase {
         return gyro.getRoll();
     }
 
-    public Encoder[] getEncoders() {
-        return new Encoder[] { lEncoder, rEncoder };
+    public Encoder getLeftEncoder() {
+        return lEncoder;
+    }
+    
+    public Encoder getRightEncoder() {
+        return rEncoder;
     }
 
     public double getEncoderAverage() {
