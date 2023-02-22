@@ -30,16 +30,14 @@ public final class Constants {
          * 
          * Left motor ID
          * 
-         * TLF :Top Left Front Talon TLB :Top Left Back Victor BLF :Bottom Left Front
-         * Victor BLB :Bottom Left Back Victor
+         * TLF :Top Left Front Talon TLB :Top Left Back Victor BLF :Bottom Left Front Victor BLB :Bottom Left Back Victor
          */
         public static final int TLF_MOTOR = 1;
         public static final int TLB_MOTOR = 2;
         public static final int BLF_MOTOR = 3;
         public static final int BLB_MOTOR = 4;
         /*
-         * Right motor ID TRF : Top Right Front Talon TRB : Top Right Back Victor BRF :
-         * Bottom Right Front Victor BRB : Bottom Right Back Victor
+         * Right motor ID TRF : Top Right Front Talon TRB : Top Right Back Victor BRF : Bottom Right Front Victor BRB : Bottom Right Back Victor
          */
         public static final int TRF_MOTOR = 5;
         public static final int TRB_MOTOR = 6;
@@ -57,13 +55,28 @@ public final class Constants {
 
     public static class HandMotorConstants {
         public static final int HAND_PORT = 2;
-        public static final double H_OPENSPEED = -0.05;
-        public static final double H_CLOSESPEED = 0.05;
-        public static final double GEAR_DIAMETER = 5.3;
-        public static final double PULSE_PER_REV = 42;
-        public static final double CM_PER_PULSE = GEAR_DIAMETER * Math.PI / PULSE_PER_REV;
-        public static final double DISTANCE_TO_CLOSE_CUBE_CM = 5;
-        public static final double DISTANCE_TO_CLOSE_CONE_CM = 7.5;
+        public static final double H_OPENSPEED = -0.1;
+        public static final double H_CLOSE_CUBE_SPEED = 0.1;
+        public static final double H_CLOSE_CONE_SPEED = 0.3;
+        public static final double H_CLOSE_CONE_ENDSPEED = 0.1;
+        public static final double H_CLOSE_CUBE_ENDSPEED = 0.05;
+        public static final double HOLD_TIME_CONE = 1;
+        public static final double HOLD_TIME_CUBE = 1;
+        public static final double H_DELAY_CHECK = 0.05;
+        public static final double DEADZONE_OFFSET = 0.0005;
+    }
+
+    public static class LimeLightConstants {
+        public static double ROTATE_SPEED = 0.4;
+        public static double DRIVE_SPEED = 0.4;
+        public static double ROTATE_MULTIPLIER = 0.4;
+    }
+
+    public static class ArmConstants {
+        public static final double SETPOINT = 1023 * 4;
+        public static final double KP = 0.15;
+        public static final double KI = 0.2;
+        public static final double KD = 0.4;
     }
 
     public static class PIDConstants {

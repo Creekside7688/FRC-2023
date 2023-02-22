@@ -5,40 +5,41 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import static frc.robot.Constants.HandMotorConstants.*;
+import frc.robot.Constants.HandMotorConstants;
 import frc.robot.subsystems.Hand;
 
-public class OpenHand extends CommandBase {
+public class OpenH extends CommandBase {
     /** Creates a new OpenH. */
-    private final Hand hand;
+    private final Hand hd;
 
-    public OpenHand(Hand h) {
-        hand = h;
-        addRequirements(hand);
+    public OpenH(Hand h) {
+        hd = h;
+        addRequirements(hd);
+
+        // Use addRequirements() here to declare subsystem dependencies.
     }
 
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-        hand.resetEncoder();
     }
 
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        hand.runMotor(H_OPENSPEED);
+        hd.runMotor(HandMotorConstants.H_OPENSPEED);
     }
 
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
-        hand.runMotor(0);
-        hand.resetEncoder();
+        hd.runMotor(0);
+        hd.reset_encoder();
     }
 
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-        return !hand.getLimitSwitch();
+        return hd.get_limit_switch();
     }
 }

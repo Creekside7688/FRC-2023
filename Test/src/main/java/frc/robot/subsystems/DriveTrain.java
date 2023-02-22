@@ -10,6 +10,9 @@ import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.math.filter.SlewRateLimiter;
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.SerialPort.Port;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
@@ -42,6 +45,8 @@ public class DriveTrain extends SubsystemBase {
     private final Encoder rEncoder;
 
     private final SlewRateLimiter filter;
+
+    private final NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
 
     public DriveTrain() {
         TLFmotor = new WPI_TalonSRX(TLF_MOTOR);
@@ -117,7 +122,7 @@ public class DriveTrain extends SubsystemBase {
     public Encoder getLeftEncoder() {
         return lEncoder;
     }
-    
+
     public Encoder getRightEncoder() {
         return rEncoder;
     }
@@ -152,5 +157,20 @@ public class DriveTrain extends SubsystemBase {
         TRBmotor.setNeutralMode(NeutralMode.Brake);
         BRFmotor.setNeutralMode(NeutralMode.Brake);
         BRBmotor.setNeutralMode(NeutralMode.Brake);
+    }
+
+    public double getXLimelight() {
+        NetworkTableEntry tx = table.getEntry("tx");
+        return tx.getDouble(0);
+    }
+
+    public double getValidTarget() {
+        NetworkTableEntry tv = table.getEntry("tv");
+        return tv.getDouble(0);
+    }
+
+    public double getTargetArea() {
+        NetworkTableEntry ta = table.getEntry("ta");
+        return ta.getDouble(0);
     }
 }

@@ -7,49 +7,56 @@ package frc.robot.subsystems;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import com.revrobotics.SparkMaxRelativeEncoder.Type;
+
 import edu.wpi.first.wpilibj.DigitalInput;
 import com.revrobotics.CANSparkMax.IdleMode;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import static frc.robot.Constants.HandMotorConstants.*;
+import frc.robot.Constants.HandMotorConstants;
 
 public class Hand extends SubsystemBase {
     /** Creates a new Hand. */
-    private final CANSparkMax handMotor = new CANSparkMax(HAND_PORT, MotorType.kBrushless);
-    private final RelativeEncoder encoder = handMotor.getEncoder();
+    private final CANSparkMax Hmotor = new CANSparkMax(HandMotorConstants.HAND_PORT, MotorType.kBrushless);
+    private final RelativeEncoder encoder = Hmotor.getEncoder(Type.kHallSensor, 42);
     private final DigitalInput limitSwitch = new DigitalInput(4);
 
     public Hand() {
-        handMotor.setIdleMode(IdleMode.kBrake);
+        Hmotor.setIdleMode(IdleMode.kBrake);
     }
 
     public void runMotor(double speed) {
-        handMotor.set(speed);
+        Hmotor.set(speed);
 
     }
 
-    public double getEncoder() {
+    public double get_encoder() {
         return encoder.getPosition();
+
     }
 
-    public boolean getLimitSwitch() {
+    public boolean get_limit_switch() {
         return limitSwitch.get();
+
     }
 
-    public void resetEncoder() {
+    public void reset_encoder() {
         encoder.setPosition(0);
 
     }
 
     public void setCoast() {
-        handMotor.setIdleMode(IdleMode.kCoast);
+        Hmotor.setIdleMode(IdleMode.kCoast);
+
     }
 
     public void setBreak() {
-        handMotor.setIdleMode(IdleMode.kBrake);
+        Hmotor.setIdleMode(IdleMode.kBrake);
+
     }
 
     @Override
     public void periodic() {
+        // This method will be called once per scheduler run
     }
 }
