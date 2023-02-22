@@ -24,7 +24,7 @@ public class CloseH extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    hk.runMotor(HandMotor.H_CLOSESPEED);
+    hk.runMotor(HandMotor.H_CLOSE_CUBE_SPEED);
   }
 
   // Called once the command ends or is interrupted.

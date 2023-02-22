@@ -7,6 +7,8 @@ package frc.robot.subsystems;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import com.revrobotics.SparkMaxRelativeEncoder.Type;
+
 import edu.wpi.first.wpilibj.DigitalInput;
 import com.revrobotics.CANSparkMax.IdleMode;
 
@@ -16,7 +18,7 @@ import frc.robot.Constants.HandMotor;
 public class Hand extends SubsystemBase {
   /** Creates a new Hand. */
   private final CANSparkMax Hmotor = new CANSparkMax(HandMotor.HANDPORT,MotorType.kBrushless);
-  private final RelativeEncoder encoder = Hmotor.getEncoder();
+  private final RelativeEncoder encoder = Hmotor.getEncoder(Type.kHallSensor,42);
   private final DigitalInput limitSwitch = new DigitalInput(4);
 
   public Hand() {

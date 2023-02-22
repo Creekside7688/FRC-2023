@@ -41,10 +41,10 @@ public final class Constants {
      * BLF :Bottom Left Front Victor
      * BLB :Bottom Left Back Vivtor
      */
-    public static final int TLF_MOTOR = 0;
-    public static final int TLB_MOTOR = 1;
-    public static final int BLF_MOTOR = 2;
-    public static final int BLB_MOTOR = 3;
+    public static final int TLF_MOTOR = 1;
+    public static final int TLB_MOTOR = 2;
+    public static final int BLF_MOTOR = 3;
+    public static final int BLB_MOTOR = 4;
     /*
      * Right motor ID
      * TRF : Top Right Front Talon
@@ -52,10 +52,11 @@ public final class Constants {
      * BRF : Bottom Right Front Victor
      * BRB : Bottom Right Back Victor
      */
-    public static final int TRF_MOTOR = 4;
-    public static final int TRB_MOTOR = 5;
-    public static final int BRF_MOTOR = 6;
-    public static final int BRB_MOTOR = 7;
+    public static final int TRF_MOTOR = 5;
+    public static final int TRB_MOTOR = 6;
+    public static final int BRF_MOTOR = 7;
+    //CHANGE LATER TO 7
+    public static final int BRB_MOTOR = 8;
     
     public static final int[] LEFT_ENCODER = new int[]{0,1};
     public static final int[] RIGHT_ENCODER = new int[]{2,3};
@@ -68,15 +69,22 @@ public final class Constants {
 
   public static class HandMotor {
     public static final int HANDPORT = 2;
-    public static final double H_OPENSPEED = 0.1;
-    public static final double H_CLOSESPEED = -0.1;
-    public static final double GEAR_DIAMETER = 5.3;
-    public static final double PULSE_PER_REV = 42;
-    public static final double CM_PER_PULSE = GEAR_DIAMETER*Math.PI/PULSE_PER_REV;
-    public static final double DISTANCE_TO_CLOSE_CUBE_CM = 5;
-    public static final double DISTANCE_TO_CLOSE_CONE_CM   = 7.5;
-    //mode brake
+    public static final double H_OPENSPEED = -0.1;
+    public static final double H_CLOSE_CUBE_SPEED = 0.1;
+    public static final double H_CLOSE_CONE_SPEED = 0.3;
+    public static final double H_CLOSE_CONE_ENDSPEED = 0.1;
+    public static final double H_CLOSE_CUBE_ENDSPEED = 0.05;
+    public static final double HOLD_TIME_CONE = 1;
+    public static final double HOLD_TIME_CUBE = 1;
+    public static final double H_DELAY_CHECK = 0.05;
+    public static final double DEADZONE_OFFSET = 0.0005;
+  }
 
+  public static class ArmConstants {
+    public static final double SETPOINT = 1023*4;
+    public static final double KP = 0.15;
+    public static final double KI = 0.2;
+    public static final double KD = 0.4;
   }
 
   public static class PIDConstants {

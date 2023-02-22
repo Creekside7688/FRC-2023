@@ -4,15 +4,21 @@
 
 package frc.robot;
 
+import frc.robot.Constants.HandMotor;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Autos;
+import frc.robot.commands.CloseCone;
+import frc.robot.commands.CloseCube;
 import frc.robot.commands.CloseH;
 import frc.robot.commands.DriveDistance;
+import frc.robot.commands.Limelight;
 import frc.robot.commands.driveJoystick;
+import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.DriveTrain;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.commands.OpenH;
+import frc.robot.commands.TestArm;
 import frc.robot.subsystems.Hand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -30,9 +36,13 @@ public class RobotContainer {
 
   private final DriveTrain dt = new DriveTrain();
   private final Hand hd = new Hand();
+  private final Arm am = new Arm();
   private final OpenH open = new OpenH(hd);
-  private final CloseH close = new CloseH(hd);
+  private final CloseCube closeCone = new CloseCube(hd, HandMotor.H_CLOSE_CONE_SPEED, HandMotor.H_CLOSE_CONE_ENDSPEED, HandMotor.HOLD_TIME_CONE);
+  private final CloseCube closeCube = new CloseCube(hd, HandMotor.H_CLOSE_CUBE_SPEED, HandMotor.H_CLOSE_CUBE_ENDSPEED, HandMotor.HOLD_TIME_CUBE);
+  private final TestArm testMyArm = new TestArm(am);
   private final driveJoystick drive = new driveJoystick(dt);
+  private final Limelight camera = new Limelight(dt);
 
   private final DriveDistance driveDistance = new DriveDistance(100, dt);
 
@@ -44,10 +54,10 @@ public class RobotContainer {
 
   private void configureBindings() {
     rb_Button.whileTrue(drive);
-    x_Button.whileTrue(open);
-    y_Button.whileTrue(close);
-    a_Button.whileTrue(driveDistance);
-    b_button.whileTrue(null);
+    x_Button.whileTrue(camera);
+    y_Button.onTrue(closeCone);
+    a_Button.onTrue(testMyArm);
+    b_button.onTrue(closeCube);
   }
 
   /**
