@@ -30,19 +30,17 @@ public class TestArm extends CommandBase {
         myArm.resetEncoder();
         pidController = new PIDController(ArmConstants.KP, ArmConstants.KI, ArmConstants.KD);
         pidController.setSetpoint(ArmConstants.SETPOINT);
-        pidController.setTolerance(10, 0.1);
+        pidController.setTolerance(3, 0.1);
     }
 
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        SmartDashboard.putNumber("Encoder data", myArm.getArmEncoder());
-        SmartDashboard.putNumber("position error", pidController.getPositionError());
-        SmartDashboard.putNumber("raw output", pidOutput);
-
         encoderData = myArm.getArmEncoder();
         pidOutput = pidController.calculate(encoderData);
-        myArm.run(MathUtil.clamp(pidOutput, -0.3, 0.3));
+        SmartDashboard.putNumber("Encoder value", encoderData);
+        SmartDashboard.putNumber("pid output", MathUtil.clamp(pidOutput, 0, 0.25)*-1);
+        myArm.run(MathUtil.clamp(pidOutput, 0, 0.25)*-1);
     }
 
     // Called once the command ends or is interrupted.
@@ -54,6 +52,7 @@ public class TestArm extends CommandBase {
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-        return pidController.atSetpoint();
+        return false;
+        //return pidController.atSetpoint();
     }
 }

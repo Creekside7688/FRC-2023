@@ -7,18 +7,27 @@ package frc.robot.subsystems;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.CounterBase.EncodingType;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
 public class Arm extends SubsystemBase {
     /** Creates a new Arm. */
-    private final WPI_VictorSPX armMotor;
+    private final WPI_VictorSPX armMotorA;
+    private final WPI_VictorSPX armMotorB;
     private final Encoder armEncoder;
 
     public Arm() {
         // change device number later
-        armMotor = new WPI_VictorSPX(7);
-        armEncoder = new Encoder(5, 6, true, EncodingType.k4X);
+        armMotorA = new WPI_VictorSPX(9);
+        armMotorB = new WPI_VictorSPX(10);
+
+        armMotorA.setNeutralMode(NeutralMode.Brake);
+        armMotorB.setNeutralMode(NeutralMode.Brake);
+
+        armEncoder = new Encoder(5, 6, false, EncodingType.k4X);
+        armEncoder.setDistancePerPulse(Constants.ArmConstants.DEGREE_PER_PULS);
     }
 
     public void resetEncoder() {
@@ -26,11 +35,15 @@ public class Arm extends SubsystemBase {
     }
 
     public void stop() {
-        armMotor.set(0);
+        armMotorA.set(0);
+        armMotorB.set(0);
+        armMotorA.setVoltage(0);
+        armMotorB.setVoltage(0);
     }
 
     public void run(double speed) {
-        armMotor.set(speed);
+        armMotorA.set(speed);
+        armMotorB.set(speed);
     }
 
     public double getArmEncoder() {
