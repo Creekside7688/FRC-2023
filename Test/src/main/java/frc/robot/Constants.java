@@ -67,9 +67,9 @@ public final class Constants {
     }
 
     public static class LimeLightConstants {
-        public static double ROTATE_SPEED = 0.4;
-        public static double DRIVE_SPEED = 0.4;
-        public static double ROTATE_MULTIPLIER = 0.4;
+        public static final double ROTATE_SPEED = 0.4;
+        public static final double DRIVE_SPEED = 0.4;
+        public static final double ROTATE_MULTIPLIER = 0.4;
     }
 
     public static class ArmConstants {
