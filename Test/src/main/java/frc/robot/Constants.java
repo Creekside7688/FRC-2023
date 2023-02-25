@@ -7,22 +7,8 @@ package frc.robot;
 import java.lang.Math;
 
 public final class Constants {
-    public static class OperatorConstants {
-        // for Controller
-        public static final int DRIVER_CONTROLLER_PORT = 0;
+    public static class ControlConstants {
         public static final int JOYSTICK_PORT = 0;
-        public static final int LB_BUTTON = 5;
-        public static final int RB_BUTTON = 6;
-        public static final int L_TRIGGER = 2;
-        public static final int R_TRIGGER = 3;
-        public static final int RIGHT_X_AXIS = 4;
-        public static final int RIGHT_Y_AXIS = 5;
-        public static final int LEFT_X_AXIS = 0;
-        public static final int LEFT_Y_AXIS = 1;
-        public static final int X_BUTTON = 3;
-        public static final int Y_BUTTON = 4;
-        public static final int A_BUTTON = 1;
-        public static final int B_BUTTON = 2;
     }
 
     public static class DriveTrainConstants {

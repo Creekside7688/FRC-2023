@@ -4,9 +4,10 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
-import static frc.robot.Constants.OperatorConstants.*;
+import static frc.robot.Constants.ControlConstants.*;
 import frc.robot.subsystems.DriveTrain;
 
 public class DriveJoystick extends CommandBase {
@@ -25,7 +26,7 @@ public class DriveJoystick extends CommandBase {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        driveTrain.arcadeDrive(RobotContainer.driverController.getRawAxis(LEFT_Y_AXIS), RobotContainer.driverController.getRawAxis(RIGHT_X_AXIS));
+        driveTrain.arcadeDrive(RobotContainer.driverController.getRawAxis(XboxController.Axis.kLeftY.value), RobotContainer.driverController.getRawAxis(XboxController.Axis.kRightX.value));
     }
 
     // Called once the command ends or is interrupted.
