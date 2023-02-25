@@ -61,7 +61,7 @@ public class Close extends CommandBase {
         Timer.delay(HandMotorConstants.H_DELAY_CHECK);
 
         // if the position of the motor hasnt changed, and 3 seconds have passed, end command
-        if(hand.getClawEncoder() > previousPos - HandMotorConstants.DEADZONE_OFFSET && hand.getClawEncoder() < previousPos - HandMotorConstants.DEADZONE_OFFSET) {
+        if(hand.getClawEncoder() > previousPos - HandMotorConstants.DEADZONE_OFFSET && hand.getClawEncoder() < previousPos + HandMotorConstants.DEADZONE_OFFSET) {
             // if 3 seconds haved passed the method will return true ending the command
             return time.hasElapsed(holdTime);
         } else {

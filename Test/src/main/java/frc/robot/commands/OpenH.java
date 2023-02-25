@@ -42,6 +42,6 @@ public class OpenH extends CommandBase {
     @Override
     public boolean isFinished() {
         //return false;
-        return !hd.get_limit_switch();
+        return !hd.getLimitSwitch();
     }
 }
