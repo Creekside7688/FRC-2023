@@ -22,12 +22,13 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import static frc.robot.Constants.DriveTrainConstants.*;
 
 public class DriveTrain extends SubsystemBase {
-    /** Creates a new driveTrain. */
+
     // Left motors
     private final WPI_TalonSRX TLFmotor;
     private final WPI_VictorSPX TLBmotor;
     private final WPI_VictorSPX BLFmotor;
     private final WPI_VictorSPX BLBmotor;
+
     // Right motors
     private final WPI_TalonSRX TRFmotor;
     private final WPI_VictorSPX TRBmotor;

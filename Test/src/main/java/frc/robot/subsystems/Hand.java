@@ -5,53 +5,55 @@
 package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkMax;
-import com.revrobotics.RelativeEncoder;
+import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkMaxRelativeEncoder.Type;
 
 import edu.wpi.first.wpilibj.DigitalInput;
-import com.revrobotics.CANSparkMax.IdleMode;
-
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants.HandMotorConstants;
+import static frc.robot.Constants.HandMotorConstants.*;
 
 public class Hand extends SubsystemBase {
-    /** Creates a new Hand. */
-    private final CANSparkMax Hmotor = new CANSparkMax(HandMotorConstants.HAND_PORT, MotorType.kBrushless);
-    private final RelativeEncoder encoder = Hmotor.getEncoder(Type.kHallSensor, 42);
+    private final CANSparkMax clawMotor = new CANSparkMax(HAND_PORT, MotorType.kBrushless);
+    private final CANSparkMax wristMotor = new CANSparkMax(WRIST_PORT, MotorType.kBrushless);
+
+    private final RelativeEncoder clawEncoder = clawMotor.getEncoder(Type.kHallSensor, 42);
+    private final RelativeEncoder wristEncoder = wristMotor.getEncoder(Type.kHallSensor, 42);
+
     private final DigitalInput limitSwitch = new DigitalInput(4);
 
     public Hand() {
-        Hmotor.setIdleMode(IdleMode.kBrake);
+        clawMotor.setIdleMode(IdleMode.kBrake);
+        wristMotor.setIdleMode(IdleMode.kBrake);
     }
 
-    public void runMotor(double speed) {
-        Hmotor.set(speed);
+    public void runClaw(double speed) {
+        clawMotor.set(speed);
+    }
+
+    public double getClawEncoder() {
+        return clawEncoder.getPosition();
 
     }
 
-    public double get_encoder() {
-        return encoder.getPosition();
-
-    }
-
-    public boolean get_limit_switch() {
+    public boolean getLimitSwitch() {
         return limitSwitch.get();
 
     }
 
-    public void reset_encoder() {
-        encoder.setPosition(0);
+    public void resetEncoder() {
+        clawEncoder.setPosition(0);
 
     }
 
     public void setCoast() {
-        Hmotor.setIdleMode(IdleMode.kCoast);
+        clawMotor.setIdleMode(IdleMode.kCoast);
 
     }
 
-    public void setBreak() {
-        Hmotor.setIdleMode(IdleMode.kBrake);
+    public void setBrake() {
+        clawMotor.setIdleMode(IdleMode.kBrake);
 
     }
 

@@ -28,16 +28,14 @@ public class OpenH extends CommandBase {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        hd.runMotor(HandMotorConstants.H_OPENSPEED);
-        SmartDashboard.putBoolean("limit switach", hd.get_limit_switch());
+        hd.runClaw(HandMotorConstants.H_OPENSPEED);
     }
 
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
-        SmartDashboard.putBoolean("limit switach", hd.get_limit_switch());
-        hd.runMotor(0);
-        hd.reset_encoder();
+        hd.runClaw(0);
+        hd.resetEncoder();
     }
 
     // Returns true when the command should end.
