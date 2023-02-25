@@ -9,6 +9,7 @@ import frc.robot.subsystems.Hand;
 import frc.robot.Constants.HandMotorConstants;
 
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Close extends CommandBase {
     /** Creates a new CloseCube. */
@@ -42,13 +43,15 @@ public class Close extends CommandBase {
     public void execute() {
         hand.runMotor(closeSpeed);
         previousPos = hand.get_encoder();
-
+        SmartDashboard.putString("end?", "no");
+        SmartDashboard.putNumber("encoder pos: ", hand.get_encoder());
     }
 
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
         // let the motor have little power so it will keep holding even when command ends
+        SmartDashboard.putString("end?", "yes");
         hand.runMotor(endSpeed);
     }
 
@@ -59,7 +62,7 @@ public class Close extends CommandBase {
         Timer.delay(HandMotorConstants.H_DELAY_CHECK);
 
         // if the position of the motor hasnt changed, and 3 seconds have passed, end command
-        if(hand.get_encoder() > previousPos - HandMotorConstants.DEADZONE_OFFSET && hand.get_encoder() < previousPos - HandMotorConstants.DEADZONE_OFFSET) {
+        if(hand.get_encoder() > previousPos - HandMotorConstants.DEADZONE_OFFSET && hand.get_encoder() < previousPos + HandMotorConstants.DEADZONE_OFFSET) {
             // if 3 seconds haved passed the method will return true ending the command
             return time.hasElapsed(holdTime);
         } else {

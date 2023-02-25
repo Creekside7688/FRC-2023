@@ -59,7 +59,8 @@ public class RobotContainer {
         x_Button.onTrue(CloseCone);
         y_Button.whileTrue(testArm);
         lb_Button.onTrue(open);
-        b_Button.whileTrue(camera);
+        b_Button.onTrue(open);
+        //b_Button.whileTrue(camera);
         a_Button.onTrue(balancingSearcher.andThen(balancer.unless(() -> !balancingSearcher.runBalance)));
     }
 

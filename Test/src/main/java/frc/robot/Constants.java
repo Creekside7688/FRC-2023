@@ -54,13 +54,13 @@ public final class Constants {
     }
 
     public static class HandMotorConstants {
-        public static final int HAND_PORT = 2;
-        public static final double H_OPENSPEED = -0.1;
+        public static final int HAND_PORT = 3;
+        public static final double H_OPENSPEED = -0.3;
         public static final double H_CLOSE_CUBE_SPEED = 0.1;
-        public static final double H_CLOSE_CONE_SPEED = 0.3;
+        public static final double H_CLOSE_CONE_SPEED = 1;
         public static final double H_CLOSE_CONE_ENDSPEED = 0.1;
         public static final double H_CLOSE_CUBE_ENDSPEED = 0.05;
-        public static final double HOLD_TIME_CONE = 1;
+        public static final double HOLD_TIME_CONE = 3;
         public static final double HOLD_TIME_CUBE = 1;
         public static final double H_DELAY_CHECK = 0.05;
         public static final double DEADZONE_OFFSET = 0.0005;

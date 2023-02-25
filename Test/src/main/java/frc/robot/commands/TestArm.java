@@ -42,7 +42,7 @@ public class TestArm extends CommandBase {
         SmartDashboard.putNumber("Encoder value", encoderData);
         SmartDashboard.putNumber("pid output", MathUtil.clamp(pidOutput, 0, 0.25)*-1);
         //myArm.run(MathUtil.clamp(pidOutput, 0, 0.25)*-1);
-        myArm.run(0.25);
+        myArm.run(-0.25);
     }
 
     // Called once the command ends or is interrupted.

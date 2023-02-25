@@ -4,6 +4,7 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants.HandMotorConstants;
 import frc.robot.subsystems.Hand;
@@ -28,11 +29,13 @@ public class OpenH extends CommandBase {
     @Override
     public void execute() {
         hd.runMotor(HandMotorConstants.H_OPENSPEED);
+        SmartDashboard.putBoolean("limit switach", hd.get_limit_switch());
     }
 
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
+        SmartDashboard.putBoolean("limit switach", hd.get_limit_switch());
         hd.runMotor(0);
         hd.reset_encoder();
     }
@@ -40,6 +43,7 @@ public class OpenH extends CommandBase {
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-        return hd.get_limit_switch();
+        //return false;
+        return !hd.get_limit_switch();
     }
 }
