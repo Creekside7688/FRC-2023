@@ -38,8 +38,7 @@ public class Arm extends SubsystemBase {
     }
 
     public void stop() {
-        motors.set(0);
-        motors.setVoltage(0);
+        motors.stopMotor();
     }
 
     public void turn(double speed) {

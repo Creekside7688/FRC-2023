@@ -40,8 +40,8 @@ public class Close extends CommandBase {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        hand.runMotor(closeSpeed);
-        previousPos = hand.get_encoder();
+        hand.runClaw(closeSpeed);
+        previousPos = hand.getClawEncoder();
 
     }
 
@@ -49,7 +49,7 @@ public class Close extends CommandBase {
     @Override
     public void end(boolean interrupted) {
         // let the motor have little power so it will keep holding even when command ends
-        hand.runMotor(endSpeed);
+        hand.runClaw(endSpeed);
     }
 
     // Returns true when the command should end.
@@ -59,7 +59,7 @@ public class Close extends CommandBase {
         Timer.delay(HandMotorConstants.H_DELAY_CHECK);
 
         // if the position of the motor hasnt changed, and 3 seconds have passed, end command
-        if(hand.get_encoder() > previousPos - HandMotorConstants.DEADZONE_OFFSET && hand.get_encoder() < previousPos - HandMotorConstants.DEADZONE_OFFSET) {
+        if(hand.getClawEncoder() > previousPos - HandMotorConstants.DEADZONE_OFFSET && hand.getClawEncoder() < previousPos - HandMotorConstants.DEADZONE_OFFSET) {
             // if 3 seconds haved passed the method will return true ending the command
             return time.hasElapsed(holdTime);
         } else {
