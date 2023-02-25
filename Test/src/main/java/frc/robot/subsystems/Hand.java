@@ -16,7 +16,6 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.HandMotorConstants;
 
 public class Hand extends SubsystemBase {
-    /** Creates a new Hand. */
     private final CANSparkMax Hmotor = new CANSparkMax(HandMotorConstants.HAND_PORT, MotorType.kBrushless);
     private final RelativeEncoder encoder = Hmotor.getEncoder(Type.kHallSensor, 42);
     private final DigitalInput limitSwitch = new DigitalInput(4);

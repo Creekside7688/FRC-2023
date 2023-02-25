@@ -77,7 +77,7 @@ public final class Constants {
         public static final double KP = 0.15;
         public static final double KI = 0.1;
         public static final double KD = 0.45;
-        public static final double DEGREE_PER_PULS = 360/2048;
+        public static final double DEGREE_PER_PULSE = 360 / 2048;
     }
 
     public static class PIDConstants {
