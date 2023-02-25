@@ -12,13 +12,13 @@ import frc.robot.Constants;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
-public class Arm extends SubsystemBase {
+public class OldArm extends SubsystemBase {
     /** Creates a new Arm. */
     private final WPI_VictorSPX armMotorA;
     private final WPI_VictorSPX armMotorB;
     private final Encoder armEncoder;
 
-    public Arm() {
+    public OldArm() {
         // change device number later
         armMotorA = new WPI_VictorSPX(9);
         armMotorB = new WPI_VictorSPX(10);

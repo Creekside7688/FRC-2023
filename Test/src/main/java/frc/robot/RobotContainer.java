@@ -10,7 +10,7 @@ import frc.robot.commands.DriveJoystick;
 import frc.robot.commands.LimeLight;
 import frc.robot.commands.OpenH;
 import frc.robot.commands.TestArm;
-import frc.robot.subsystems.Arm;
+import frc.robot.subsystems.OldArm;
 import frc.robot.subsystems.DriveTrain;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -32,7 +32,7 @@ public class RobotContainer {
     private final Trigger b_Button = new JoystickButton(driverController, OperatorConstants.B_BUTTON);
     private final Trigger lb_Button = new JoystickButton(driverController, OperatorConstants.LB_BUTTON);
 
-    private final Arm myArm = new Arm();
+    private final OldArm myArm = new OldArm();
     private final DriveTrain driveTrain = new DriveTrain();
     private final Hand hand = new Hand();
     private final Close CloseCube = new Close(hand, H_CLOSE_CUBE_SPEED, H_CLOSE_CUBE_ENDSPEED, HOLD_TIME_CUBE);

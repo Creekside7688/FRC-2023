@@ -73,10 +73,10 @@ public final class Constants {
     }
 
     public static class ArmConstants {
-        public static final double SETPOINT = 256;
+        public static final double SETPOINT = 512;
         public static final double KP = 0.15;
-        public static final double KI = 0;
-        public static final double KD = 0.2;
+        public static final double KI = 0.1;
+        public static final double KD = 0.45;
         public static final double DEGREE_PER_PULS = 360/2048;
     }
 
