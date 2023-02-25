@@ -49,6 +49,10 @@ public class Arm extends SubsystemBase {
         return armEncoder.get();
     }
 
+    public double getDegree(){
+        return armEncoder.getDistance();
+    }
+
     @Override
     public void periodic() {
     }
