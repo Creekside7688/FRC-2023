@@ -41,6 +41,7 @@ public final class Constants {
 
     public static class HandMotorConstants {
         public static final int HAND_PORT = 3;
+        public static final int WRIST_PORT = 2;
         public static final double H_OPENSPEED = -0.3;
         public static final double H_CLOSE_CUBE_SPEED = 0.1;
         public static final double H_CLOSE_CONE_SPEED = 1;
