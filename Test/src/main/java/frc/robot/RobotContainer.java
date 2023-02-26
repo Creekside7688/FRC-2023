@@ -5,10 +5,10 @@
 package frc.robot;
 
 import frc.robot.Constants.ControlConstants;
-import frc.robot.commands.Close;
+import frc.robot.commands.CloseHand;
 import frc.robot.commands.DriveJoystick;
-import frc.robot.commands.LimeLight;
-import frc.robot.commands.OpenH;
+import frc.robot.commands.AprilTagAlign;
+import frc.robot.commands.OpenHand;
 import frc.robot.commands.TestArm;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.DriveTrain;
@@ -21,7 +21,7 @@ import frc.robot.subsystems.Hand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
-import static frc.robot.Constants.HandMotorConstants.*;
+import static frc.robot.Constants.HandConstants.*;
 
 public class RobotContainer {
     public static Joystick driverController = new Joystick(ControlConstants.JOYSTICK_PORT);
@@ -32,31 +32,29 @@ public class RobotContainer {
     private final Trigger rb_Button = new JoystickButton(driverController, XboxController.Button.kRightBumper.value);
     private final Trigger rt_Trigger = new Trigger(RobotContainer::rtAsButton);
 
+    private final Trigger ls_Button = new JoystickButton(driverController, XboxController.Button.kLeftStick.value);
+    private final Trigger rs_Button = new JoystickButton(driverController, XboxController.Button.kRightStick.value);
+
     private final Trigger a_Button = new JoystickButton(driverController, XboxController.Button.kA.value);
     private final Trigger b_Button = new JoystickButton(driverController, XboxController.Button.kB.value);
     private final Trigger x_Button = new JoystickButton(driverController, XboxController.Button.kX.value);
     private final Trigger y_Button = new JoystickButton(driverController, XboxController.Button.kY.value);
 
-    private final Trigger ls_Button = new JoystickButton(driverController, XboxController.Button.kLeftStick.value);
-    private final Trigger rs_Button = new JoystickButton(driverController, XboxController.Button.kRightStick.value);
-
-    private final Arm myArm = new Arm();
+    private final Arm arm = new Arm();
     private final DriveTrain driveTrain = new DriveTrain();
     private final Hand hand = new Hand();
-    // private final Close CloseCube = new Close(hand, H_CLOSE_CUBE_SPEED, H_CLOSE_CUBE_ENDSPEED, HOLD_TIME_CUBE);
-    private final Close CloseCone = new Close(hand, H_CLOSE_CONE_SPEED, H_CLOSE_CONE_ENDSPEED, HOLD_TIME_CONE);
-    private final LimeLight camera = new LimeLight(driveTrain);
-    private final OpenH open = new OpenH(hand);
-    private final TestArm testArm = new TestArm(myArm);
+
+    private final CloseHand closeHand = new CloseHand(hand, H_CLOSE_CONE_SPEED, H_CLOSE_CONE_ENDSPEED, HOLD_TIME_CONE);
+    private final OpenHand openHand = new OpenHand(hand);
+
+    private final AprilTagAlign aprilTagAlign = new AprilTagAlign(driveTrain);
+    private final TestArm testArm = new TestArm(arm);
 
     private final DriveJoystick drive = new DriveJoystick(driveTrain);
 
     private final Search balancingSearcher = new Search(200, driveTrain);
     private final Balancer balancer = new Balancer(driveTrain);
 
-    /**
-     * The container for the robot. Contains subsystems, OI devices, and commands.
-     */
     public RobotContainer() {
         // Configure the trigger bindings
         configureBindings();
@@ -66,11 +64,9 @@ public class RobotContainer {
 
     private void configureBindings() {
         x_Button.onTrue(balancingSearcher.andThen(balancer.unless(() -> !balancingSearcher.runBalance)));
-        y_Button.whileTrue(testArm);
-        lb_Button.onTrue(open);
-        b_Button.onTrue(open);
-        //b_Button.whileTrue(camera);
-        a_Button.onTrue(balancingSearcher.andThen(balancer.unless(() -> !balancingSearcher.runBalance)));
+        y_Button.onTrue(closeHand);
+        b_Button.onTrue(openHand);
+        a_Button.whileTrue(testArm);
     }
 
     /**
@@ -89,5 +85,21 @@ public class RobotContainer {
 
     private static final boolean rtAsButton() {
         return driverController.getRawAxis(XboxController.Axis.kRightTrigger.value) > 0.5;
+    }
+
+    public static final boolean getDpadUp() {
+        return driverController.getPOV() == 0;
+    }
+
+    public static final boolean getDpadDown() {
+        return driverController.getPOV() == 180;
+    }
+
+    public static final boolean getDpadLeft() {
+        return driverController.getPOV() == 270;
+    }
+
+    public static final boolean getDpadRight() {
+        return driverController.getPOV() == 90;
     }
 }

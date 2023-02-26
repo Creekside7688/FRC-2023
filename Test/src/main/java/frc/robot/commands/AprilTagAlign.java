@@ -9,8 +9,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.Constants.LimeLightConstants;
 
-public class LimeLight extends CommandBase {
-    /** Creates a new Limelight. */
+public class AprilTagAlign extends CommandBase {
     private final DriveTrain driveTrain;
     private double rotateOutput;
     private double speedOutput;
@@ -18,7 +17,7 @@ public class LimeLight extends CommandBase {
     private final double driveSpeed = LimeLightConstants.DRIVE_SPEED;
     private final double rotateMultiplier = LimeLightConstants.ROTATE_MULTIPLIER;
 
-    public LimeLight(DriveTrain dt) {
+    public AprilTagAlign(DriveTrain dt) {
         driveTrain = dt;
         addRequirements(driveTrain);
         // Use addRequirements() here to declare subsystem dependencies.

@@ -12,7 +12,7 @@ import com.revrobotics.SparkMaxRelativeEncoder.Type;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import static frc.robot.Constants.HandMotorConstants.*;
+import static frc.robot.Constants.HandConstants.*;
 
 public class Hand extends SubsystemBase {
     private final CANSparkMax clawMotor = new CANSparkMax(HAND_PORT, MotorType.kBrushless);

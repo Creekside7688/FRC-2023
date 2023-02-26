@@ -12,7 +12,6 @@ import frc.robot.Constants.ArmConstants;
 import frc.robot.subsystems.Arm;
 
 public class TestArm extends CommandBase {
-    /** Creates a new TestArm. */
     private final Arm arm;
     private PIDController pidController;
     private double encoderData;
@@ -21,7 +20,6 @@ public class TestArm extends CommandBase {
     public TestArm(Arm arm) {
         this.arm = arm;
         addRequirements(arm);
-        // Use addRequirements() here to declare subsystem dependencies.
     }
 
     // Called when the command is initially scheduled.

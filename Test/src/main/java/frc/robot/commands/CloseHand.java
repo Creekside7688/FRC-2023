@@ -6,13 +6,12 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Hand;
-import frc.robot.Constants.HandMotorConstants;
+import frc.robot.Constants.HandConstants;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class Close extends CommandBase {
-    /** Creates a new CloseCube. */
+public class CloseHand extends CommandBase {
     private final Hand hand;
     private double previousPos = 0;
     private final Timer time = new Timer();
@@ -20,14 +19,13 @@ public class Close extends CommandBase {
     private final double endSpeed;
     private final double holdTime;
 
-    public Close(Hand h, double cspeed, double espeed, double htime) {
+    public CloseHand(Hand h, double cspeed, double espeed, double htime) {
         hand = h;
         closeSpeed = cspeed;
         endSpeed = espeed;
         holdTime = htime;
 
         addRequirements(hand);
-        // Use addRequirements() here to declare subsystem dependencies.
     }
 
     // Called when the command is initially scheduled.
@@ -58,10 +56,10 @@ public class Close extends CommandBase {
     @Override
     public boolean isFinished() {
         // delay so that it can detect a difference between current encoder value and previousPos encoder value
-        Timer.delay(HandMotorConstants.H_DELAY_CHECK);
+        Timer.delay(HandConstants.H_DELAY_CHECK);
 
         // if the position of the motor hasnt changed, and 3 seconds have passed, end command
-        if(hand.getClawEncoder() > previousPos - HandMotorConstants.DEADZONE_OFFSET && hand.getClawEncoder() < previousPos + HandMotorConstants.DEADZONE_OFFSET) {
+        if(hand.getClawEncoder() > previousPos - HandConstants.DEADZONE_OFFSET && hand.getClawEncoder() < previousPos + HandConstants.DEADZONE_OFFSET) {
             // if 3 seconds haved passed the method will return true ending the command
             return time.hasElapsed(holdTime);
         } else {
