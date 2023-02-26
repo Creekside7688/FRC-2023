@@ -6,12 +6,12 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants.HandConstants;
-import frc.robot.subsystems.Hand;
+import frc.robot.subsystems.Claw;
 
 public class OpenHand extends CommandBase {
-    private final Hand hd;
+    private final Claw hd;
 
-    public OpenHand(Hand h) {
+    public OpenHand(Claw h) {
         hd = h;
         addRequirements(hd);
     }

@@ -5,21 +5,21 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Hand;
+import frc.robot.subsystems.Claw;
 import frc.robot.Constants.HandConstants;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class CloseHand extends CommandBase {
-    private final Hand hand;
+    private final Claw hand;
     private double previousPos = 0;
     private final Timer time = new Timer();
     private final double closeSpeed;
     private final double endSpeed;
     private final double holdTime;
 
-    public CloseHand(Hand h, double cspeed, double espeed, double htime) {
+    public CloseHand(Claw h, double cspeed, double espeed, double htime) {
         hand = h;
         closeSpeed = cspeed;
         endSpeed = espeed;

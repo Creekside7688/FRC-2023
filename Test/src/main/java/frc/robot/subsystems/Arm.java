@@ -45,8 +45,12 @@ public class Arm extends SubsystemBase {
         motors.set(speed);
     }
 
-    public double getArmEncoder() {
+    public double getEncoderPosition() {
         return armEncoder.get();
+    }
+
+    public double getEncoderAsDegrees() {
+        throw new UnsupportedOperationException("Brennan pls calculate this pls pls pls");
     }
 
     @Override

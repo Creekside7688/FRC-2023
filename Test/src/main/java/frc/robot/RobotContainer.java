@@ -6,18 +6,20 @@ package frc.robot;
 
 import frc.robot.Constants.ControlConstants;
 import frc.robot.commands.CloseHand;
-import frc.robot.commands.DriveJoystick;
+import frc.robot.commands.Drive;
 import frc.robot.commands.AprilTagAlign;
 import frc.robot.commands.OpenHand;
 import frc.robot.commands.TestArm;
+import frc.robot.commands.WristLeveller;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.DriveTrain;
+import frc.robot.subsystems.Wrist;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.commands.balancing.Balancer;
 import frc.robot.commands.balancing.Search;
-import frc.robot.subsystems.Hand;
+import frc.robot.subsystems.Claw;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
@@ -42,24 +44,27 @@ public class RobotContainer {
 
     private final Arm arm = new Arm();
     private final DriveTrain driveTrain = new DriveTrain();
-    private final Hand hand = new Hand();
+    private final Claw hand = new Claw();
+    private final Wrist wrist = new Wrist();
 
     private final CloseHand closeHand = new CloseHand(hand, H_CLOSE_CONE_SPEED, H_CLOSE_CONE_ENDSPEED, HOLD_TIME_CONE);
     private final OpenHand openHand = new OpenHand(hand);
 
+    private final WristLeveller levelWrist = new WristLeveller(wrist, arm);
+
     private final AprilTagAlign aprilTagAlign = new AprilTagAlign(driveTrain);
     private final TestArm testArm = new TestArm(arm);
 
-    private final DriveJoystick drive = new DriveJoystick(driveTrain);
+    private final Drive drive = new Drive(driveTrain);
 
     private final Search balancingSearcher = new Search(200, driveTrain);
     private final Balancer balancer = new Balancer(driveTrain);
 
     public RobotContainer() {
-        // Configure the trigger bindings
         configureBindings();
 
         driveTrain.setDefaultCommand(drive);
+        wrist.setDefaultCommand(levelWrist);
     }
 
     private void configureBindings() {
