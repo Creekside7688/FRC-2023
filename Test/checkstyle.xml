@@ -46,6 +46,7 @@
   </module>
 
   <module name="TreeWalker">
+  <module name="UnusedVariable" severity="ignore"/>
     <module name="OuterTypeFilename"/>
     <module name="IllegalTokenText">
       <property name="tokens" value="STRING_LITERAL, CHAR_LITERAL"/>

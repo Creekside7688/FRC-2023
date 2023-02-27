@@ -4,29 +4,25 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Hand;
-import frc.robot.Constants.HandMotorConstants;
+import static frc.robot.Constants.HandConstants.CLOSE_SPEED;
+import static frc.robot.Constants.HandConstants.DEADZONE_OFFSET;
+import static frc.robot.Constants.HandConstants.DELAY_CHECK;
+import static frc.robot.Constants.HandConstants.HOLD_SPEED;
+import static frc.robot.Constants.HandConstants.HOLD_TIME;
 
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.subsystems.Claw;
 
-public class Close extends CommandBase {
-    /** Creates a new CloseCube. */
-    private final Hand hand;
+public class CloseClaw extends CommandBase {
+    private final Claw claw;
     private double previousPos = 0;
     private final Timer time = new Timer();
-    private final double closeSpeed;
-    private final double endSpeed;
-    private final double holdTime;
 
-    public Close(Hand h, double cspeed, double espeed, double htime) {
-        hand = h;
-        closeSpeed = cspeed;
-        endSpeed = espeed;
-        holdTime = htime;
+    public CloseClaw(Claw claw) {
+        this.claw = claw;
 
-        addRequirements(hand);
-        // Use addRequirements() here to declare subsystem dependencies.
+        addRequirements(claw);
     }
 
     // Called when the command is initially scheduled.
@@ -34,34 +30,32 @@ public class Close extends CommandBase {
     public void initialize() {
         time.reset();
         time.start();
-
     }
 
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        hand.runClaw(closeSpeed);
-        previousPos = hand.getClawEncoder();
-
+        claw.runClaw(CLOSE_SPEED);
+        previousPos = claw.getClawEncoder();
     }
 
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
         // let the motor have little power so it will keep holding even when command ends
-        hand.runClaw(endSpeed);
+        claw.runClaw(HOLD_SPEED);
     }
 
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
         // delay so that it can detect a difference between current encoder value and previousPos encoder value
-        Timer.delay(HandMotorConstants.H_DELAY_CHECK);
+        Timer.delay(DELAY_CHECK);
 
         // if the position of the motor hasnt changed, and 3 seconds have passed, end command
-        if(hand.getClawEncoder() > previousPos - HandMotorConstants.DEADZONE_OFFSET && hand.getClawEncoder() < previousPos - HandMotorConstants.DEADZONE_OFFSET) {
+        if(claw.getClawEncoder() > previousPos - DEADZONE_OFFSET && claw.getClawEncoder() < previousPos + DEADZONE_OFFSET) {
             // if 3 seconds haved passed the method will return true ending the command
-            return time.hasElapsed(holdTime);
+            return time.hasElapsed(HOLD_TIME);
         } else {
             // reset time so command ends when 3 seconds have passed since the motor position hasnt changed
             time.reset();

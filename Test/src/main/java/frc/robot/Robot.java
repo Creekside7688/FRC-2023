@@ -24,6 +24,7 @@ public class Robot extends TimedRobot {
         // and put our
         // autonomous chooser on the dashboard.
         robotContainer = new RobotContainer();
+        System.out.println("Created RobotContrainer: " + robotContainer);
     }
 
     /**

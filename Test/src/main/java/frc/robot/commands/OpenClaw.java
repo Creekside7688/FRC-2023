@@ -5,16 +5,15 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.RobotContainer;
-import static frc.robot.Constants.OperatorConstants.*;
-import frc.robot.subsystems.DriveTrain;
+import frc.robot.Constants.HandConstants;
+import frc.robot.subsystems.Claw;
 
-public class DriveJoystick extends CommandBase {
-    private final DriveTrain driveTrain;
+public class OpenClaw extends CommandBase {
+    private final Claw claw;
 
-    public DriveJoystick(DriveTrain d) {
-        driveTrain = d;
-        addRequirements(driveTrain);
+    public OpenClaw(Claw claw) {
+        this.claw = claw;
+        addRequirements(claw);
     }
 
     // Called when the command is initially scheduled.
@@ -25,19 +24,20 @@ public class DriveJoystick extends CommandBase {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        driveTrain.arcadeDrive(RobotContainer.driverController.getRawAxis(LEFT_Y_AXIS), RobotContainer.driverController.getRawAxis(RIGHT_X_AXIS));
+        claw.runClaw(HandConstants.OPEN_SPEED);
     }
 
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
-        driveTrain.resetEncoders();
-        driveTrain.Stop();
+        claw.runClaw(0);
+        claw.resetEncoder();
     }
 
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-        return false;
+        // return false;
+        return !claw.getLimitSwitch();
     }
 }

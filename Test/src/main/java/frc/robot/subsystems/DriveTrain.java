@@ -4,6 +4,19 @@
 
 package frc.robot.subsystems;
 
+import static frc.robot.Constants.DriveTrainConstants.BLB_MOTOR;
+import static frc.robot.Constants.DriveTrainConstants.BLF_MOTOR;
+import static frc.robot.Constants.DriveTrainConstants.BRB_MOTOR;
+import static frc.robot.Constants.DriveTrainConstants.BRF_MOTOR;
+import static frc.robot.Constants.DriveTrainConstants.DISTANCE_PER_PULSE;
+import static frc.robot.Constants.DriveTrainConstants.LEFT_ENCODER;
+import static frc.robot.Constants.DriveTrainConstants.LIMIT_SPEED;
+import static frc.robot.Constants.DriveTrainConstants.RIGHT_ENCODER;
+import static frc.robot.Constants.DriveTrainConstants.TLB_MOTOR;
+import static frc.robot.Constants.DriveTrainConstants.TLF_MOTOR;
+import static frc.robot.Constants.DriveTrainConstants.TRB_MOTOR;
+import static frc.robot.Constants.DriveTrainConstants.TRF_MOTOR;
+
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
@@ -19,15 +32,15 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import static frc.robot.Constants.DriveTrainConstants.*;
 
 public class DriveTrain extends SubsystemBase {
-    /** Creates a new driveTrain. */
+
     // Left motors
     private final WPI_TalonSRX TLFmotor;
     private final WPI_VictorSPX TLBmotor;
     private final WPI_VictorSPX BLFmotor;
     private final WPI_VictorSPX BLBmotor;
+
     // Right motors
     private final WPI_TalonSRX TRFmotor;
     private final WPI_VictorSPX TRBmotor;
@@ -79,8 +92,8 @@ public class DriveTrain extends SubsystemBase {
         lEncoder = new Encoder(LEFT_ENCODER[0], LEFT_ENCODER[1], true);
         rEncoder = new Encoder(RIGHT_ENCODER[0], RIGHT_ENCODER[1], false);
 
-        lEncoder.setDistancePerPulse(DISTANCE_PER_PULS);
-        rEncoder.setDistancePerPulse(DISTANCE_PER_PULS);
+        lEncoder.setDistancePerPulse(DISTANCE_PER_PULSE);
+        rEncoder.setDistancePerPulse(DISTANCE_PER_PULSE);
 
         gyro = new AHRS(Port.kUSB1);
 

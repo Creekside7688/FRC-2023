@@ -12,7 +12,6 @@ import frc.robot.Constants.ArmConstants;
 import frc.robot.subsystems.Arm;
 
 public class TestArm extends CommandBase {
-    /** Creates a new TestArm. */
     private final Arm arm;
     private PIDController pidController;
     private double encoderData;
@@ -22,7 +21,6 @@ public class TestArm extends CommandBase {
     public TestArm(Arm arm) {
         this.arm = arm;
         addRequirements(arm);
-        // Use addRequirements() here to declare subsystem dependencies.
     }
 
     // Called when the command is initially scheduled.
@@ -30,7 +28,7 @@ public class TestArm extends CommandBase {
     public void initialize() {
         arm.resetEncoder();
         pidController = new PIDController(ArmConstants.KP, ArmConstants.KI, ArmConstants.KD);
-        pidController.setSetpoint(ArmConstants.SETPOINT);
+        pidController.setSetpoint(90);
         pidController.setTolerance(3, 0.1);
     }
 
@@ -39,12 +37,12 @@ public class TestArm extends CommandBase {
     public void execute() {
         minPower = Math.cos(Math.toRadians(arm.getDegree())+Math.PI/6)*ArmConstants.KG;
         pidOutput = pidController.calculate(arm.getDegree());
+
         SmartDashboard.putNumber("Encoder value", encoderData);
         SmartDashboard.putNumber("minimum power", minPower);
         System.out.println(arm.getDegree());
         SmartDashboard.putNumber("pid output", MathUtil.clamp(pidOutput+minPower, 0.0, 0.3) * -1);
         arm.turn(MathUtil.clamp(pidOutput+minPower, 0.0, 0.3) * -1);
-
     }
 
     // Called once the command ends or is interrupted.

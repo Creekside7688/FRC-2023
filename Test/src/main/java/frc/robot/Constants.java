@@ -4,25 +4,9 @@
 
 package frc.robot;
 
-import java.lang.Math;
-
 public final class Constants {
-    public static class OperatorConstants {
-        // for Controller
-        public static final int DRIVER_CONTROLLER_PORT = 0;
+    public static class ControlConstants {
         public static final int JOYSTICK_PORT = 0;
-        public static final int LB_BUTTON = 5;
-        public static final int RB_BUTTON = 6;
-        public static final int L_TRIGGER = 2;
-        public static final int R_TRIGGER = 3;
-        public static final int RIGHT_X_AXIS = 4;
-        public static final int RIGHT_Y_AXIS = 5;
-        public static final int LEFT_X_AXIS = 0;
-        public static final int LEFT_Y_AXIS = 1;
-        public static final int X_BUTTON = 3;
-        public static final int Y_BUTTON = 4;
-        public static final int A_BUTTON = 1;
-        public static final int B_BUTTON = 2;
     }
 
     public static class DriveTrainConstants {
@@ -48,24 +32,25 @@ public final class Constants {
         public static final int[] RIGHT_ENCODER = new int[] { 2, 3 };
 
         public static final double WHEEL_PERIMETER_CM = 15.24 * Math.PI;
-        public static final double DISTANCE_PER_PULS = WHEEL_PERIMETER_CM / 2048;
+        public static final double DISTANCE_PER_PULSE = WHEEL_PERIMETER_CM / 2048.0;
 
         public static final double LIMIT_SPEED = 1;
     }
 
-    public static class HandMotorConstants {
-        public static final int HAND_PORT = 2;
-        public static final int WRIST_PORT = 1;
-
-        public static final double H_OPENSPEED = -0.1;
-        public static final double H_CLOSE_CUBE_SPEED = 0.1;
-        public static final double H_CLOSE_CONE_SPEED = 0.3;
-        public static final double H_CLOSE_CONE_ENDSPEED = 0.1;
-        public static final double H_CLOSE_CUBE_ENDSPEED = 0.05;
-        public static final double HOLD_TIME_CONE = 1;
-        public static final double HOLD_TIME_CUBE = 1;
-        public static final double H_DELAY_CHECK = 0.05;
+    public static class HandConstants {
+        public static final int HAND_PORT = 3;
+        public static final double OPEN_SPEED = -0.3;
+        public static final double CLOSE_SPEED = 1;
+        public static final double HOLD_SPEED = 0.1;
+        public static final double HOLD_TIME = 1.5;
+        public static final double DELAY_CHECK = 0.05;
         public static final double DEADZONE_OFFSET = 0.0005;
+    }
+
+    public static class WristConstants {
+        public static final int WRIST_PORT = 1;
+        public static final double GEARBOX_REDUCTION = 4;
+        public static final double DEGREES_PER_ROTATION = 1 / GEARBOX_REDUCTION * 360;
     }
 
     public static class LimeLightConstants {

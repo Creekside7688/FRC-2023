@@ -9,14 +9,16 @@
 
 package frc.robot.commands.balancing;
 
+import static frc.robot.Constants.PIDConstants.kD;
+import static frc.robot.Constants.PIDConstants.kI;
+import static frc.robot.Constants.PIDConstants.kP;
+
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.DriveTrain;
-
-import static frc.robot.Constants.PIDConstants.*;
 
 public class Search extends CommandBase {
     private final DriveTrain driveTrain;
@@ -81,7 +83,6 @@ public class Search extends CommandBase {
         lOutput = MathUtil.clamp(-lOutput, -0.4, 0.4);
         rOutput = MathUtil.clamp(-rOutput, -0.4, 0.4);
         driveTrain.tankDrive(lOutput, rOutput);
-
 
         SmartDashboard.putNumber("Left Distance", lEncoder.getDistance());
         SmartDashboard.putNumber("Right Distance", rEncoder.getDistance());
