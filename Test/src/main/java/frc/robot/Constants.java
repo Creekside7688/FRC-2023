@@ -34,7 +34,7 @@ public final class Constants {
         public static final int[] RIGHT_ENCODER = new int[] { 2, 3 };
 
         public static final double WHEEL_PERIMETER_CM = 15.24 * Math.PI;
-        public static final double DISTANCE_PER_PULS = WHEEL_PERIMETER_CM / 2048;
+        public static final double DISTANCE_PER_PULSE = WHEEL_PERIMETER_CM / 2048.0;
 
         public static final double LIMIT_SPEED = 1;
     }
@@ -66,7 +66,8 @@ public final class Constants {
         public static final double KP = 0.15;
         public static final double KI = 0.1;
         public static final double KD = 0.45;
-        public static final double DEGREE_PER_PULSE = 360 / 2048;
+        public static final double DEGREE_PER_PULSE = 360.0 / 2048.0;
+        public static final double ARM_OFFSET = 30;
     }
 
     public static class PIDConstants {

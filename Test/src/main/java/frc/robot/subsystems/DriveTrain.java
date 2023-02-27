@@ -80,8 +80,8 @@ public class DriveTrain extends SubsystemBase {
         lEncoder = new Encoder(LEFT_ENCODER[0], LEFT_ENCODER[1], true);
         rEncoder = new Encoder(RIGHT_ENCODER[0], RIGHT_ENCODER[1], false);
 
-        lEncoder.setDistancePerPulse(DISTANCE_PER_PULS);
-        rEncoder.setDistancePerPulse(DISTANCE_PER_PULS);
+        lEncoder.setDistancePerPulse(DISTANCE_PER_PULSE);
+        rEncoder.setDistancePerPulse(DISTANCE_PER_PULSE);
 
         gyro = new AHRS(Port.kUSB1);
 

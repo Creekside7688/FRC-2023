@@ -4,34 +4,41 @@
 
 package frc.robot.subsystems;
 
-import edu.wpi.first.wpilibj.DutyCycleEncoder;
-import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import static frc.robot.Constants.ArmConstants.ARM_OFFSET;
+import static frc.robot.Constants.ArmConstants.DEGREE_PER_PULSE;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
+
+import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Arm extends SubsystemBase {
     private final WPI_VictorSPX armMotorA;
     private final WPI_VictorSPX armMotorB;
 
+    public double setPoint;
+
     private final MotorControllerGroup motors;
 
-    private final DutyCycleEncoder encoder;
+    private final Encoder encoder;
 
     public Arm() {
         armMotorA = new WPI_VictorSPX(9);
         armMotorB = new WPI_VictorSPX(10);
-
         armMotorA.setNeutralMode(NeutralMode.Brake);
         armMotorB.setNeutralMode(NeutralMode.Brake);
 
         motors = new MotorControllerGroup(armMotorA, armMotorB);
+        motors.setInverted(false);
 
-        encoder = new DutyCycleEncoder(5);
+        encoder = new Encoder(5, 6, false);
+        encoder.setDistancePerPulse(DEGREE_PER_PULSE);
+    }
+
+    public void resetEncoder() {
         encoder.reset();
-        encoder.setDutyCycleRange(1.0 / 1024.0, 1023.0 / 1024.0);
-        encoder.setDistancePerRotation(360);
     }
 
     public void stop() {
@@ -42,30 +49,8 @@ public class Arm extends SubsystemBase {
         motors.set(speed);
     }
 
-    /**
-     * Gets the rotation of the arm in degrees since the last reset. Use this to get the relative rotation.
-     * 
-     * @return The relative rotation of the arm in degrees since the last reset.
-     */
-    public double getEncoderRelativeDegrees() {
-        return encoder.getDistance();
-    }
-
-    /**
-     * Gets the rotation of the arm in degrees.
-     * 
-     * @return The rotation of the arm in degrees.
-     */
-    public double getEncoderDegrees() {
-        return encoder.getAbsolutePosition() * encoder.getDistancePerRotation();
-    }
-
-    public double getEncoderOffset() {
-        return encoder.getPositionOffset() * encoder.getDistancePerRotation();
-    }
-
-    public void resetEncoder() {
-        encoder.reset();
+    public double getEncoderAbsoluteDegrees() {
+        return encoder.getDistance() + ARM_OFFSET;
     }
 
     @Override
