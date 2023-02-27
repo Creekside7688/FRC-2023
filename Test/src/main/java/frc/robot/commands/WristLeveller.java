@@ -4,6 +4,8 @@
 
 package frc.robot.commands;
 
+import static frc.robot.Constants.WristConstants.DEGREES_PER_ROTATION;
+
 import com.revrobotics.RelativeEncoder;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
@@ -21,6 +23,7 @@ public class WristLeveller extends CommandBase {
         this.arm = arm;
 
         wristEncoder = wrist.getEncoder();
+        wristEncoder.setPositionConversionFactor(DEGREES_PER_ROTATION);
 
         addRequirements(wrist);
     }

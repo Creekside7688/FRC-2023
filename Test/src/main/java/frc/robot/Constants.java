@@ -4,8 +4,6 @@
 
 package frc.robot;
 
-import java.lang.Math;
-
 public final class Constants {
     public static class ControlConstants {
         public static final int JOYSTICK_PORT = 0;
@@ -41,19 +39,18 @@ public final class Constants {
 
     public static class HandConstants {
         public static final int HAND_PORT = 3;
-        public static final double H_OPENSPEED = -0.3;
-        public static final double H_CLOSE_CUBE_SPEED = 0.1;
-        public static final double H_CLOSE_CONE_SPEED = 1;
-        public static final double H_CLOSE_CONE_ENDSPEED = 0.1;
-        public static final double H_CLOSE_CUBE_ENDSPEED = 0.05;
-        public static final double HOLD_TIME_CONE = 3;
-        public static final double HOLD_TIME_CUBE = 1;
-        public static final double H_DELAY_CHECK = 0.05;
+        public static final double OPEN_SPEED = -0.3;
+        public static final double CLOSE_SPEED = 1;
+        public static final double HOLD_SPEED = 0.1;
+        public static final double HOLD_TIME = 1.5;
+        public static final double DELAY_CHECK = 0.05;
         public static final double DEADZONE_OFFSET = 0.0005;
     }
 
     public static class WristConstants {
         public static final int WRIST_PORT = 1;
+        public static final double GEARBOX_REDUCTION = 4;
+        public static final double DEGREES_PER_ROTATION = 1 / GEARBOX_REDUCTION * 360;
     }
 
     public static class LimeLightConstants {
@@ -66,7 +63,7 @@ public final class Constants {
         public static final double KP = 0.15;
         public static final double KI = 0.1;
         public static final double KD = 0.45;
-        public static final double DEGREE_PER_PULSE = 360.0 / 2048.0;
+        public static final double DEGREES_PER_PULSE = 360.0 / 2048.0;
         public static final double ARM_OFFSET = 30;
     }
 

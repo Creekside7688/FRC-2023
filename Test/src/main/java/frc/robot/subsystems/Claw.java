@@ -4,6 +4,8 @@
 
 package frc.robot.subsystems;
 
+import static frc.robot.Constants.HandConstants.HAND_PORT;
+
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
@@ -12,7 +14,6 @@ import com.revrobotics.SparkMaxRelativeEncoder.Type;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import static frc.robot.Constants.HandConstants.*;
 
 public class Claw extends SubsystemBase {
     private final CANSparkMax clawMotor = new CANSparkMax(HAND_PORT, MotorType.kBrushless);
@@ -54,5 +55,6 @@ public class Claw extends SubsystemBase {
     }
 
     @Override
-    public void periodic() { }
+    public void periodic() {
+    }
 }

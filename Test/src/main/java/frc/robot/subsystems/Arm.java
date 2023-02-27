@@ -5,7 +5,7 @@
 package frc.robot.subsystems;
 
 import static frc.robot.Constants.ArmConstants.ARM_OFFSET;
-import static frc.robot.Constants.ArmConstants.DEGREE_PER_PULSE;
+import static frc.robot.Constants.ArmConstants.DEGREES_PER_PULSE;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
@@ -34,7 +34,7 @@ public class Arm extends SubsystemBase {
         motors.setInverted(false);
 
         encoder = new Encoder(5, 6, false);
-        encoder.setDistancePerPulse(DEGREE_PER_PULSE);
+        encoder.setDistancePerPulse(DEGREES_PER_PULSE);
     }
 
     public void resetEncoder() {

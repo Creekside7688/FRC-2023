@@ -4,26 +4,24 @@
 
 package frc.robot;
 
-import frc.robot.Constants.ControlConstants;
-import frc.robot.commands.CloseHand;
-import frc.robot.commands.Drive;
-import frc.robot.commands.AprilTagAlign;
-import frc.robot.commands.OpenHand;
-import frc.robot.commands.TestArm;
-import frc.robot.commands.WristLeveller;
-import frc.robot.subsystems.Arm;
-import frc.robot.subsystems.DriveTrain;
-import frc.robot.subsystems.Wrist;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.commands.balancing.Balancer;
-import frc.robot.commands.balancing.Search;
-import frc.robot.subsystems.Claw;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
-
-import static frc.robot.Constants.HandConstants.*;
+import frc.robot.Constants.ControlConstants;
+import frc.robot.commands.AprilTagAlign;
+import frc.robot.commands.CloseClaw;
+import frc.robot.commands.Drive;
+import frc.robot.commands.OpenClaw;
+import frc.robot.commands.TestArm;
+import frc.robot.commands.WristLeveller;
+import frc.robot.commands.balancing.Balancer;
+import frc.robot.commands.balancing.Search;
+import frc.robot.subsystems.Arm;
+import frc.robot.subsystems.Claw;
+import frc.robot.subsystems.DriveTrain;
+import frc.robot.subsystems.Wrist;
 
 public class RobotContainer {
     public static Joystick driverController = new Joystick(ControlConstants.JOYSTICK_PORT);
@@ -47,8 +45,8 @@ public class RobotContainer {
     private final Claw hand = new Claw();
     private final Wrist wrist = new Wrist();
 
-    private final CloseHand closeHand = new CloseHand(hand, H_CLOSE_CONE_SPEED, H_CLOSE_CONE_ENDSPEED, HOLD_TIME_CONE);
-    private final OpenHand openHand = new OpenHand(hand);
+    private final CloseClaw closeHand = new CloseClaw(hand);
+    private final OpenClaw openHand = new OpenClaw(hand);
 
     private final WristLeveller levelWrist = new WristLeveller(wrist, arm);
 

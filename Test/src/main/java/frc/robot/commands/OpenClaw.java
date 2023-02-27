@@ -8,10 +8,10 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants.HandConstants;
 import frc.robot.subsystems.Claw;
 
-public class OpenHand extends CommandBase {
+public class OpenClaw extends CommandBase {
     private final Claw claw;
 
-    public OpenHand(Claw claw) {
+    public OpenClaw(Claw claw) {
         this.claw = claw;
         addRequirements(claw);
     }
@@ -24,7 +24,7 @@ public class OpenHand extends CommandBase {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        claw.runClaw(HandConstants.H_OPENSPEED);
+        claw.runClaw(HandConstants.OPEN_SPEED);
     }
 
     // Called once the command ends or is interrupted.
@@ -37,7 +37,7 @@ public class OpenHand extends CommandBase {
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-        //return false;
+        // return false;
         return !claw.getLimitSwitch();
     }
 }
