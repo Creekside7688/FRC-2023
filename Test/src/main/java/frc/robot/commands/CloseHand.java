@@ -12,20 +12,20 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class CloseHand extends CommandBase {
-    private final Claw hand;
+    private final Claw claw;
     private double previousPos = 0;
     private final Timer time = new Timer();
     private final double closeSpeed;
     private final double endSpeed;
     private final double holdTime;
 
-    public CloseHand(Claw h, double cspeed, double espeed, double htime) {
-        hand = h;
-        closeSpeed = cspeed;
-        endSpeed = espeed;
-        holdTime = htime;
+    public CloseHand(Claw claw, double cSpeed, double eSpeed, double hTime) {
+        this.claw = claw;
+        closeSpeed = cSpeed;
+        endSpeed = eSpeed;
+        holdTime = hTime;
 
-        addRequirements(hand);
+        addRequirements(claw);
     }
 
     // Called when the command is initially scheduled.
@@ -33,15 +33,13 @@ public class CloseHand extends CommandBase {
     public void initialize() {
         time.reset();
         time.start();
-
     }
 
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        hand.runClaw(closeSpeed);
-        previousPos = hand.getClawEncoder();
-
+        claw.runClaw(closeSpeed);
+        previousPos = claw.getClawEncoder();
     }
 
     // Called once the command ends or is interrupted.
@@ -49,7 +47,7 @@ public class CloseHand extends CommandBase {
     public void end(boolean interrupted) {
         // let the motor have little power so it will keep holding even when command ends
         SmartDashboard.putString("end?", "yes");
-        hand.runClaw(endSpeed);
+        claw.runClaw(endSpeed);
     }
 
     // Returns true when the command should end.
@@ -59,7 +57,7 @@ public class CloseHand extends CommandBase {
         Timer.delay(HandConstants.H_DELAY_CHECK);
 
         // if the position of the motor hasnt changed, and 3 seconds have passed, end command
-        if(hand.getClawEncoder() > previousPos - HandConstants.DEADZONE_OFFSET && hand.getClawEncoder() < previousPos + HandConstants.DEADZONE_OFFSET) {
+        if(claw.getClawEncoder() > previousPos - HandConstants.DEADZONE_OFFSET && claw.getClawEncoder() < previousPos + HandConstants.DEADZONE_OFFSET) {
             // if 3 seconds haved passed the method will return true ending the command
             return time.hasElapsed(holdTime);
         } else {

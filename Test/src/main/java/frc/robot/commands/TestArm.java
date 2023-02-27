@@ -6,6 +6,7 @@ package frc.robot.commands;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.wpilibj.PneumaticsControlModule;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants.ArmConstants;
@@ -25,19 +26,21 @@ public class TestArm extends CommandBase {
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-        arm.resetEncoder();
         pidController = new PIDController(ArmConstants.KP, ArmConstants.KI, ArmConstants.KD);
-        pidController.setSetpoint(ArmConstants.SETPOINT);
+        pidController.setSetpoint(90 - arm.getEncoderOffset());
         pidController.setTolerance(3, 0.1);
     }
 
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
+        double angle = arm.getEncoderRelativeDegrees();
+        double output = pidController.calculate(angle);
+        
+        arm.turn(output);
+
         SmartDashboard.putNumber("Encoder value", encoderData);
         SmartDashboard.putNumber("pid output", MathUtil.clamp(pidOutput, 0, 0.25) * -1);
-
-        arm.turn(-0.25);
     }
 
     // Called once the command ends or is interrupted.

@@ -9,11 +9,11 @@ import frc.robot.Constants.HandConstants;
 import frc.robot.subsystems.Claw;
 
 public class OpenHand extends CommandBase {
-    private final Claw hd;
+    private final Claw claw;
 
-    public OpenHand(Claw h) {
-        hd = h;
-        addRequirements(hd);
+    public OpenHand(Claw claw) {
+        this.claw = claw;
+        addRequirements(claw);
     }
 
     // Called when the command is initially scheduled.
@@ -24,20 +24,20 @@ public class OpenHand extends CommandBase {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        hd.runClaw(HandConstants.H_OPENSPEED);
+        claw.runClaw(HandConstants.H_OPENSPEED);
     }
 
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
-        hd.runClaw(0);
-        hd.resetEncoder();
+        claw.runClaw(0);
+        claw.resetEncoder();
     }
 
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
         //return false;
-        return !hd.getLimitSwitch();
+        return !claw.getLimitSwitch();
     }
 }

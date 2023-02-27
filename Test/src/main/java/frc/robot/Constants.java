@@ -63,7 +63,6 @@ public final class Constants {
     }
 
     public static class ArmConstants {
-        public static final double SETPOINT = 512;
         public static final double KP = 0.15;
         public static final double KI = 0.1;
         public static final double KD = 0.45;
