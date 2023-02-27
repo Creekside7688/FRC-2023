@@ -76,8 +76,8 @@ public final class Constants {
 
     public static class ArmConstants {
         public static final double SETPOINT = 60;
-        public static final double KP = 0.15;
-        public static final double KI = 0;
+        public static final double KP = 0.03;
+        public static final double KI = 0.01;
         public static final double KD = 0;
         public static final double KG = 0.15;
         public static final double RADIAN_PER_PULSE = Math.PI*2/2048;

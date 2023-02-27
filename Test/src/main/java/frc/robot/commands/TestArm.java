@@ -38,10 +38,13 @@ public class TestArm extends CommandBase {
     @Override
     public void execute() {
         minPower = Math.cos(Math.toRadians(arm.getDegree())+Math.PI/6)*ArmConstants.KG;
+        pidOutput = pidController.calculate(arm.getDegree());
         SmartDashboard.putNumber("Encoder value", encoderData);
         SmartDashboard.putNumber("minimum power", minPower);
+        System.out.println(arm.getDegree());
         SmartDashboard.putNumber("pid output", MathUtil.clamp(pidOutput+minPower, 0.0, 0.3) * -1);
         arm.turn(MathUtil.clamp(pidOutput+minPower, 0.0, 0.3) * -1);
+
     }
 
     // Called once the command ends or is interrupted.
