@@ -16,6 +16,7 @@ public class TestArm extends CommandBase {
     private PIDController pidController;
     private double encoderData;
     private double pidOutput;
+    private double minPower;
 
     public TestArm(Arm arm) {
         this.arm = arm;
@@ -34,12 +35,14 @@ public class TestArm extends CommandBase {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        double armAngle = arm.getEncoderAbsoluteDegrees();
-        double output = pidController.calculate(armAngle);
-        SmartDashboard.putNumber("Encoder value", encoderData);
-        SmartDashboard.putNumber("pid output", MathUtil.clamp(pidOutput, 0, 0.25) * -1);
+        minPower = Math.cos(Math.toRadians(arm.getDegree())+Math.PI/6)*ArmConstants.KG;
+        pidOutput = pidController.calculate(arm.getDegree());
 
-        arm.turn(-0.25);
+        SmartDashboard.putNumber("Encoder value", encoderData);
+        SmartDashboard.putNumber("minimum power", minPower);
+        System.out.println(arm.getDegree());
+        SmartDashboard.putNumber("pid output", MathUtil.clamp(pidOutput+minPower, 0.0, 0.3) * -1);
+        arm.turn(MathUtil.clamp(pidOutput+minPower, 0.0, 0.3) * -1);
     }
 
     // Called once the command ends or is interrupted.
