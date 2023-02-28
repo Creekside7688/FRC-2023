@@ -65,8 +65,8 @@ public final class Constants {
     }
 
     public static class ArmConstants {
-        public static final double KP = 0.03;
-        public static final double KI = 0.01;
+        public static final double KP = 0.02;
+        public static final double KI = 0.0;
         public static final double KD = 0;
         public static final double KG = 0.02;
 
@@ -74,7 +74,7 @@ public final class Constants {
         public static final double DEGREES_PER_PULSE = 360.0 / 2048.0;
         public static final double ARM_OFFSET_DEGREES = 30;
 
-        public static final double HIGH_NODE_DEGREES = 180;
+        public static final double HIGH_NODE_DEGREES = -60;
         public static final double MID_NODE_DEGREES = 180;
         public static final double GROUND_NODE_DEGREES = 180;
         public static final double LOADING_ZONE_DEGREES = 180;
