@@ -65,8 +65,9 @@ public final class Constants {
         public static final double KI = 0.01;
         public static final double KD = 0;
         public static final double KG = 0.15;
-        public static final double RADIAN_PER_PULSE = Math.PI*2/2048;
-        public static final double DEGREE_PER_PULSE = 360.0 / 2048.0;
+        public static final double RADIAN_PER_PULSE = Math.PI * 2 / 2048;
+        public static final double DEGREES_PER_PULSE = 360.0 / 2048.0;
+        public static final double ARM_OFFSET_DEGREES = Math.toDegrees(Math.PI / 6);
     }
 
     public static class PIDConstants {

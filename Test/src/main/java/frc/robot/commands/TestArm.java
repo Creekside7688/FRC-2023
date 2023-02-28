@@ -39,9 +39,9 @@ public class TestArm extends CommandBase {
 
         SmartDashboard.putNumber("Encoder value", arm.getEncoderAbsoluteDegrees());
         SmartDashboard.putNumber("minimum power", minPower);
-        System.out.println(arm.getEncoderAbsoluteDegrees());
-        SmartDashboard.putNumber("pid output", MathUtil.clamp(pidOutput+minPower, -0.3, 0)*-1);
-        arm.turn(MathUtil.clamp(pidOutput+minPower, -0.3, 0)*-1);
+        System.out.println(arm.getDegree());
+        SmartDashboard.putNumber("pid output", MathUtil.clamp(pidOutput +minPower, 0.0, 0.3) * -1);
+        arm.turn(MathUtil.clamp(pidOutput+minPower, 0.0, 0.3) * -1);
     }
 
     // Called once the command ends or is interrupted.

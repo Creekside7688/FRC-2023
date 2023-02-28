@@ -5,6 +5,7 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -42,13 +43,22 @@ public class RobotContainer {
     private final Trigger x_Button = new JoystickButton(driverController, XboxController.Button.kX.value);
     private final Trigger y_Button = new JoystickButton(driverController, XboxController.Button.kY.value);
 
+<<<<<<< HEAD
     public static final Arm arm = new Arm();
+=======
+    private final Trigger dpadUp = new Trigger(RobotContainer::getDpadUp);
+    private final Trigger dpadDown = new Trigger(RobotContainer::getDpadDown);
+    private final Trigger dpadLeft = new Trigger(RobotContainer::getDpadLeft);
+    private final Trigger dpadRight = new Trigger(RobotContainer::getDpadRight);
+
+    private final Arm arm = new Arm();
+>>>>>>> a3fd07fbbf162eb962cce168bdb16c185dada31d
     private final DriveTrain driveTrain = new DriveTrain();
     private final Claw hand = new Claw();
     private final Wrist wrist = new Wrist();
 
-    private final CloseClaw closeHand = new CloseClaw(hand);
-    private final OpenClaw openHand = new OpenClaw(hand);
+    private final CloseClaw closeClaw = new CloseClaw(hand);
+    private final OpenClaw openClaw = new OpenClaw(hand);
 
     private final WristLeveller levelWrist = new WristLeveller(wrist, arm);
 
@@ -67,17 +77,24 @@ public class RobotContainer {
         configureBindings();
 
         driveTrain.setDefaultCommand(drive);
-        //wrist.setDefaultCommand(testArm);
+        // wrist.setDefaultCommand(levelWrist);
     }
 
     private void configureBindings() {
-        // x_Button.onTrue(balancingSearcher.andThen(balancer.unless(() -> !balancingSearcher.runBalance)));
-        x_Button.whileTrue(closearm);
-        y_Button.onTrue(closeHand);
-        b_Button.onTrue(openHand);
-        a_Button.whileTrue(openarm);
-        rb_Button.whileTrue(drive);
-        lb_Button.whileTrue(testArm);
+        // COMPETITION CONTROLS DO NOT CHANGE
+
+        // rb_Button.onTrue(new MoveArm(HIGH_NODE_DEGREES));
+        // dpadRight.onTrue(new MoveArm(MID_NODE_DEGREES)); // Coresponds to M2 on controller
+        // rt_Trigger.onTrue(new MoveArm(HIGH_NODE_DEGREES));
+        // dpadUp.onTrue(new MoveArm(LOADING_ZONE));
+
+        b_Button.onTrue(openClaw);
+        a_Button.onTrue(closeClaw);
+        ls_Button.onTrue(balancingSearcher.andThen(balancer.unless(() -> !balancingSearcher.runBalance)));
+        rs_Button.onTrue(aprilTagAlign);
+
+        // USE X AND Y BUTTONS TO DEBUG
+        x_Button.onTrue(testArm);
     }
 
     /**
