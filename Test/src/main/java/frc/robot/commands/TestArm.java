@@ -14,7 +14,6 @@ import frc.robot.subsystems.Arm;
 public class TestArm extends CommandBase {
     private final Arm arm;
     private PIDController pidController;
-    private double encoderData;
     private double pidOutput;
     private double minPower;
 

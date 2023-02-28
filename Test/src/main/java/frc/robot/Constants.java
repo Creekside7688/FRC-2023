@@ -61,13 +61,22 @@ public final class Constants {
 
     public static class ArmConstants {
         public static final double SETPOINT = 60;
+
         public static final double KP = 0.03;
         public static final double KI = 0.01;
         public static final double KD = 0;
         public static final double KG = 0.15;
+
         public static final double RADIAN_PER_PULSE = Math.PI * 2 / 2048;
         public static final double DEGREES_PER_PULSE = 360.0 / 2048.0;
-        public static final double ARM_OFFSET_DEGREES = Math.toDegrees(Math.PI / 6);
+        public static final double ARM_OFFSET_DEGREES = 30;
+
+        public static final double HIGH_NODE_DEGREES = 180;
+        public static final double MID_NODE_DEGREES = 180;
+        public static final double GROUND_NODE_DEGREES = 180;
+        public static final double LOADING_ZONE_DEGREES = 180;
+
+        public static final double MANUAL_DEGREES_MOVEMENT_PER_SECOND = 1;
     }
 
     public static class PIDConstants {
