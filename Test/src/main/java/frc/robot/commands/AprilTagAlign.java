@@ -20,15 +20,12 @@ public class AprilTagAlign extends CommandBase {
     public AprilTagAlign(DriveTrain dt) {
         driveTrain = dt;
         addRequirements(driveTrain);
-        // Use addRequirements() here to declare subsystem dependencies.
     }
 
-    // Called when the command is initially scheduled.
     @Override
     public void initialize() {
     }
 
-    // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
         rotateOutput = driveTrain.getXLimelight() * rotateMultiplier;
@@ -37,13 +34,11 @@ public class AprilTagAlign extends CommandBase {
         driveTrain.arcadeDrive(MathUtil.clamp(speedOutput, 0, driveSpeed) * -1, MathUtil.clamp(rotateOutput, rotateSpeed * -1, rotateSpeed));
     }
 
-    // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
         driveTrain.arcadeDrive(0, 0);
     }
 
-    // Returns true when the command should end.
     @Override
     public boolean isFinished() {
         // return driveTrain.getTargetArea() > 61 && driveTrain.getTargetArea() < 59;

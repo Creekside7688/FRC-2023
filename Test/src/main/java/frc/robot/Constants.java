@@ -51,6 +51,11 @@ public final class Constants {
         public static final int WRIST_PORT = 1;
         public static final double GEARBOX_REDUCTION = 4;
         public static final double DEGREES_PER_ROTATION = 360.0/100;
+
+        public static final double KP = 0.05;
+        public static final double KI = 0;
+        public static final double KD = 0;
+        public static final double KG = 0;
     } 
 
     public static class LimeLightConstants {
@@ -60,8 +65,6 @@ public final class Constants {
     }
 
     public static class ArmConstants {
-        public static final double SETPOINT = 60;
-
         public static final double KP = 0.03;
         public static final double KI = 0.01;
         public static final double KD = 0;

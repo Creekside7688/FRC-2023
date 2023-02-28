@@ -4,11 +4,6 @@
 
 package frc.robot.commands;
 
-import static frc.robot.Constants.WristConstants.DEGREES_PER_ROTATION;
-
-import com.revrobotics.RelativeEncoder;
-
-
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -37,8 +32,8 @@ public class WristLeveller extends CommandBase {
 
     @Override
     public void execute() {
-        //double armAngle = 360 - (arm.getEncoderAbsoluteDegrees());
-        //double targetAngle = 180 - (90 - armAngle);
+        // double armAngle = 360 - (arm.getEncoderAbsoluteDegrees());
+        // double targetAngle = 180 - (90 - armAngle);
         double output = pidController.calculate(wrist.getDegrees());
         wrist.turn(MathUtil.clamp(output, -0.3, 0.3));
         SmartDashboard.putNumber("wrist encoder value: ", wrist.getDegrees());

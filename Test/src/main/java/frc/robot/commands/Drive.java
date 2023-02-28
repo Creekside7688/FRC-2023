@@ -17,25 +17,21 @@ public class Drive extends CommandBase {
         addRequirements(driveTrain);
     }
 
-    // Called when the command is initially scheduled.
     @Override
     public void initialize() {
     }
 
-    // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
         driveTrain.arcadeDrive(RobotContainer.driverController.getRawAxis(XboxController.Axis.kLeftY.value), RobotContainer.driverController.getRawAxis(XboxController.Axis.kRightX.value)*-1);
     }
 
-    // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
         driveTrain.resetEncoders();
         driveTrain.Stop();
     }
 
-    // Returns true when the command should end.
     @Override
     public boolean isFinished() {
         return false;

@@ -8,40 +8,34 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Arm;
 
 public class CloseArm extends CommandBase {
-  /** Creates a new closeArm. */
-  private final Arm myArm;
-  private double speedMulti = 1;
-  public CloseArm(Arm arm) {
-    myArm = arm;
-    addRequirements(myArm);
+    private final Arm myArm;
+    private double speedMulti = 1;
 
-    // Use addRequirements() here to declare subsystem dependencies.
-  }
-
-  // Called when the command is initially scheduled.
-  @Override
-  public void initialize() {
-    myArm.resetEncoder();
-  }
-
-  // Called every time the scheduler runs while the command is scheduled.
-  @Override
-  public void execute() {
-    myArm.turn(0.3*speedMulti);
-  }
-
-  // Called once the command ends or is interrupted.
-  @Override
-  public void end(boolean interrupted) {
-    myArm.turn(0);
-  }
-
-  // Returns true when the command should end.
-  @Override
-  public boolean isFinished() {
-    if(myArm.getEncoderAbsoluteDegrees() < -140){
-      speedMulti = 0;
+    public CloseArm(Arm arm) {
+        myArm = arm;
+        addRequirements(myArm);
     }
-    return false;
-  }
+
+    @Override
+    public void initialize() {
+        myArm.resetEncoder();
+    }
+
+    @Override
+    public void execute() {
+        myArm.turn(0.3 * speedMulti);
+    }
+
+    @Override
+    public void end(boolean interrupted) {
+        myArm.turn(0);
+    }
+
+    @Override
+    public boolean isFinished() {
+        if(myArm.getEncoderAbsoluteDegrees() < -140) {
+            speedMulti = 0;
+        }
+        return false;
+    }
 }

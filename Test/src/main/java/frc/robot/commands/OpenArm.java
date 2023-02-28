@@ -12,50 +12,45 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants.ArmConstants;
 
 public class OpenArm extends CommandBase {
-  /** Creates a new OpenArm. */
-  private final Arm arm;
-  private final PIDController pidController;
-  private double direction = -1;
-  public OpenArm(Arm arm) {
-    // Use addRequirements() here to declare subsystem dependencies.
-    this.arm = arm;
-    
-    pidController = new PIDController(ArmConstants.KP, ArmConstants.KI, ArmConstants.KD);
-    pidController.setSetpoint(225);
-    pidController.setTolerance(2);
-    addRequirements(arm);
-  }
+    private final Arm arm;
+    private final PIDController pidController;
+    private double direction = -1;
 
-  // Called when the command is initially scheduled.
-  @Override
-  public void initialize() {
-    arm.resetEncoder();
-    
-  }
+    public OpenArm(Arm arm) {
+        this.arm = arm;
 
-  // Called every time the scheduler runs while the command is scheduled.
-  @Override
-  public void execute() {
-    double output = pidController.calculate(arm.getEncoderAbsoluteDegrees());
-    //arm.turn(0.35);
-    arm.turn(MathUtil.clamp(output, 0, 0.28)*direction);
-    SmartDashboard.putNumber("degrees", arm.getEncoderAbsoluteDegrees());
-  }
+        pidController = new PIDController(ArmConstants.KP, ArmConstants.KI, ArmConstants.KD);
+        pidController.setSetpoint(225);
+        pidController.setTolerance(2);
 
-  // Called once the command ends or is interrupted.
-  @Override
-  public void end(boolean interrupted) {
-    arm.turn(.01);
-    SmartDashboard.putString("is finished?", "yes");
-  }
-
-  // Returns true when the command should end.
-  @Override
-  public boolean isFinished() {
-    if(arm.getEncoderAbsoluteDegrees() > 130){
-      direction = 0.05;
+        addRequirements(arm);
     }
 
-    return pidController.atSetpoint();
-  }
+    @Override
+    public void initialize() {
+        arm.resetEncoder();
+    }
+
+    @Override
+    public void execute() {
+        double output = pidController.calculate(arm.getEncoderAbsoluteDegrees());
+        // arm.turn(0.35);
+        arm.turn(MathUtil.clamp(output, 0, 0.28) * direction);
+        SmartDashboard.putNumber("degrees", arm.getEncoderAbsoluteDegrees());
+    }
+
+    @Override
+    public void end(boolean interrupted) {
+        arm.turn(.01);
+        SmartDashboard.putString("is finished?", "yes");
+    }
+
+    @Override
+    public boolean isFinished() {
+        if(arm.getEncoderAbsoluteDegrees() > 130) {
+            direction = 0.05;
+        }
+
+        return pidController.atSetpoint();
+    }
 }

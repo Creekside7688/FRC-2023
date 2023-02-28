@@ -25,28 +25,24 @@ public class CloseClaw extends CommandBase {
         addRequirements(claw);
     }
 
-    // Called when the command is initially scheduled.
     @Override
     public void initialize() {
         time.reset();
         time.start();
     }
 
-    // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
         claw.runClaw(CLOSE_SPEED);
         previousPos = claw.getClawEncoder();
     }
 
-    // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
         // let the motor have little power so it will keep holding even when command ends
         claw.runClaw(HOLD_SPEED);
     }
 
-    // Returns true when the command should end.
     @Override
     public boolean isFinished() {
         // delay so that it can detect a difference between current encoder value and previousPos encoder value

@@ -26,7 +26,6 @@ public class TestArm extends CommandBase {
         addRequirements(arm);
     }
 
-    // Called when the command is initially scheduled.
     @Override
     public void initialize() {
         pidController = new PIDController(ArmConstants.KP, ArmConstants.KI, ArmConstants.KD);
@@ -34,7 +33,6 @@ public class TestArm extends CommandBase {
         pidController.setTolerance(3, 0.1);
     }
 
-    // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
         minPower = -Math.cos(Math.toRadians(arm.getEncoderAbsoluteDegrees()) + Math.PI / 12) * ArmConstants.KG;
@@ -47,13 +45,11 @@ public class TestArm extends CommandBase {
         arm.turn(MathUtil.clamp(pidOutput + minPower, -0.3, 0.0)*-1);
     }
 
-    // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
        
     }
 
-    // Returns true when the command should end.
     @Override
     public boolean isFinished() {
         return false;
