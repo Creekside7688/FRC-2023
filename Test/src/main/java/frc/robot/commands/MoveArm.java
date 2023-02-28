@@ -6,6 +6,8 @@ package frc.robot.commands;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants.ArmConstants;
 import frc.robot.subsystems.Arm;
@@ -31,10 +33,10 @@ public class MoveArm extends CommandBase {
     @Override
     public void execute() {
         pidController.setSetpoint(targetAngle);
-        double minPower = -Math.cos(Math.toRadians(arm.getEncoderAbsoluteDegrees()) + Math.PI / 12) * ArmConstants.KG;
+        double minPower = -Math.cos(Math.toRadians(arm.getEncoderAbsoluteDegrees()) + Math.PI / 6) * ArmConstants.KG;
         double output = pidController.calculate(arm.getEncoderAbsoluteDegrees());
 
-        arm.turn(MathUtil.clamp(output + minPower, 0.0, 0.3) * -1);
+        arm.turn(MathUtil.clamp(output + minPower, -0.3, 0.15) * -1);
     }
 
     @Override

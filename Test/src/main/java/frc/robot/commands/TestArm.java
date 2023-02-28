@@ -6,6 +6,8 @@ package frc.robot.commands;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants.ArmConstants;
@@ -13,10 +15,12 @@ import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Wrist;
 
 public class TestArm extends CommandBase {
+    double b = -60;
     private final Arm arm;
     private final Wrist myWrist;
     private PIDController pidController;
     private PIDController wristPidController;
+    private Joystick joystick = new Joystick(0);
     private double pidOutput;
     private double minPower;
 
@@ -34,13 +38,23 @@ public class TestArm extends CommandBase {
         arm.resetEncoder();
         myWrist.resetEncoder();
         
-        pidController.setSetpoint(-60);
+        
         pidController.setTolerance(3, 0.1);
         wristPidController.setTolerance(3,0.1);
     }
 
     @Override
     public void execute() {
+        
+        System.out.println();
+        pidController.setSetpoint(b);
+        if(joystick.getRawAxis(2)==1){
+            
+            b -= 0.2;
+        } else if(joystick.getRawAxis(3)==1){
+            b+=0.2;
+        }
+        
         minPower = -Math.cos(Math.toRadians(arm.getEncoderAbsoluteDegrees()) + Math.PI / 6) * ArmConstants.KG;
         pidOutput = pidController.calculate(arm.getEncoderAbsoluteDegrees());
         wristPidController.setSetpoint(arm.getEncoder());
@@ -52,7 +66,7 @@ public class TestArm extends CommandBase {
         SmartDashboard.putNumber("minimum power", minPower);
         System.out.println(arm.getEncoder());
         SmartDashboard.putNumber("pid output", MathUtil.clamp(pidOutput + minPower, 0.0, 0.3) * -1);
-        arm.turn(MathUtil.clamp(pidOutput + minPower, -0.3, 0.0)*-1);
+        arm.turn(MathUtil.clamp(pidOutput + minPower, -0.3, 0.1)*-1);
     }
 
     @Override
