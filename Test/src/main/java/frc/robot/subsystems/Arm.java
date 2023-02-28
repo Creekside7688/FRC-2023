@@ -4,8 +4,7 @@
 
 package frc.robot.subsystems;
 
-import static frc.robot.Constants.ArmConstants.ARM_OFFSET;
-import static frc.robot.Constants.ArmConstants.DEGREES_PER_PULSE;
+import static frc.robot.Constants.ArmConstants.*;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
@@ -50,11 +49,11 @@ public class Arm extends SubsystemBase {
     }
 
     public double getEncoderAbsoluteDegrees() {
-        return encoder.getDistance() + ARM_OFFSET;
+        return encoder.getDistance() + ARM_OFFSET_DEGREES;
     }
 
     public double getDegree(){
-        return armEncoder.getDistance();
+        return encoder.getDistance();
     }
 
     @Override

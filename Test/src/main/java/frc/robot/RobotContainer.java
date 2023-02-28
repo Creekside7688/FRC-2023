@@ -62,14 +62,16 @@ public class RobotContainer {
         configureBindings();
 
         driveTrain.setDefaultCommand(drive);
-        wrist.setDefaultCommand(levelWrist);
+        // wrist.setDefaultCommand(levelWrist);
     }
 
     private void configureBindings() {
-        x_Button.onTrue(balancingSearcher.andThen(balancer.unless(() -> !balancingSearcher.runBalance)));
+        // x_Button.onTrue(balancingSearcher.andThen(balancer.unless(() -> !balancingSearcher.runBalance)));
         y_Button.onTrue(closeHand);
         b_Button.onTrue(openHand);
         a_Button.whileTrue(testArm);
+
+        x_Button.whileTrue(levelWrist);
     }
 
     /**

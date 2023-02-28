@@ -36,10 +36,13 @@ public class WristLeveller extends CommandBase {
     public void execute() {
         double armAngle = 360 - (arm.getEncoderAbsoluteDegrees());
         double targetAngle = 180 - (90 - armAngle);
+
+        wrist.turn(-0.25);
     }
 
     @Override
     public void end(boolean interrupted) {
+        wrist.stop();
     }
 
     @Override
