@@ -84,18 +84,18 @@ public class RobotContainer {
     private void configureBindings() {
         // COMPETITION CONTROLS DO NOT CHANGE
 
-        rb_Button.onTrue(Commands.run(() -> moveArm.setTargetAngle(ArmConstants.HIGH_NODE_DEGREES)));
-        dpadRight.onTrue(Commands.run(() -> moveArm.setTargetAngle(ArmConstants.MID_NODE_DEGREES))); // M2 On the controller
-        rt_Trigger.onTrue(Commands.run(() -> moveArm.setTargetAngle(ArmConstants.GROUND_NODE_DEGREES)));
-        dpadUp.onTrue(Commands.run(() -> moveArm.setTargetAngle(ArmConstants.LOADING_ZONE_DEGREES))); // M1 On the controller
+        //rb_Button.onTrue(Commands.run(() -> moveArm.setTargetAngle(ArmConstants.HIGH_NODE_DEGREES)));
+        //dpadRight.onTrue(Commands.run(() -> moveArm.setTargetAngle(ArmConstants.MID_NODE_DEGREES))); // M2 On the controller
+        //rt_Trigger.onTrue(Commands.run(() -> moveArm.setTargetAngle(ArmConstants.GROUND_NODE_DEGREES)));
+        //dpadUp.onTrue(Commands.run(() -> moveArm.setTargetAngle(ArmConstants.LOADING_ZONE_DEGREES))); // M1 On the controller
 
         b_Button.onTrue(openClaw);
         a_Button.onTrue(closeClaw);
-        ls_Button.onTrue(balancingSearcher.andThen(balancer.unless(() -> !balancingSearcher.runBalance)));
-        rs_Button.onTrue(aprilTagAlign);
+        ls_Button.onTrue(closeArm.andThen(balancingSearcher).andThen(balancer.unless(() -> !balancingSearcher.runBalance)));
+        //s_Button.onTrue(aprilTagAlign);
 
         //lb_Button.whileTrue(Commands.run(() -> moveArm.setTargetAngle(moveArm.getTargetAngle() - ArmConstants.MANUAL_DEGREES_MOVEMENT_PER_SECOND)));
-        lt_Trigger.whileTrue(Commands.run(() -> moveArm.setTargetAngle(moveArm.getTargetAngle() + ArmConstants.MANUAL_DEGREES_MOVEMENT_PER_SECOND)));
+        //lt_Trigger.whileTrue(Commands.run(() -> moveArm.setTargetAngle(moveArm.getTargetAngle() + ArmConstants.MANUAL_DEGREES_MOVEMENT_PER_SECOND)));
 
         // USE X AND Y BUTTONS TO TEST COMMANDS
         x_Button.onTrue(openarm.andThen(levelWrist));
