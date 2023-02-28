@@ -5,20 +5,22 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.robot.Constants.ArmConstants;
 import frc.robot.Constants.ControlConstants;
 import frc.robot.commands.AprilTagAlign;
 import frc.robot.commands.CloseClaw;
 import frc.robot.commands.Drive;
+import frc.robot.commands.MoveArm;
 import frc.robot.commands.OpenArm;
 import frc.robot.commands.OpenClaw;
 import frc.robot.commands.TestArm;
 import frc.robot.commands.WristLeveller;
-import frc.robot.commands.closeArm;
+import frc.robot.commands.CloseArm;
 import frc.robot.commands.balancing.Balancer;
 import frc.robot.commands.balancing.Search;
 import frc.robot.subsystems.Arm;
@@ -63,12 +65,15 @@ public class RobotContainer {
 
     private final Drive drive = new Drive(driveTrain);
 
-    private final closeArm closearm = new closeArm(arm);
+    private final CloseArm closeArm = new CloseArm(arm);
 
     private final Search balancingSearcher = new Search(200, driveTrain);
     private final Balancer balancer = new Balancer(driveTrain);
 
     public final OpenArm openarm = new OpenArm(arm);
+
+    public final MoveArm moveArm = new MoveArm(arm);
+
     public RobotContainer() {
         configureBindings();
 
@@ -79,17 +84,20 @@ public class RobotContainer {
     private void configureBindings() {
         // COMPETITION CONTROLS DO NOT CHANGE
 
-        // rb_Button.onTrue(new MoveArm(HIGH_NODE_DEGREES));
-        // dpadRight.onTrue(new MoveArm(MID_NODE_DEGREES)); // Coresponds to M2 on controller
-        // rt_Trigger.onTrue(new MoveArm(HIGH_NODE_DEGREES));
-        // dpadUp.onTrue(new MoveArm(LOADING_ZONE));
+        rb_Button.onTrue(Commands.run(() -> moveArm.setTargetAngle(ArmConstants.HIGH_NODE_DEGREES)));
+        dpadRight.onTrue(Commands.run(() -> moveArm.setTargetAngle(ArmConstants.MID_NODE_DEGREES))); // M2 On the controller
+        rt_Trigger.onTrue(Commands.run(() -> moveArm.setTargetAngle(ArmConstants.GROUND_NODE_DEGREES)));
+        dpadUp.onTrue(Commands.run(() -> moveArm.setTargetAngle(ArmConstants.LOADING_ZONE_DEGREES))); // M1 On the controller
 
         b_Button.onTrue(openClaw);
         a_Button.onTrue(closeClaw);
         ls_Button.onTrue(balancingSearcher.andThen(balancer.unless(() -> !balancingSearcher.runBalance)));
         rs_Button.onTrue(aprilTagAlign);
 
-        // USE X AND Y BUTTONS TO DEBUG
+        lb_Button.whileTrue(Commands.run(() -> moveArm.setTargetAngle(moveArm.getTargetAngle() - ArmConstants.MANUAL_DEGREES_MOVEMENT_PER_SECOND)));
+        lt_Trigger.whileTrue(Commands.run(() -> moveArm.setTargetAngle(moveArm.getTargetAngle() + ArmConstants.MANUAL_DEGREES_MOVEMENT_PER_SECOND)));
+
+        // USE X AND Y BUTTONS TO TEST COMMANDS
         x_Button.onTrue(testArm);
         y_Button.whileTrue(levelWrist);
 
