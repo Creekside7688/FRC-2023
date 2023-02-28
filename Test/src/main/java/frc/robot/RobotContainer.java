@@ -43,16 +43,12 @@ public class RobotContainer {
     private final Trigger x_Button = new JoystickButton(driverController, XboxController.Button.kX.value);
     private final Trigger y_Button = new JoystickButton(driverController, XboxController.Button.kY.value);
 
-<<<<<<< HEAD
-    public static final Arm arm = new Arm();
-=======
     private final Trigger dpadUp = new Trigger(RobotContainer::getDpadUp);
     private final Trigger dpadDown = new Trigger(RobotContainer::getDpadDown);
     private final Trigger dpadLeft = new Trigger(RobotContainer::getDpadLeft);
     private final Trigger dpadRight = new Trigger(RobotContainer::getDpadRight);
 
     private final Arm arm = new Arm();
->>>>>>> a3fd07fbbf162eb962cce168bdb16c185dada31d
     private final DriveTrain driveTrain = new DriveTrain();
     private final Claw hand = new Claw();
     private final Wrist wrist = new Wrist();
@@ -72,7 +68,7 @@ public class RobotContainer {
     private final Search balancingSearcher = new Search(200, driveTrain);
     private final Balancer balancer = new Balancer(driveTrain);
 
-    public  final static OpenArm openarm = new OpenArm(arm);
+    public final OpenArm openarm = new OpenArm(arm);
     public RobotContainer() {
         configureBindings();
 

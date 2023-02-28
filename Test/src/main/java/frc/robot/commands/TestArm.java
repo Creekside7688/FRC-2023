@@ -34,14 +34,14 @@ public class TestArm extends CommandBase {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        minPower = -Math.cos(Math.toRadians(arm.getEncoderAbsoluteDegrees())+Math.PI/12)*ArmConstants.KG;
+        minPower = -Math.cos(Math.toRadians(arm.getEncoderAbsoluteDegrees()) + Math.PI / 12) * ArmConstants.KG;
         pidOutput = pidController.calculate(arm.getEncoderAbsoluteDegrees());
 
         SmartDashboard.putNumber("Encoder value", arm.getEncoderAbsoluteDegrees());
         SmartDashboard.putNumber("minimum power", minPower);
-        System.out.println(arm.getDegree());
-        SmartDashboard.putNumber("pid output", MathUtil.clamp(pidOutput +minPower, 0.0, 0.3) * -1);
-        arm.turn(MathUtil.clamp(pidOutput+minPower, 0.0, 0.3) * -1);
+        System.out.println(arm.getEncoder());
+        SmartDashboard.putNumber("pid output", MathUtil.clamp(pidOutput + minPower, 0.0, 0.3) * -1);
+        arm.turn(MathUtil.clamp(pidOutput + minPower, 0.0, 0.3) * -1);
     }
 
     // Called once the command ends or is interrupted.

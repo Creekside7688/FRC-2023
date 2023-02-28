@@ -34,7 +34,7 @@ public class Arm extends SubsystemBase {
         motors.setInverted(false);
 
         encoder = new Encoder(5, 6, false);
-        encoder.setDistancePerPulse(Constants.ArmConstants.DEGREE_PER_PULSE);
+        encoder.setDistancePerPulse(Constants.ArmConstants.DEGREES_PER_PULSE);
     }
 
     public void resetEncoder() {
@@ -50,6 +50,10 @@ public class Arm extends SubsystemBase {
     }
 
     public double getEncoderAbsoluteDegrees() {
+        return encoder.getDistance() + ARM_OFFSET_DEGREES;
+    }
+
+    public double getEncoder() {
         return encoder.getDistance(); //+ ARM_OFFSET;
     }
 
