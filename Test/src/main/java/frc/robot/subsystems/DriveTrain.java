@@ -83,8 +83,8 @@ public class DriveTrain extends SubsystemBase {
         leftmotor = new MotorControllerGroup(TLFmotor, TLBmotor, BLFmotor, BLBmotor);
         rightmotor = new MotorControllerGroup(TRFmotor, TRBmotor, BRBmotor, BRFmotor);
 
-        leftmotor.setInverted(true);
-        rightmotor.setInverted(false);
+        leftmotor.setInverted(false);
+        rightmotor.setInverted(true);
 
         filter = new SlewRateLimiter(2);
         diffdrive = new DifferentialDrive(leftmotor, rightmotor);

@@ -13,9 +13,11 @@ import frc.robot.Constants.ControlConstants;
 import frc.robot.commands.AprilTagAlign;
 import frc.robot.commands.CloseClaw;
 import frc.robot.commands.Drive;
+import frc.robot.commands.OpenArm;
 import frc.robot.commands.OpenClaw;
 import frc.robot.commands.TestArm;
 import frc.robot.commands.WristLeveller;
+import frc.robot.commands.closeArm;
 import frc.robot.commands.balancing.Balancer;
 import frc.robot.commands.balancing.Search;
 import frc.robot.subsystems.Arm;
@@ -40,7 +42,7 @@ public class RobotContainer {
     private final Trigger x_Button = new JoystickButton(driverController, XboxController.Button.kX.value);
     private final Trigger y_Button = new JoystickButton(driverController, XboxController.Button.kY.value);
 
-    private final Arm arm = new Arm();
+    public static final Arm arm = new Arm();
     private final DriveTrain driveTrain = new DriveTrain();
     private final Claw hand = new Claw();
     private final Wrist wrist = new Wrist();
@@ -55,21 +57,27 @@ public class RobotContainer {
 
     private final Drive drive = new Drive(driveTrain);
 
+    private final closeArm closearm = new closeArm(arm);
+
     private final Search balancingSearcher = new Search(200, driveTrain);
     private final Balancer balancer = new Balancer(driveTrain);
 
+    public  final static OpenArm openarm = new OpenArm(arm);
     public RobotContainer() {
         configureBindings();
 
         driveTrain.setDefaultCommand(drive);
-        wrist.setDefaultCommand(levelWrist);
+        //wrist.setDefaultCommand(testArm);
     }
 
     private void configureBindings() {
-        x_Button.onTrue(balancingSearcher.andThen(balancer.unless(() -> !balancingSearcher.runBalance)));
+        // x_Button.onTrue(balancingSearcher.andThen(balancer.unless(() -> !balancingSearcher.runBalance)));
+        x_Button.whileTrue(closearm);
         y_Button.onTrue(closeHand);
         b_Button.onTrue(openHand);
-        a_Button.whileTrue(testArm);
+        a_Button.whileTrue(openarm);
+        rb_Button.whileTrue(drive);
+        lb_Button.whileTrue(testArm);
     }
 
     /**

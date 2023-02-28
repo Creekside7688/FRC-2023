@@ -4,8 +4,7 @@
 
 package frc.robot.subsystems;
 
-import static frc.robot.Constants.ArmConstants.ARM_OFFSET;
-import static frc.robot.Constants.ArmConstants.DEGREES_PER_PULSE;
+//import static frc.robot.Constants.ArmConstants.ARM_OFFSET;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
@@ -13,6 +12,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 
 public class Arm extends SubsystemBase {
     private final WPI_VictorSPX armMotorA;
@@ -34,7 +34,7 @@ public class Arm extends SubsystemBase {
         motors.setInverted(false);
 
         encoder = new Encoder(5, 6, false);
-        encoder.setDistancePerPulse(DEGREES_PER_PULSE);
+        encoder.setDistancePerPulse(Constants.ArmConstants.DEGREE_PER_PULSE);
     }
 
     public void resetEncoder() {
@@ -50,11 +50,7 @@ public class Arm extends SubsystemBase {
     }
 
     public double getEncoderAbsoluteDegrees() {
-        return encoder.getDistance() + ARM_OFFSET;
-    }
-
-    public double getDegree(){
-        return armEncoder.getDistance();
+        return encoder.getDistance(); //+ ARM_OFFSET;
     }
 
     @Override

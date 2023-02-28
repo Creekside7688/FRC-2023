@@ -26,29 +26,28 @@ public class TestArm extends CommandBase {
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-        arm.resetEncoder();
         pidController = new PIDController(ArmConstants.KP, ArmConstants.KI, ArmConstants.KD);
-        pidController.setSetpoint(90);
+        pidController.setSetpoint(225);
         pidController.setTolerance(3, 0.1);
     }
 
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        minPower = Math.cos(Math.toRadians(arm.getDegree())+Math.PI/6)*ArmConstants.KG;
-        pidOutput = pidController.calculate(arm.getDegree());
+        minPower = -Math.cos(Math.toRadians(arm.getEncoderAbsoluteDegrees())+Math.PI/12)*ArmConstants.KG;
+        pidOutput = pidController.calculate(arm.getEncoderAbsoluteDegrees());
 
-        SmartDashboard.putNumber("Encoder value", encoderData);
+        SmartDashboard.putNumber("Encoder value", arm.getEncoderAbsoluteDegrees());
         SmartDashboard.putNumber("minimum power", minPower);
-        System.out.println(arm.getDegree());
-        SmartDashboard.putNumber("pid output", MathUtil.clamp(pidOutput+minPower, 0.0, 0.3) * -1);
-        arm.turn(MathUtil.clamp(pidOutput+minPower, 0.0, 0.3) * -1);
+        System.out.println(arm.getEncoderAbsoluteDegrees());
+        SmartDashboard.putNumber("pid output", MathUtil.clamp(pidOutput+minPower, -0.3, 0)*-1);
+        arm.turn(MathUtil.clamp(pidOutput+minPower, -0.3, 0)*-1);
     }
 
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
-        arm.stop();
+       
     }
 
     // Returns true when the command should end.

@@ -34,14 +34,14 @@ public final class Constants {
         public static final double WHEEL_PERIMETER_CM = 15.24 * Math.PI;
         public static final double DISTANCE_PER_PULSE = WHEEL_PERIMETER_CM / 2048.0;
 
-        public static final double LIMIT_SPEED = 1;
+        public static final double LIMIT_SPEED = 0.9;
     }
 
     public static class HandConstants {
         public static final int HAND_PORT = 3;
-        public static final double OPEN_SPEED = -0.3;
+        public static final double OPEN_SPEED = -0.2;
         public static final double CLOSE_SPEED = 1;
-        public static final double HOLD_SPEED = 0.1;
+        public static final double HOLD_SPEED = 0.3;
         public static final double HOLD_TIME = 1.5;
         public static final double DELAY_CHECK = 0.05;
         public static final double DEADZONE_OFFSET = 0.0005;

@@ -8,6 +8,8 @@ import static frc.robot.Constants.WristConstants.DEGREES_PER_ROTATION;
 
 import com.revrobotics.RelativeEncoder;
 
+
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Wrist;
@@ -15,6 +17,7 @@ import frc.robot.subsystems.Wrist;
 public class WristLeveller extends CommandBase {
     private final Wrist wrist;
     private final Arm arm;
+    private final PIDController pidController;
 
     private final RelativeEncoder wristEncoder;
 
@@ -22,6 +25,7 @@ public class WristLeveller extends CommandBase {
         this.wrist = wrist;
         this.arm = arm;
 
+        pidController = new PIDController(0.1, 0, 0);
         wristEncoder = wrist.getEncoder();
         wristEncoder.setPositionConversionFactor(DEGREES_PER_ROTATION);
 
@@ -34,12 +38,15 @@ public class WristLeveller extends CommandBase {
 
     @Override
     public void execute() {
-        double armAngle = 360 - (arm.getEncoderAbsoluteDegrees());
-        double targetAngle = 180 - (90 - armAngle);
+        //double armAngle = 360 - (arm.getEncoderAbsoluteDegrees());
+        //double targetAngle = 180 - (90 - armAngle);
+        
+        wrist.turn(-0.3);
     }
 
     @Override
     public void end(boolean interrupted) {
+        wrist.stop();
     }
 
     @Override
