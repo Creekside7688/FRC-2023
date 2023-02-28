@@ -98,9 +98,8 @@ public class RobotContainer {
         lt_Trigger.whileTrue(Commands.run(() -> moveArm.setTargetAngle(moveArm.getTargetAngle() + ArmConstants.MANUAL_DEGREES_MOVEMENT_PER_SECOND)));
 
         // USE X AND Y BUTTONS TO TEST COMMANDS
-        x_Button.onTrue(openarm.andThen(levelWrist));
-        y_Button.onTrue(closeArm);
-
+        x_Button.onTrue(testArm);
+        y_Button.whileTrue(closeArm);
     }
 
     /**
