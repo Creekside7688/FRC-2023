@@ -53,7 +53,7 @@ public class OpenArm extends CommandBase {
   @Override
   public boolean isFinished() {
     if(arm.getEncoderAbsoluteDegrees() > 130){
-      direction = 0.1;
+      direction = 0.05;
     }
 
     return pidController.atSetpoint();

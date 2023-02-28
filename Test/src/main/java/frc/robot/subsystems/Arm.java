@@ -50,7 +50,7 @@ public class Arm extends SubsystemBase {
     }
 
     public double getEncoderAbsoluteDegrees() {
-        return encoder.getDistance() + ARM_OFFSET_DEGREES;
+        return encoder.getDistance();
     }
 
     public double getEncoder() {

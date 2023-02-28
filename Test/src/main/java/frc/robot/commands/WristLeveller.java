@@ -9,7 +9,9 @@ import static frc.robot.Constants.WristConstants.DEGREES_PER_ROTATION;
 import com.revrobotics.RelativeEncoder;
 
 
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Wrist;
@@ -19,16 +21,13 @@ public class WristLeveller extends CommandBase {
     private final Arm arm;
     private final PIDController pidController;
 
-    private final RelativeEncoder wristEncoder;
-
     public WristLeveller(Wrist wrist, Arm arm) {
         this.wrist = wrist;
         this.arm = arm;
 
-        pidController = new PIDController(0.1, 0, 0);
-        wristEncoder = wrist.getEncoder();
-        wristEncoder.setPositionConversionFactor(DEGREES_PER_ROTATION);
-
+        pidController = new PIDController(0.15, 0, 0);
+        pidController.setTolerance(3);
+        pidController.setSetpoint(-90);
         addRequirements(wrist);
     }
 
@@ -40,8 +39,9 @@ public class WristLeveller extends CommandBase {
     public void execute() {
         //double armAngle = 360 - (arm.getEncoderAbsoluteDegrees());
         //double targetAngle = 180 - (90 - armAngle);
-        
-        wrist.turn(-0.3);
+        double output = pidController.calculate(wrist.getDegrees());
+        wrist.turn(MathUtil.clamp(output, -0.3, 0.3));
+        SmartDashboard.putNumber("wrist encoder value: ", wrist.getDegrees());
     }
 
     @Override
@@ -51,6 +51,6 @@ public class WristLeveller extends CommandBase {
 
     @Override
     public boolean isFinished() {
-        return false;
+        return pidController.atSetpoint();
     }
 }

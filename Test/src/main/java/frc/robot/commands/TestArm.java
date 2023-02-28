@@ -10,16 +10,20 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants.ArmConstants;
 import frc.robot.subsystems.Arm;
+import frc.robot.subsystems.Wrist;
 
 public class TestArm extends CommandBase {
     private final Arm arm;
+    private final Wrist myWrist;
     private PIDController pidController;
     private double encoderData;
     private double pidOutput;
     private double minPower;
 
-    public TestArm(Arm arm) {
+    public TestArm(Arm arm, Wrist wrist) {
         this.arm = arm;
+        myWrist = wrist;
+        addRequirements(myWrist);
         addRequirements(arm);
     }
 
@@ -27,7 +31,7 @@ public class TestArm extends CommandBase {
     @Override
     public void initialize() {
         pidController = new PIDController(ArmConstants.KP, ArmConstants.KI, ArmConstants.KD);
-        pidController.setSetpoint(225);
+        pidController.setSetpoint(-60);
         pidController.setTolerance(3, 0.1);
     }
 
@@ -41,7 +45,7 @@ public class TestArm extends CommandBase {
         SmartDashboard.putNumber("minimum power", minPower);
         System.out.println(arm.getEncoder());
         SmartDashboard.putNumber("pid output", MathUtil.clamp(pidOutput + minPower, 0.0, 0.3) * -1);
-        arm.turn(MathUtil.clamp(pidOutput + minPower, 0.0, 0.3) * -1);
+        arm.turn(MathUtil.clamp(pidOutput + minPower, -0.3, 0.0)*-1);
     }
 
     // Called once the command ends or is interrupted.

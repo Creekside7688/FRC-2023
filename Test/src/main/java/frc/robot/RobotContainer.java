@@ -59,7 +59,7 @@ public class RobotContainer {
     private final WristLeveller levelWrist = new WristLeveller(wrist, arm);
 
     private final AprilTagAlign aprilTagAlign = new AprilTagAlign(driveTrain);
-    private final TestArm testArm = new TestArm(arm);
+    private final TestArm testArm = new TestArm(arm, wrist);
 
     private final Drive drive = new Drive(driveTrain);
 
@@ -91,6 +91,8 @@ public class RobotContainer {
 
         // USE X AND Y BUTTONS TO DEBUG
         x_Button.onTrue(testArm);
+        y_Button.whileTrue(levelWrist);
+
     }
 
     /**
