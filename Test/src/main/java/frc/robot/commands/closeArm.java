@@ -7,11 +7,11 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Arm;
 
-public class CloseArm extends CommandBase {
+public class closeArm extends CommandBase {
     private final Arm myArm;
     private double speedMulti = 1;
 
-    public CloseArm(Arm arm) {
+    public closeArm(Arm arm) {
         myArm = arm;
         addRequirements(myArm);
     }

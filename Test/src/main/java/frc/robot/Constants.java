@@ -52,7 +52,7 @@ public final class Constants {
         public static final double GEARBOX_REDUCTION = 4;
         public static final double DEGREES_PER_ROTATION = 360.0/100;
 
-        public static final double KP = 0.05;
+        public static final double KP = 0.03;
         public static final double KI = 0;
         public static final double KD = 0;
         public static final double KG = 0;
@@ -68,7 +68,7 @@ public final class Constants {
         public static final double KP = 0.03;
         public static final double KI = 0.01;
         public static final double KD = 0;
-        public static final double KG = 0.15;
+        public static final double KG = 0.02;
 
         public static final double RADIAN_PER_PULSE = Math.PI * 2 / 2048;
         public static final double DEGREES_PER_PULSE = 360.0 / 2048.0;

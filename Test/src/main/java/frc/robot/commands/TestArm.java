@@ -16,6 +16,7 @@ public class TestArm extends CommandBase {
     private final Arm arm;
     private final Wrist myWrist;
     private PIDController pidController;
+    private PIDController wristPidController;
     private double pidOutput;
     private double minPower;
 
@@ -29,14 +30,23 @@ public class TestArm extends CommandBase {
     @Override
     public void initialize() {
         pidController = new PIDController(ArmConstants.KP, ArmConstants.KI, ArmConstants.KD);
+        wristPidController = new PIDController(0.03, 0, 0);
+        arm.resetEncoder();
+        myWrist.resetEncoder();
+        
         pidController.setSetpoint(-60);
         pidController.setTolerance(3, 0.1);
+        wristPidController.setTolerance(3,0.1);
     }
 
     @Override
     public void execute() {
-        minPower = -Math.cos(Math.toRadians(arm.getEncoderAbsoluteDegrees()) + Math.PI / 12) * ArmConstants.KG;
+        minPower = -Math.cos(Math.toRadians(arm.getEncoderAbsoluteDegrees()) + Math.PI / 6) * ArmConstants.KG;
         pidOutput = pidController.calculate(arm.getEncoderAbsoluteDegrees());
+        wristPidController.setSetpoint(arm.getEncoder());
+        myWrist.turn(wristPidController.calculate(myWrist.getDegrees()));
+
+
 
         SmartDashboard.putNumber("Encoder value", arm.getEncoderAbsoluteDegrees());
         SmartDashboard.putNumber("minimum power", minPower);

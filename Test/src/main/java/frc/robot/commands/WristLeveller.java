@@ -20,28 +20,36 @@ public class WristLeveller extends CommandBase {
         this.wrist = wrist;
         this.arm = arm;
 
-        pidController = new PIDController(0.15, 0, 0);
-        pidController.setTolerance(3);
-        pidController.setSetpoint(-90);
+        pidController = new PIDController(0.03, 0, 0);
+       
+        pidController.setTolerance(3,0.1);
+        pidController.setSetpoint(-32.5);
         addRequirements(wrist);
+        addRequirements(arm);
     }
 
     @Override
-    public void initialize() {
+    public void initialize() { 
+        wrist.resetEncoder();
     }
 
     @Override
     public void execute() {
         // double armAngle = 360 - (arm.getEncoderAbsoluteDegrees());
-        // double targetAngle = 180 - (90 - armAngle);
-        double output = pidController.calculate(wrist.getDegrees());
-        wrist.turn(MathUtil.clamp(output, -0.3, 0.3));
-        SmartDashboard.putNumber("wrist encoder value: ", wrist.getDegrees());
+        // double targetAngle = 180 - (90 - armAngle)
+        System.out.print(arm.getEncoderAbsoluteDegrees());
+        if(arm.getEncoderAbsoluteDegrees()>280){
+             double output = pidController.calculate(wrist.getDegrees());
+             wrist.turn(MathUtil.clamp(output, -0.3, 0.3));
+             
+        }
+       SmartDashboard.putNumber("wrist encoder value: ", wrist.getDegrees());
     }
 
     @Override
     public void end(boolean interrupted) {
         wrist.stop();
+        wrist.resetEncoder();
     }
 
     @Override
