@@ -23,6 +23,7 @@ public class TestArm extends CommandBase {
     private Joystick joystick = new Joystick(0);
     private double pidOutput;
     private double minPower;
+    private double b = 0;
 
     public TestArm(Arm arm, Wrist wrist) {
         this.arm = arm;

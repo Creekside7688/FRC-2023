@@ -34,7 +34,7 @@ public class CloseArm extends CommandBase {
 
     @Override
     public void end(boolean interrupted) {
-        myArm.turn(0);
+        myArm.turn(0.03);
     }
 
     @Override
