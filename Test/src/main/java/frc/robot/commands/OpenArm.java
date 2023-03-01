@@ -6,7 +6,6 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Arm;
-import frc.robot.subsystems.Wrist;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -14,25 +13,22 @@ import frc.robot.Constants.ArmConstants;
 
 public class OpenArm extends CommandBase {
     private final Arm arm;
-    private final Wrist wrist;
     private final PIDController pidController;
     private double direction = -1;
 
-    public OpenArm(Arm arm, Wrist wrist) {
+    public OpenArm(Arm arm) {
         this.arm = arm;
-        this.wrist = wrist;
+
         pidController = new PIDController(ArmConstants.KP, ArmConstants.KI, ArmConstants.KD);
         pidController.setSetpoint(225);
         pidController.setTolerance(2);
 
         addRequirements(arm);
-        addRequirements(wrist);
     }
 
     @Override
     public void initialize() {
         arm.resetEncoder();
-        wrist.turn(0.05);
     }
 
     @Override

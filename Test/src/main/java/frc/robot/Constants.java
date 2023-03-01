@@ -34,7 +34,7 @@ public final class Constants {
         public static final double WHEEL_PERIMETER_CM = 15.24 * Math.PI;
         public static final double DISTANCE_PER_PULSE = WHEEL_PERIMETER_CM / 2048.0;
 
-        public static final double LIMIT_SPEED = 1;
+        public static final double LIMIT_SPEED = 0.9;
     }
 
     public static class HandConstants {

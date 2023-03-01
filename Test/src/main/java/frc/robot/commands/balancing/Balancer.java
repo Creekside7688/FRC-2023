@@ -32,7 +32,7 @@ public class Balancer extends CommandBase {
 
         double output = Math.min(angleError * 0.05, 1);
 
-        output = MathUtil.clamp(-output, -0.38, 0.38);
+        output = MathUtil.clamp(-output, -0.375, 0.375);
 
         driveTrain.arcadeDrive(output, 0);
     }
@@ -40,7 +40,7 @@ public class Balancer extends CommandBase {
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
-        // driveTrain.setCoast();
+        driveTrain.setCoast();
         driveTrain.resetEncoders();
     }
 

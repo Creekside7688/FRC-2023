@@ -23,7 +23,7 @@ public class WristLeveller extends CommandBase {
         pidController = new PIDController(0.03, 0, 0);
        
         pidController.setTolerance(3,0.1);
-        pidController.setSetpoint(-35);
+        pidController.setSetpoint(-32.5);
         addRequirements(wrist);
         addRequirements(arm);
     }
@@ -31,7 +31,6 @@ public class WristLeveller extends CommandBase {
     @Override
     public void initialize() { 
         wrist.resetEncoder();
-        wrist.turn(0);
     }
 
     @Override
