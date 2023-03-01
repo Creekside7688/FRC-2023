@@ -50,10 +50,10 @@ public class TestArm extends CommandBase {
         
         System.out.println();
         //pidController.setSetpoint(b);
-        if(joystick.getRawAxis(2)==1){
+        if(joystick.getRawButton(XboxController.Button.kRightBumper.value)){
             speed = 0.25;
             pidController.setSetpoint(arm.getEncoderAbsoluteDegrees());
-        } else if(joystick.getRawAxis(3)==1){
+        } else if(joystick.getRawAxis(XboxController.Axis.kRightTrigger.value) == 1){
             speed = -0.25;
             pidController.setSetpoint(arm.getEncoderAbsoluteDegrees());
         }else{

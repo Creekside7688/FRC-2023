@@ -91,6 +91,7 @@ public class RobotContainer {
 
         b_Button.onTrue(openClaw);
         a_Button.onTrue(closeClaw);
+
         ls_Button.onTrue(balancingSearcher.andThen(balancer.unless(() -> !balancingSearcher.runBalance)));
         rs_Button.onTrue(aprilTagAlign);
 
@@ -110,7 +111,7 @@ public class RobotContainer {
      */
     public Command getAutonomousCommand() {
         // An example command will be run in autonomous
-        return null;
+        return balancingSearcher.andThen(balancer.unless(() -> !balancingSearcher.runBalance)).withTimeout(8);
     }
 
     private static final boolean ltAsButton() {
