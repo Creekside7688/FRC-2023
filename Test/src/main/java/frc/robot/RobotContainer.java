@@ -20,7 +20,7 @@ import frc.robot.commands.OpenArm;
 import frc.robot.commands.OpenClaw;
 import frc.robot.commands.TestArm;
 import frc.robot.commands.WristLeveller;
-import frc.robot.commands.closeArm;
+import frc.robot.commands.CloseArm;
 import frc.robot.commands.balancing.Balancer;
 import frc.robot.commands.balancing.Search;
 import frc.robot.subsystems.Arm;
@@ -65,7 +65,7 @@ public class RobotContainer {
 
     private final Drive drive = new Drive(driveTrain);
 
-    private final closeArm closeArm = new closeArm(arm);
+    private final CloseArm closeArm = new CloseArm(arm);
 
     private final Search balancingSearcher = new Search(200, driveTrain);
     private final Balancer balancer = new Balancer(driveTrain);
@@ -78,6 +78,7 @@ public class RobotContainer {
         configureBindings();
 
         driveTrain.setDefaultCommand(drive);
+        //arm.setDefaultCommand(testArm);
         // wrist.setDefaultCommand(levelWrist);
     }
 
@@ -100,9 +101,6 @@ public class RobotContainer {
         // USE X AND Y BUTTONS TO TEST COMMANDS
 
         x_Button.onTrue(openarm.andThen(levelWrist));
-        y_Button.onTrue(testArm);
-
-
     }
 
     /**

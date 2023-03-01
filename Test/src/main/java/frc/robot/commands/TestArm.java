@@ -48,11 +48,10 @@ public class TestArm extends CommandBase {
         
         System.out.println();
         pidController.setSetpoint(b);
-        if(joystick.getRawAxis(2)==1){
-            
+        if(joystick.getRawAxis(XboxController.Axis.kRightTrigger.value)==1){
+            b += 0.2;
+        } else if(joystick.getRawButton(XboxController.Button.kRightBumper.value)){
             b -= 0.2;
-        } else if(joystick.getRawAxis(3)==1){
-            b+=0.2;
         }
         
         minPower = -Math.cos(Math.toRadians(arm.getEncoderAbsoluteDegrees()) + Math.PI / 6) * ArmConstants.KG;
