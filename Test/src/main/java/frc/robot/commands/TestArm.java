@@ -15,7 +15,7 @@ import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Wrist;
 
 public class TestArm extends CommandBase {
-    double b = -60;
+    private double targetAngle;
     private final Arm arm;
     private final Wrist myWrist;
     private PIDController pidController;
@@ -35,6 +35,7 @@ public class TestArm extends CommandBase {
     public void initialize() {
         pidController = new PIDController(ArmConstants.KP, ArmConstants.KI, ArmConstants.KD);
         wristPidController = new PIDController(0.03, 0, 0);
+        targetAngle = -60;
         arm.resetEncoder();
         myWrist.resetEncoder();
         
@@ -47,18 +48,23 @@ public class TestArm extends CommandBase {
     public void execute() {
         
         System.out.println();
-        pidController.setSetpoint(b);
+       
         if(joystick.getRawAxis(2)==1){
-            
-            b -= 0.2;
+            arm.turn(0.3);
+           targetAngle = arm.getEncoder();
         } else if(joystick.getRawAxis(3)==1){
-            b+=0.2;
+            arm.turn(-0.3);
+            targetAngle = arm.getEncoder();
+        } else {
+             pidController.setSetpoint(targetAngle);
+             minPower = -Math.cos(Math.toRadians(arm.getEncoderAbsoluteDegrees()) + Math.PI / 6) * ArmConstants.KG;
+             pidOutput = pidController.calculate(arm.getEncoderAbsoluteDegrees());
+             arm.turn(MathUtil.clamp(pidOutput + minPower, -0.3, 0.13)*-1);
+       
         }
-        
-        minPower = -Math.cos(Math.toRadians(arm.getEncoderAbsoluteDegrees()) + Math.PI / 6) * ArmConstants.KG;
-        pidOutput = pidController.calculate(arm.getEncoderAbsoluteDegrees());
-        wristPidController.setSetpoint(arm.getEncoder());
+         wristPidController.setSetpoint(arm.getEncoder());
         myWrist.turn(wristPidController.calculate(myWrist.getDegrees()));
+        
 
 
 
@@ -66,7 +72,7 @@ public class TestArm extends CommandBase {
         SmartDashboard.putNumber("minimum power", minPower);
         System.out.println(arm.getEncoder());
         SmartDashboard.putNumber("pid output", MathUtil.clamp(pidOutput + minPower, 0.0, 0.3) * -1);
-        arm.turn(MathUtil.clamp(pidOutput + minPower, -0.3, 0.13)*-1);
+        
     }
 
     @Override
