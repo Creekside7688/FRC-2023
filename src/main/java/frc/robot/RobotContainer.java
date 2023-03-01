@@ -91,18 +91,16 @@ public class RobotContainer {
 
         b_Button.onTrue(openClaw);
         a_Button.onTrue(closeClaw);
-        //ls_Button.onTrue(closeArm.andThen(balancingSearcher).andThen(balancer.unless(() -> !balancingSearcher.runBalance)));
-        //s_Button.onTrue(aprilTagAlign);
+        ls_Button.onTrue(balancingSearcher.andThen(balancer.unless(() -> !balancingSearcher.runBalance)));
+        rs_Button.onTrue(aprilTagAlign);
 
-        //lb_Button.whileTrue(Commands.run(() -> moveArm.setTargetAngle(moveArm.getTargetAngle() - ArmConstants.MANUAL_DEGREES_MOVEMENT_PER_SECOND)));
+        // lb_Button.whileTrue(Commands.run(() -> moveArm.setTargetAngle(moveArm.getTargetAngle() - ArmConstants.MANUAL_DEGREES_MOVEMENT_PER_SECOND)));
         //lt_Trigger.whileTrue(Commands.run(() -> moveArm.setTargetAngle(moveArm.getTargetAngle() + ArmConstants.MANUAL_DEGREES_MOVEMENT_PER_SECOND)));
 
         // USE X AND Y BUTTONS TO TEST COMMANDS
 
-        x_Button.onTrue(openarm.andThen(levelWrist));
-        y_Button.onTrue(closeArm);
-
-
+        dpadLeft.onTrue(openarm.andThen(levelWrist));
+        dpadDown.onTrue(closeArm);
     }
 
     /**
