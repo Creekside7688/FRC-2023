@@ -6,19 +6,25 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Arm;
+import frc.robot.subsystems.Wrist;
 
 public class CloseArm extends CommandBase {
     private final Arm myArm;
     private double speedMulti = 1;
+    private Wrist myWrist;
 
-    public CloseArm(Arm arm) {
+    public CloseArm(Arm arm, Wrist wrist) {
         myArm = arm;
+        myWrist = wrist;
+
         addRequirements(myArm);
+        addRequirements(myWrist);
     }
 
     @Override
     public void initialize() {
         myArm.resetEncoder();
+        myWrist.turn(0.05);
     }
 
     @Override

@@ -49,11 +49,19 @@ public class TestArm extends CommandBase {
     public void execute() {
         
         System.out.println();
-        pidController.setSetpoint(b);
-        if(joystick.getRawAxis(XboxController.Axis.kRightTrigger.value) == 1){
-            b += 0.2;
-        } else if(joystick.getRawButton(XboxController.Button.kRightBumper.value)){
-            b -= 0.2;
+       
+        if(joystick.getRawAxis(2)==1){
+            arm.turn(0.3);
+           pidController.setSetpoint(arm.getEncoder());
+        } else if(joystick.getRawAxis(3)==1){
+            arm.turn(-0.3);
+            pidController.setSetpoint(arm.getEncoder());
+        } else {
+             
+             minPower = -Math.cos(Math.toRadians(arm.getEncoderAbsoluteDegrees()) + Math.PI / 6) * ArmConstants.KG;
+             pidOutput = pidController.calculate(arm.getEncoderAbsoluteDegrees());
+             arm.turn(MathUtil.clamp(pidOutput + minPower, -0.3, 0.13)*-1);
+       
         }
          wristPidController.setSetpoint(arm.getEncoder());
         myWrist.turn(wristPidController.calculate(myWrist.getDegrees()));
