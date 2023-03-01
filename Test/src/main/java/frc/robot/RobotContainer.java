@@ -70,7 +70,7 @@ public class RobotContainer {
     private final Search balancingSearcher = new Search(200, driveTrain);
     private final Balancer balancer = new Balancer(driveTrain);
 
-    public final OpenArm openarm = new OpenArm(arm);
+    public final OpenArm openarm = new OpenArm(arm, wrist);
 
     public final MoveArm moveArm = new MoveArm(arm);
 
@@ -91,8 +91,9 @@ public class RobotContainer {
 
         b_Button.onTrue(openClaw);
         a_Button.onTrue(closeClaw);
-        ls_Button.onTrue(closeArm.andThen(balancingSearcher).andThen(balancer.unless(() -> !balancingSearcher.runBalance)));
+        ls_Button.onTrue(balancingSearcher.andThen(balancer.withTimeout(12).unless(() -> !balancingSearcher.runBalance)));
         //s_Button.onTrue(aprilTagAlign);
+        //rb_Button.onTrue(closeArm);
 
         //lb_Button.whileTrue(Commands.run(() -> moveArm.setTargetAngle(moveArm.getTargetAngle() - ArmConstants.MANUAL_DEGREES_MOVEMENT_PER_SECOND)));
         //lt_Trigger.whileTrue(Commands.run(() -> moveArm.setTargetAngle(moveArm.getTargetAngle() + ArmConstants.MANUAL_DEGREES_MOVEMENT_PER_SECOND)));

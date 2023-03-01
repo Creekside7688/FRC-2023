@@ -15,7 +15,7 @@ import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Wrist;
 
 public class TestArm extends CommandBase {
-    double b = -60;
+    double b;
     private final Arm arm;
     private final Wrist myWrist;
     private PIDController pidController;
@@ -37,6 +37,8 @@ public class TestArm extends CommandBase {
         wristPidController = new PIDController(0.03, 0, 0);
         arm.resetEncoder();
         myWrist.resetEncoder();
+        b = 0;
+
         
         
         pidController.setTolerance(3, 0.1);
@@ -47,26 +49,33 @@ public class TestArm extends CommandBase {
     public void execute() {
         
         System.out.println();
-        pidController.setSetpoint(b);
         if(joystick.getRawAxis(2)==1){
             
-            b -= 0.2;
+            arm.turn(-0.25);
+            b = arm.getEncoder();
         } else if(joystick.getRawAxis(3)==1){
-            b+=0.2;
+            arm.turn(0.25);
+            b = arm.getEncoder();
+        } else {
+        
+            pidController.setSetpoint(b);
+            minPower = -Math.cos(Math.toRadians(arm.getEncoderAbsoluteDegrees()) + Math.PI / 6) * ArmConstants.KG;
+            pidOutput = pidController.calculate(arm.getEncoderAbsoluteDegrees());
+            SmartDashboard.putNumber("pid output", MathUtil.clamp(pidOutput + minPower, 0.0, 0.3) * -1);
+            arm.turn(MathUtil.clamp(pidOutput + minPower, -0.3, 0.1)*-1);
+
+
         }
         
-        minPower = -Math.cos(Math.toRadians(arm.getEncoderAbsoluteDegrees()) + Math.PI / 6) * ArmConstants.KG;
-        pidOutput = pidController.calculate(arm.getEncoderAbsoluteDegrees());
         wristPidController.setSetpoint(arm.getEncoder());
         myWrist.turn(wristPidController.calculate(myWrist.getDegrees()));
-
+        
 
 
         SmartDashboard.putNumber("Encoder value", arm.getEncoderAbsoluteDegrees());
         SmartDashboard.putNumber("minimum power", minPower);
         System.out.println(arm.getEncoder());
-        SmartDashboard.putNumber("pid output", MathUtil.clamp(pidOutput + minPower, 0.0, 0.3) * -1);
-        arm.turn(MathUtil.clamp(pidOutput + minPower, -0.3, 0.13)*-1);
+        
     }
 
     @Override
