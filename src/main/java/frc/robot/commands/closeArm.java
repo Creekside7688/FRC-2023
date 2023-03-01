@@ -23,6 +23,7 @@ public class closeArm extends CommandBase {
     @Override
     public void initialize() {
         myArm.resetEncoder();
+        wrist.turn(0.05);
     }
 
     @Override

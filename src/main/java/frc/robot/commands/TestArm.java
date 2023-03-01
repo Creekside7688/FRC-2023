@@ -23,6 +23,7 @@ public class TestArm extends CommandBase {
     private Joystick joystick = new Joystick(0);
     private double pidOutput;
     private double minPower;
+    private double speed;
 
     public TestArm(Arm arm, Wrist wrist) {
         this.arm = arm;
@@ -41,32 +42,38 @@ public class TestArm extends CommandBase {
         
         pidController.setTolerance(3, 0.1);
         wristPidController.setTolerance(3,0.1);
+        pidController.setSetpoint(-60);
     }
 
     @Override
     public void execute() {
         
         System.out.println();
-        pidController.setSetpoint(b);
+        //pidController.setSetpoint(b);
         if(joystick.getRawAxis(2)==1){
-            
-            b -= 0.2;
+            speed = 0.25;
+            pidController.setSetpoint(arm.getEncoderAbsoluteDegrees());
         } else if(joystick.getRawAxis(3)==1){
-            b+=0.2;
+            speed = -0.25;
+            pidController.setSetpoint(arm.getEncoderAbsoluteDegrees());
+        }else{
+            minPower = -Math.cos(Math.toRadians(arm.getEncoderAbsoluteDegrees()) + Math.PI / 6) * ArmConstants.KG;
+            pidOutput = pidController.calculate(arm.getEncoderAbsoluteDegrees());
+            //stalling speed
+            speed = MathUtil.clamp(pidOutput + minPower, -0.3, 0.13)*-1;
         }
         
-        minPower = -Math.cos(Math.toRadians(arm.getEncoderAbsoluteDegrees()) + Math.PI / 6) * ArmConstants.KG;
-        pidOutput = pidController.calculate(arm.getEncoderAbsoluteDegrees());
+       
+
+
+
+        //SmartDashboard.putNumber("Encoder value", arm.getEncoderAbsoluteDegrees());
+        //SmartDashboard.putNumber("minimum power", minPower);
+        //System.out.println(arm.getEncoder());
+        //SmartDashboard.putNumber("pid output", MathUtil.clamp(pidOutput + minPower, 0.0, 0.3) * -1);
         wristPidController.setSetpoint(arm.getEncoder());
         myWrist.turn(wristPidController.calculate(myWrist.getDegrees()));
-
-
-
-        SmartDashboard.putNumber("Encoder value", arm.getEncoderAbsoluteDegrees());
-        SmartDashboard.putNumber("minimum power", minPower);
-        System.out.println(arm.getEncoder());
-        SmartDashboard.putNumber("pid output", MathUtil.clamp(pidOutput + minPower, 0.0, 0.3) * -1);
-        arm.turn(MathUtil.clamp(pidOutput + minPower, -0.3, 0.13)*-1);
+        arm.turn(speed);
     }
 
     @Override
