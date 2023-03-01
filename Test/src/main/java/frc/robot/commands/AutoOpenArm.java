@@ -15,6 +15,6 @@ public class AutoOpenArm extends SequentialCommandGroup {
   public AutoOpenArm(Arm arm, Wrist wrist) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
-    addCommands(new OpenArm(arm),new WristLeveller(wrist, arm));
+    addCommands(new OpenArm(arm, wrist),new WristLeveller(wrist, arm));
   }
 }

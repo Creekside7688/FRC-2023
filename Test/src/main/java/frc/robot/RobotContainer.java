@@ -67,12 +67,12 @@ public class RobotContainer {
 
     private final Drive drive = new Drive(driveTrain);
 
-    private final CloseArm closeArm = new CloseArm(arm);
+    private final CloseArm closeArm = new CloseArm(arm, wrist);
 
     private final Search balancingSearcher = new Search(200, driveTrain);
     private final Balancer balancer = new Balancer(driveTrain);
 
-    public final OpenArm openarm = new OpenArm(arm);
+    public final OpenArm openarm = new OpenArm(arm, wrist);
 
     public final MoveArm moveArm = new MoveArm(arm);
 

@@ -51,12 +51,12 @@ public class TestArm extends CommandBase {
        
         if(joystick.getRawAxis(2)==1){
             arm.turn(0.3);
-           targetAngle = arm.getEncoder();
+           pidController.setSetpoint(arm.getEncoder());
         } else if(joystick.getRawAxis(3)==1){
             arm.turn(-0.3);
-            targetAngle = arm.getEncoder();
+            pidController.setSetpoint(arm.getEncoder());
         } else {
-             pidController.setSetpoint(targetAngle);
+             
              minPower = -Math.cos(Math.toRadians(arm.getEncoderAbsoluteDegrees()) + Math.PI / 6) * ArmConstants.KG;
              pidOutput = pidController.calculate(arm.getEncoderAbsoluteDegrees());
              arm.turn(MathUtil.clamp(pidOutput + minPower, -0.3, 0.13)*-1);
