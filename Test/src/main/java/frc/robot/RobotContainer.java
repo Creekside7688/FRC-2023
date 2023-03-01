@@ -89,7 +89,8 @@ public class RobotContainer {
 
         b_Button.onTrue(openClaw);
         a_Button.onTrue(closeClaw);
-        ls_Button.onTrue(closeArm.andThen(balancingSearcher).andThen(balancer.unless(() -> !balancingSearcher.runBalance)));
+        ls_Button.onTrue(balancingSearcher.andThen(balancer.unless(() -> !balancingSearcher.runBalance)));
+        rb_Button.onTrue(closeArm);
         //s_Button.onTrue(aprilTagAlign);
 
         //lb_Button.whileTrue(Commands.run(() -> moveArm.setTargetAngle(moveArm.getTargetAngle() - ArmConstants.MANUAL_DEGREES_MOVEMENT_PER_SECOND)));
