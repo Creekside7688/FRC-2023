@@ -7,12 +7,12 @@ package frc.robot;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
-import frc.robot.Constants.ArmConstants;
 import frc.robot.Constants.ControlConstants;
 import frc.robot.commands.AprilTagAlign;
+import frc.robot.commands.AutoOpenArm;
+import frc.robot.commands.CloseArm;
 import frc.robot.commands.CloseClaw;
 import frc.robot.commands.Drive;
 import frc.robot.commands.MoveArm;
@@ -58,6 +58,9 @@ public class RobotContainer {
     private final CloseClaw closeClaw = new CloseClaw(hand);
     private final OpenClaw openClaw = new OpenClaw(hand);
 
+
+    private final AutoOpenArm openArmwithWrist = new AutoOpenArm(arm, wrist);
+
     private final WristLeveller levelWrist = new WristLeveller(wrist, arm);
 
     private final AprilTagAlign aprilTagAlign = new AprilTagAlign(driveTrain);
@@ -92,7 +95,8 @@ public class RobotContainer {
 
         b_Button.onTrue(openClaw);
         a_Button.onTrue(closeClaw);
-        ls_Button.onTrue(closeArm.andThen(balancingSearcher).andThen(balancer.unless(() -> !balancingSearcher.runBalance)));
+        ls_Button.onTrue(balancingSearcher.andThen(balancer.unless(() -> !balancingSearcher.runBalance)));
+        rb_Button.onTrue(closeArm);
         //s_Button.onTrue(aprilTagAlign);
 
         //lb_Button.whileTrue(Commands.run(() -> moveArm.setTargetAngle(moveArm.getTargetAngle() - ArmConstants.MANUAL_DEGREES_MOVEMENT_PER_SECOND)));
@@ -110,7 +114,7 @@ public class RobotContainer {
      */
     public Command getAutonomousCommand() {
         // An example command will be run in autonomous
-        return null;
+        return openArmwithWrist;
     }
 
     private static final boolean ltAsButton() {

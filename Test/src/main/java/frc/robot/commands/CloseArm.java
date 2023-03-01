@@ -35,6 +35,7 @@ public class CloseArm extends CommandBase {
     public boolean isFinished() {
         if(myArm.getEncoderAbsoluteDegrees() < -140) {
             speedMulti = 0;
+            return true;
         }
         return false;
     }
