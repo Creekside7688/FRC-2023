@@ -7,12 +7,11 @@ package frc.robot;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
-import frc.robot.Constants.ArmConstants;
 import frc.robot.Constants.ControlConstants;
 import frc.robot.commands.AprilTagAlign;
+import frc.robot.commands.CloseArm;
 import frc.robot.commands.CloseClaw;
 import frc.robot.commands.Drive;
 import frc.robot.commands.MoveArm;
@@ -20,7 +19,6 @@ import frc.robot.commands.OpenArm;
 import frc.robot.commands.OpenClaw;
 import frc.robot.commands.TestArm;
 import frc.robot.commands.WristLeveller;
-import frc.robot.commands.closeArm;
 import frc.robot.commands.balancing.Balancer;
 import frc.robot.commands.balancing.Search;
 import frc.robot.subsystems.Arm;
@@ -65,7 +63,7 @@ public class RobotContainer {
 
     private final Drive drive = new Drive(driveTrain);
 
-    private final closeArm closeArm = new closeArm(arm);
+    private final CloseArm closeArm = new CloseArm(arm);
 
     private final Search balancingSearcher = new Search(200, driveTrain);
     private final Balancer balancer = new Balancer(driveTrain);
