@@ -23,7 +23,17 @@ public class Drive extends CommandBase {
 
     @Override
     public void execute() {
-        driveTrain.arcadeDrive(RobotContainer.driverController.getRawAxis(XboxController.Axis.kLeftY.value), RobotContainer.driverController.getRawAxis(XboxController.Axis.kRightX.value)*-1);
+        double speed = RobotContainer.driverController.getRawAxis(XboxController.Axis.kLeftY.value);
+        double rotation = RobotContainer.driverController.getRawAxis(XboxController.Axis.kRightX.value);
+        
+        if(Math.abs(speed) < 0.15){
+            speed = 0;
+        }
+        if(Math.abs(rotation) < 0.15){
+            rotation = 0;
+        }
+
+        driveTrain.arcadeDrive(speed, rotation);
     }
 
     @Override

@@ -5,6 +5,7 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.subsystems.Arm;
 
@@ -15,6 +16,8 @@ import frc.robot.subsystems.Arm;
  */
 public class Robot extends TimedRobot {
     private RobotContainer robotContainer;
+    private Command autonomousCommand;
+
     /**
      * This function is run when the robot is first started up and should be used for any initialization code.
      */
@@ -61,12 +64,12 @@ public class Robot extends TimedRobot {
     @Override
     public void autonomousInit() {
 
-        // m_autonomousCommand = m_robotContainer.getAutonomousCommand();
+        autonomousCommand = robotContainer.getAutonomousCommand();
 
-        // // schedule the autonomous command (example)
-        // if (m_autonomousCommand != null) {
-        // m_autonomousCommand.schedule();
-        // }
+        // schedule the autonomous command (example)
+        if(autonomousCommand != null) {
+            autonomousCommand.schedule();
+        }
     }
 
     /** This function is called periodically during autonomous. */
@@ -76,14 +79,15 @@ public class Robot extends TimedRobot {
 
     @Override
     public void teleopInit() {
+        robotContainer.driveTrain.setCoast();
 
         // This makes sure that the autonomous stops running when
         // teleop starts running. If you want the autonomous to
         // continue until interrupted by another command, remove
         // this line or comment it out.
-        // if (m_autonomousCommand != null) {
-        // m_autonomousCommand.cancel();
-        // }
+        if(autonomousCommand != null) {
+            autonomousCommand.cancel();
+        }
     }
 
     /** This function is called periodically during operator control. */

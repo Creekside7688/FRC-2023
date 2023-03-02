@@ -42,32 +42,39 @@ public class TestArm extends CommandBase {
         
         pidController.setTolerance(3, 0.1);
         wristPidController.setTolerance(3,0.1);
-        pidController.setSetpoint(-60);
+        b = -60;
     }
 
     @Override
     public void execute() {
         
-        System.out.println();
-        //pidController.setSetpoint(b);
+        //System.out.println();
+        pidController.setSetpoint(b);
+
         if(joystick.getRawButton(XboxController.Button.kRightBumper.value)){
-            speed = 0.25;
-            pidController.setSetpoint(arm.getEncoderAbsoluteDegrees());
+            b += 0.4 ;
+            if(b>0){
+                b = 0;
+            }
+            pidController.setSetpoint(b);
         } else if(joystick.getRawAxis(XboxController.Axis.kRightTrigger.value) == 1){
-            speed = -0.25;
-            pidController.setSetpoint(arm.getEncoderAbsoluteDegrees());
-        }else{
-            minPower = -Math.cos(Math.toRadians(arm.getEncoderAbsoluteDegrees()) + Math.PI / 6) * ArmConstants.KG;
-            pidOutput = pidController.calculate(arm.getEncoderAbsoluteDegrees());
-            //stalling speed
-            speed = MathUtil.clamp(pidOutput + minPower, -0.3, 0.13)*-1;
+            b -= 0.4;
+
+            if(b < -90){
+                b = -90;
+            }
+            pidController.setSetpoint(b);
+
+        } else {
+           //pidController.setSetpoint(b);
+           
         }
-        
-       
-
-
-
-        //SmartDashboard.putNumber("Encoder value", arm.getEncoderAbsoluteDegrees());
+               
+        minPower = -Math.cos(Math.toRadians(arm.getEncoderAbsoluteDegrees()) + Math.PI / 6) * ArmConstants.KG;
+        pidOutput = pidController.calculate(arm.getEncoderAbsoluteDegrees());
+        //stalling speed
+        speed = MathUtil.clamp(pidOutput + minPower, -0.3, 0.13)*-1;
+        SmartDashboard.putNumber("B", b);
         //SmartDashboard.putNumber("minimum power", minPower);
         //System.out.println(arm.getEncoder());
         //SmartDashboard.putNumber("pid output", MathUtil.clamp(pidOutput + minPower, 0.0, 0.3) * -1);

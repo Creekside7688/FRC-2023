@@ -89,8 +89,8 @@ public class DriveTrain extends SubsystemBase {
         filter = new SlewRateLimiter(2);
         diffdrive = new DifferentialDrive(leftmotor, rightmotor);
 
-        lEncoder = new Encoder(LEFT_ENCODER[0], LEFT_ENCODER[1], true);
-        rEncoder = new Encoder(RIGHT_ENCODER[0], RIGHT_ENCODER[1], false);
+        lEncoder = new Encoder(LEFT_ENCODER[0], LEFT_ENCODER[1], false);
+        rEncoder = new Encoder(RIGHT_ENCODER[0], RIGHT_ENCODER[1], true);
 
         lEncoder.setDistancePerPulse(DISTANCE_PER_PULSE);
         rEncoder.setDistancePerPulse(DISTANCE_PER_PULSE);
@@ -113,7 +113,7 @@ public class DriveTrain extends SubsystemBase {
     }
 
     public void arcadeDrive(double speed, double rotation) {
-        diffdrive.arcadeDrive(filter.calculate(speed * LIMIT_SPEED), rotation);
+        diffdrive.arcadeDrive(filter.calculate(speed * LIMIT_SPEED), -rotation*0.7, false);
     }
 
     public void tankDrive(double leftSpeed, double rightSpeed) {

@@ -23,7 +23,7 @@ public class OpenArm extends CommandBase {
         this.wrist = wrist;
 
         pidController = new PIDController(ArmConstants.KP, ArmConstants.KI, ArmConstants.KD);
-        pidController.setSetpoint(225);
+        pidController.setSetpoint(140);
         pidController.setTolerance(2);
 
         addRequirements(arm);
@@ -33,14 +33,14 @@ public class OpenArm extends CommandBase {
     @Override
     public void initialize() {
         arm.resetEncoder();
-        wrist.turn(0.05);
+        wrist.turn(0.07);
     }
 
     @Override
     public void execute() {
         double output = pidController.calculate(arm.getEncoderAbsoluteDegrees());
         // arm.turn(0.35);
-        arm.turn(MathUtil.clamp(output, 0, 0.28) * direction);
+        arm.turn(MathUtil.clamp(output, 0, 0.3) * direction);
         SmartDashboard.putNumber("degrees", arm.getEncoderAbsoluteDegrees());
     }
 
@@ -52,10 +52,10 @@ public class OpenArm extends CommandBase {
 
     @Override
     public boolean isFinished() {
-        if(arm.getEncoderAbsoluteDegrees() > 130) {
-            direction = 0.05;
+        if(arm.getEncoderAbsoluteDegrees() > 135) {
+            direction = 0.01                                        ;
         }
 
-        return pidController.atSetpoint();
+        return arm.getEncoderAbsoluteDegrees() > 225;
     }
 }

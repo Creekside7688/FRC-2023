@@ -23,6 +23,7 @@ public class closeArm extends CommandBase {
     @Override
     public void initialize() {
         myArm.resetEncoder();
+        wrist.resetEncoder();
         wrist.turn(0.05);
     }
 
@@ -40,6 +41,7 @@ public class closeArm extends CommandBase {
     public boolean isFinished() {
         if(myArm.getEncoderAbsoluteDegrees() < -140) {
             speedMulti = 0;
+            return true;
         }
         return false;
     }

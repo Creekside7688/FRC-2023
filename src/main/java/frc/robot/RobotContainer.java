@@ -51,7 +51,7 @@ public class RobotContainer {
     private final Trigger dpadRight = new Trigger(RobotContainer::getDpadRight);
 
     private final Arm arm = new Arm();
-    private final DriveTrain driveTrain = new DriveTrain();
+    public final DriveTrain driveTrain = new DriveTrain();
     private final Claw hand = new Claw();
     private final Wrist wrist = new Wrist();
 
@@ -70,9 +70,9 @@ public class RobotContainer {
     private final Search balancingSearcher = new Search(200, driveTrain);
     private final Balancer balancer = new Balancer(driveTrain);
 
-    public final OpenArm openarm = new OpenArm(arm,wrist);
+    private final OpenArm openarm = new OpenArm(arm,wrist);
 
-    public final MoveArm moveArm = new MoveArm(arm);
+    private final MoveArm moveArm = new MoveArm(arm);
 
     public RobotContainer() {
         configureBindings();    
@@ -100,18 +100,19 @@ public class RobotContainer {
 
         // USE X AND Y BUTTONS TO TEST COMMANDS
 
-        dpadLeft.onTrue(openarm.andThen(levelWrist));
-        dpadDown.onTrue(closeArm);
+        //dpadLeft.onTrue(openarm.andThen(levelWrist));
+        dpadDown.onTrue(testArm);
+        x_Button.onTrue(closeArm);
     }
 
     /**
-     * Use this to pass the autonomous command to the main {@link Robot} class.
-     *
+     * Use this to pass the autonomous command to the main {@link Robot} c
      * @return the command to run in autonomous
      */
     public Command getAutonomousCommand() {
         // An example command will be run in autonomous
-        return balancingSearcher.andThen(balancer.unless(() -> !balancingSearcher.runBalance)).withTimeout(8);
+        // return balancingSearcher.andThen(balancer.unless(() -> !balancingSearcher.runBalance));
+        return openarm.andThen(levelWrist);
     }
 
     private static final boolean ltAsButton() {

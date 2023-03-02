@@ -28,11 +28,9 @@ public class Balancer extends CommandBase {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        double angleError = 0 - driveTrain.getPitch();
+        double angleError = 0 - -driveTrain.getPitch();
 
-        double output = Math.min(angleError * 0.05, 1);
-
-        output = MathUtil.clamp(-output, -0.375, 0.375);
+        double output = Math.min(angleError * 0.04, 1);
 
         driveTrain.arcadeDrive(output, 0);
     }
@@ -40,7 +38,6 @@ public class Balancer extends CommandBase {
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
-        driveTrain.setCoast();
         driveTrain.resetEncoders();
     }
 

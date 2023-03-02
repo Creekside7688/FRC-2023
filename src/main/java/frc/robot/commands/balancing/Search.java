@@ -25,7 +25,6 @@ public class Search extends CommandBase {
 
     private PIDController leftPIDController;
     private PIDController rightPIDController;
-
     private double distance;
 
     private Encoder lEncoder;
@@ -46,8 +45,8 @@ public class Search extends CommandBase {
         leftPIDController.setSetpoint(this.distance);
         rightPIDController.setSetpoint(this.distance);
 
-        leftPIDController.setTolerance(1);
-        rightPIDController.setTolerance(1);
+        leftPIDController.setTolerance(5);
+        rightPIDController.setTolerance(5);
 
         this.lEncoder = driveTrain.getLeftEncoder();
         this.rEncoder = driveTrain.getRightEncoder();
@@ -77,11 +76,11 @@ public class Search extends CommandBase {
             driveTrain.resetEncoders(); // This looks useless because it's already in end() but removing this line will break the auto-balancer.
         }
 
-        double lOutput = leftPIDController.calculate(lEncoder.getDistance());
-        double rOutput = rightPIDController.calculate(rEncoder.getDistance());
+        double lOutput = leftPIDController.calculate(lEncoder.getDistance()*-1);
+        double rOutput = rightPIDController.calculate(rEncoder.getDistance()*-1);
 
-        lOutput = MathUtil.clamp(-lOutput, -0.4, 0.4);
-        rOutput = MathUtil.clamp(-rOutput, -0.4, 0.4);
+        lOutput = MathUtil.clamp(-lOutput, -0.4, 0.4)*-1;
+        rOutput = MathUtil.clamp(-rOutput, -0.4, 0.4)*-1;
         driveTrain.tankDrive(lOutput, rOutput);
 
         SmartDashboard.putNumber("Left Distance", lEncoder.getDistance());
