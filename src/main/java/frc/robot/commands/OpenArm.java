@@ -4,13 +4,13 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Arm;
-import frc.robot.subsystems.Wrist;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants.ArmConstants;
+import frc.robot.subsystems.Arm;
+import frc.robot.subsystems.Wrist;
 
 public class OpenArm extends CommandBase {
     private final Arm arm;
@@ -39,7 +39,6 @@ public class OpenArm extends CommandBase {
     @Override
     public void execute() {
         double output = pidController.calculate(arm.getEncoderAbsoluteDegrees());
-        // arm.turn(0.35);
         arm.turn(MathUtil.clamp(output, 0, 0.3) * direction);
         SmartDashboard.putNumber("degrees", arm.getEncoderAbsoluteDegrees());
     }
@@ -53,7 +52,7 @@ public class OpenArm extends CommandBase {
     @Override
     public boolean isFinished() {
         if(arm.getEncoderAbsoluteDegrees() > 135) {
-            direction = 0.01                                        ;
+            direction = 0.01;
         }
 
         return arm.getEncoderAbsoluteDegrees() > 225;

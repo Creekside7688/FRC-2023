@@ -8,35 +8,77 @@ import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants.ArmConstants;
 import frc.robot.subsystems.Arm;
+import frc.robot.subsystems.Wrist;
 
 public class MoveArm extends CommandBase {
+    private double armTarget = -60;
     private final Arm arm;
-    private final PIDController pidController;
-    private double targetAngle;
+    private final Wrist wrist;
+    private PIDController pidController;
+    private PIDController wristPIDController;
+    private Joystick joystick = new Joystick(0);
 
-    public MoveArm(Arm arm) {
+    public MoveArm(Arm arm, Wrist wrist) {
         this.arm = arm;
+        this.wrist = wrist;
+        addRequirements(wrist);
         addRequirements(arm);
-
-        pidController = new PIDController(ArmConstants.KP, ArmConstants.KI, ArmConstants.KD);
-        pidController.setSetpoint(0);
-        pidController.setTolerance(3, 0.1);
     }
 
     @Override
     public void initialize() {
+        pidController = new PIDController(ArmConstants.KP, ArmConstants.KI, ArmConstants.KD);
+        wristPIDController = new PIDController(0.03, 0, 0);
+        arm.resetEncoder();
+        wrist.resetEncoder();
+
+        pidController.setTolerance(3, 0.1);
+        wristPIDController.setTolerance(3, 0.1);
+        armTarget = -60;
     }
 
     @Override
     public void execute() {
-        pidController.setSetpoint(targetAngle);
-        double minPower = -Math.cos(Math.toRadians(arm.getEncoderAbsoluteDegrees()) + Math.PI / 6) * ArmConstants.KG;
-        double output = pidController.calculate(arm.getEncoderAbsoluteDegrees());
 
-        arm.turn(MathUtil.clamp(output + minPower, -0.3, 0.15) * -1);
+        // System.out.println();
+        pidController.setSetpoint(armTarget);
+
+        if(joystick.getRawButton(XboxController.Button.kRightBumper.value)) {
+            armTarget += 0.4;
+            if(armTarget > 0) {
+                armTarget = 0;
+            }
+
+            pidController.setSetpoint(armTarget);
+
+        } else if(joystick.getRawAxis(XboxController.Axis.kRightTrigger.value) == 1) {
+            armTarget -= 0.4;
+
+            if(armTarget < -90) {
+                armTarget = -90;
+            }
+
+            pidController.setSetpoint(armTarget);
+
+        }
+
+        double minPower = -Math.cos(Math.toRadians(arm.getEncoderAbsoluteDegrees()) + Math.PI / 6) * ArmConstants.KG;
+        double armOutput = pidController.calculate(arm.getEncoderAbsoluteDegrees());
+
+        double armSpeed = -MathUtil.clamp(armOutput + minPower, -0.3, 0.13);
+
+        SmartDashboard.putNumber("B", armTarget);
+
+        wristPIDController.setSetpoint(arm.getEncoder());
+
+        double wristOutput = wristPIDController.calculate(wrist.getDegrees());
+
+        wrist.turn(wristOutput);
+        arm.turn(armSpeed);
     }
 
     @Override
@@ -46,13 +88,5 @@ public class MoveArm extends CommandBase {
     @Override
     public boolean isFinished() {
         return false;
-    }
-
-    public double getTargetAngle() {
-        return targetAngle;
-    }
-
-    public void setTargetAngle(double angle) {
-        this.targetAngle = angle;
     }
 }

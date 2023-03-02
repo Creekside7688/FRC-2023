@@ -41,8 +41,7 @@ public class Wrist extends SubsystemBase {
         wristEncoder.setPosition(0);
     }
 
-
-    public double getDegrees(){
+    public double getDegrees() {
         return wristEncoder.getPosition();
     }
 }

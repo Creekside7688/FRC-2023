@@ -50,13 +50,13 @@ public final class Constants {
     public static class WristConstants {
         public static final int WRIST_PORT = 1;
         public static final double GEARBOX_REDUCTION = 4;
-        public static final double DEGREES_PER_ROTATION = 360.0/100;
+        public static final double DEGREES_PER_ROTATION = 360.0 / 100;
 
         public static final double KP = 0.03;
         public static final double KI = 0;
         public static final double KD = 0;
         public static final double KG = 0;
-    } 
+    }
 
     public static class LimeLightConstants {
         public static final double ROTATE_SPEED = 0.4;

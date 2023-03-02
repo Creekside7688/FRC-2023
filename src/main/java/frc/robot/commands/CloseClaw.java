@@ -4,11 +4,7 @@
 
 package frc.robot.commands;
 
-import static frc.robot.Constants.HandConstants.CLOSE_SPEED;
-import static frc.robot.Constants.HandConstants.DEADZONE_OFFSET;
-import static frc.robot.Constants.HandConstants.DELAY_CHECK;
-import static frc.robot.Constants.HandConstants.HOLD_SPEED;
-import static frc.robot.Constants.HandConstants.HOLD_TIME;
+import static frc.robot.Constants.HandConstants.*;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;

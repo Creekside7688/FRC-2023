@@ -17,8 +17,8 @@ public class AprilTagAlign extends CommandBase {
     private final double driveSpeed = LimeLightConstants.DRIVE_SPEED;
     private final double rotateMultiplier = LimeLightConstants.ROTATE_MULTIPLIER;
 
-    public AprilTagAlign(DriveTrain dt) {
-        driveTrain = dt;
+    public AprilTagAlign(DriveTrain driveTrain) {
+        this.driveTrain = driveTrain;
         addRequirements(driveTrain);
     }
 

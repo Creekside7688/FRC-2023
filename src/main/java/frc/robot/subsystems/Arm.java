@@ -4,8 +4,6 @@
 
 package frc.robot.subsystems;
 
-import static frc.robot.Constants.ArmConstants.*;
-
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
@@ -54,7 +52,7 @@ public class Arm extends SubsystemBase {
     }
 
     public double getEncoder() {
-        return encoder.getDistance(); //+ ARM_OFFSET;
+        return encoder.getDistance(); // + ARM_OFFSET;
     }
 
     @Override

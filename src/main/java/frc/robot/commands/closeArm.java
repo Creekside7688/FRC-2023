@@ -8,14 +8,14 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Wrist;
 
-public class closeArm extends CommandBase {
+public class CloseArm extends CommandBase {
     private final Arm myArm;
     private double speedMulti = 1;
     private final Wrist wrist;
 
-    public closeArm(Arm arm, Wrist wrist) {
+    public CloseArm(Arm arm, Wrist wrist) {
         myArm = arm;
-        this.wrist = wrist;        
+        this.wrist = wrist;
         addRequirements(myArm);
         addRequirements(wrist);
     }

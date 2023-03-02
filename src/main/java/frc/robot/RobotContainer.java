@@ -7,22 +7,18 @@ package frc.robot;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
-import frc.robot.Constants.ArmConstants;
 import frc.robot.Constants.ControlConstants;
 import frc.robot.commands.AprilTagAlign;
+import frc.robot.commands.CloseArm;
 import frc.robot.commands.CloseClaw;
 import frc.robot.commands.Drive;
+import frc.robot.commands.DriveDistance;
 import frc.robot.commands.MoveArm;
 import frc.robot.commands.OpenArm;
 import frc.robot.commands.OpenClaw;
-import frc.robot.commands.TestArm;
 import frc.robot.commands.WristLeveller;
-import frc.robot.commands.closeArm;
-import frc.robot.commands.balancing.Balancer;
-import frc.robot.commands.balancing.Search;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Claw;
 import frc.robot.subsystems.DriveTrain;
@@ -55,64 +51,50 @@ public class RobotContainer {
     private final Claw hand = new Claw();
     private final Wrist wrist = new Wrist();
 
+    private final Drive drive = new Drive(driveTrain);
+    private final DriveDistance driveDistance = new DriveDistance(driveTrain, 500);
+
     private final CloseClaw closeClaw = new CloseClaw(hand);
     private final OpenClaw openClaw = new OpenClaw(hand);
 
+    private final AprilTagAlign aprilTagAlign = new AprilTagAlign(driveTrain);
+    private final MoveArm moveArm = new MoveArm(arm, wrist);
+
+    private final CloseArm closeArm = new CloseArm(arm, wrist);
+    private final OpenArm openArm = new OpenArm(arm, wrist);
     private final WristLeveller levelWrist = new WristLeveller(wrist, arm);
 
-    private final AprilTagAlign aprilTagAlign = new AprilTagAlign(driveTrain);
-    private final TestArm testArm = new TestArm(arm, wrist);
-
-    private final Drive drive = new Drive(driveTrain);
-
-    private final closeArm closeArm = new closeArm(arm,wrist);
-
-    private final Search balancingSearcher = new Search(200, driveTrain);
-    private final Balancer balancer = new Balancer(driveTrain);
-
-    private final OpenArm openarm = new OpenArm(arm,wrist);
-
-    private final MoveArm moveArm = new MoveArm(arm);
-
     public RobotContainer() {
-        configureBindings();    
+        configureBindings();
 
         driveTrain.setDefaultCommand(drive);
+        arm.setDefaultCommand(moveArm);
         // wrist.setDefaultCommand(levelWrist);
     }
 
     private void configureBindings() {
-        // COMPETITION CONTROLS DO NOT CHANGE
-
-        //rb_Button.onTrue(Commands.run(() -> moveArm.setTargetAngle(ArmConstants.HIGH_NODE_DEGREES)));
-        //dpadRight.onTrue(Commands.run(() -> moveArm.setTargetAngle(ArmConstants.MID_NODE_DEGREES))); // M2 On the controller
-        //rt_Trigger.onTrue(Commands.run(() -> moveArm.setTargetAngle(ArmConstants.GROUND_NODE_DEGREES)));
-        //dpadUp.onTrue(Commands.run(() -> moveArm.setTargetAngle(ArmConstants.LOADING_ZONE_DEGREES))); // M1 On the controller
-
         b_Button.onTrue(openClaw);
         a_Button.onTrue(closeClaw);
 
-        ls_Button.onTrue(balancingSearcher.andThen(balancer.unless(() -> !balancingSearcher.runBalance)));
         rs_Button.onTrue(aprilTagAlign);
 
         // lb_Button.whileTrue(Commands.run(() -> moveArm.setTargetAngle(moveArm.getTargetAngle() - ArmConstants.MANUAL_DEGREES_MOVEMENT_PER_SECOND)));
-        //lt_Trigger.whileTrue(Commands.run(() -> moveArm.setTargetAngle(moveArm.getTargetAngle() + ArmConstants.MANUAL_DEGREES_MOVEMENT_PER_SECOND)));
+        // lt_Trigger.whileTrue(Commands.run(() -> moveArm.setTargetAngle(moveArm.getTargetAngle() + ArmConstants.MANUAL_DEGREES_MOVEMENT_PER_SECOND)));
 
         // USE X AND Y BUTTONS TO TEST COMMANDS
 
-        //dpadLeft.onTrue(openarm.andThen(levelWrist));
-        dpadDown.onTrue(testArm);
+        // dpadLeft.onTrue(openarm.andThen(levelWrist));
+        dpadDown.onTrue(moveArm);
         x_Button.onTrue(closeArm);
     }
 
     /**
      * Use this to pass the autonomous command to the main {@link Robot} c
+     * 
      * @return the command to run in autonomous
      */
     public Command getAutonomousCommand() {
-        // An example command will be run in autonomous
-        // return balancingSearcher.andThen(balancer.unless(() -> !balancingSearcher.runBalance));
-        return openarm.andThen(levelWrist);
+        return openArm.andThen(driveDistance).andThen(levelWrist);
     }
 
     private static final boolean ltAsButton() {
