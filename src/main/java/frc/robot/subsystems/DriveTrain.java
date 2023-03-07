@@ -50,6 +50,8 @@ public class DriveTrain extends SubsystemBase {
 
     private final NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
 
+    public boolean isCoast = false;
+
     public DriveTrain() {
         TLFmotor = new WPI_TalonSRX(TLF_MOTOR);
         TLBmotor = new WPI_VictorSPX(TLB_MOTOR);

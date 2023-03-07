@@ -4,6 +4,7 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.DriveTrain;
 
@@ -21,21 +22,23 @@ public class DriveDistance extends CommandBase {
     @Override
     public void initialize() {
         driveTrain.resetEncoders();
+        
+        driveTrain.setBrake();
     }
 
     @Override
     public void execute() {
-        if(driveTrain.getEncoderAverage() < distance) {
-            driveTrain.arcadeDrive(0.6, 0);
-        }
+        driveTrain.arcadeDrive(-0.4, 0);
+        SmartDashboard.putNumber("encoder drive distance", driveTrain.getEncoderAverage());
     }
 
     @Override
     public void end(boolean interrupted) {
+        driveTrain.Stop();
     }
 
     @Override
     public boolean isFinished() {
-        return false;
+        return driveTrain.getEncoderAverage() < -distance;
     }
 }

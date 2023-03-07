@@ -48,7 +48,7 @@ public class MoveArm extends CommandBase {
         pidController.setSetpoint(armTarget);
 
         if(joystick.getRawButton(XboxController.Button.kRightBumper.value)) {
-            armTarget += 0.4;
+            armTarget += 1;
             if(armTarget > 0) {
                 armTarget = 0;
             }
@@ -56,7 +56,7 @@ public class MoveArm extends CommandBase {
             pidController.setSetpoint(armTarget);
 
         } else if(joystick.getRawAxis(XboxController.Axis.kRightTrigger.value) == 1) {
-            armTarget -= 0.4;
+            armTarget -= 1;
 
             if(armTarget < -90) {
                 armTarget = -90;
@@ -69,13 +69,14 @@ public class MoveArm extends CommandBase {
         double minPower = -Math.cos(Math.toRadians(arm.getEncoderAbsoluteDegrees()) + Math.PI / 6) * ArmConstants.KG;
         double armOutput = pidController.calculate(arm.getEncoderAbsoluteDegrees());
 
-        double armSpeed = -MathUtil.clamp(armOutput + minPower, -0.3, 0.13);
+        double armSpeed = -MathUtil.clamp(armOutput + minPower, -0.4, 0);
 
-        SmartDashboard.putNumber("B", armTarget);
+        SmartDashboard.putNumber("encoder move arm", arm.getEncoderAbsoluteDegrees());
 
         wristPIDController.setSetpoint(arm.getEncoder());
 
         double wristOutput = wristPIDController.calculate(wrist.getDegrees());
+
 
         wrist.turn(wristOutput);
         arm.turn(armSpeed);
@@ -83,6 +84,7 @@ public class MoveArm extends CommandBase {
 
     @Override
     public void end(boolean interrupted) {
+        SmartDashboard.putString("end of move arm?", "yes");
     }
 
     @Override

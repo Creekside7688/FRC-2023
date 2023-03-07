@@ -23,7 +23,7 @@ public class WristLeveller extends CommandBase {
         pidController = new PIDController(0.05, 0, 0);
 
         pidController.setTolerance(3, 0.1);
-        pidController.setSetpoint(-55);
+        pidController.setSetpoint(-65);
         addRequirements(wrist);
         addRequirements(arm);
     }
@@ -32,16 +32,16 @@ public class WristLeveller extends CommandBase {
     public void initialize() {
         wrist.resetEncoder();
         wrist.turn(0);
+        pidController.reset();
+        
     }
 
     @Override
     public void execute() {
-        if(arm.getEncoderAbsoluteDegrees() > 250) {
-            double output = pidController.calculate(wrist.getDegrees());
-            SmartDashboard.putNumber("wrist wspeed", MathUtil.clamp(output, -0.4, 0.4));
-            wrist.turn(MathUtil.clamp(output, -0.4, 0.4));
+        double output = pidController.calculate(wrist.getDegrees());
+        SmartDashboard.putNumber("wrist wspeed", MathUtil.clamp(output, -0.4, 0.4));
+        wrist.turn(MathUtil.clamp(output, -0.5, 0.5));
 
-        }
 
         SmartDashboard.putNumber("wrist encoder value: ", wrist.getDegrees());
     }

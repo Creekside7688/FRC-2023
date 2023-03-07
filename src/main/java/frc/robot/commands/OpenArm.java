@@ -33,28 +33,30 @@ public class OpenArm extends CommandBase {
     @Override
     public void initialize() {
         arm.resetEncoder();
+        wrist.resetEncoder();
         wrist.turn(0.07);
     }
 
     @Override
     public void execute() {
         double output = pidController.calculate(arm.getEncoderAbsoluteDegrees());
-        arm.turn(MathUtil.clamp(output, 0, 0.3) * direction);
+        arm.turn(MathUtil.clamp(output, 0, 0.35) * direction);
         SmartDashboard.putNumber("degrees", arm.getEncoderAbsoluteDegrees());
     }
 
     @Override
     public void end(boolean interrupted) {
         arm.turn(.01);
+        arm.resetEncoder();
         SmartDashboard.putString("is finished?", "yes");
     }
 
     @Override
     public boolean isFinished() {
         if(arm.getEncoderAbsoluteDegrees() > 135) {
-            direction = 0.01;
+            direction = 0;
         }
 
-        return arm.getEncoderAbsoluteDegrees() > 225;
+        return arm.getEncoderAbsoluteDegrees() > 250;
     }
 }

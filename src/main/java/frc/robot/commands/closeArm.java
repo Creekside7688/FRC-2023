@@ -4,6 +4,7 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Wrist;
@@ -22,19 +23,23 @@ public class CloseArm extends CommandBase {
 
     @Override
     public void initialize() {
-        myArm.resetEncoder();
-        wrist.resetEncoder();
-        wrist.turn(0.05);
+        //myArm.resetEncoder();
+        //wrist.resetEncoder();
+        wrist.turn(0.1);
     }
 
     @Override
     public void execute() {
         myArm.turn(0.3 * speedMulti);
+        SmartDashboard.putNumber("encoder move arm", myArm.getEncoderAbsoluteDegrees());
+
     }
 
     @Override
     public void end(boolean interrupted) {
         myArm.turn(0);
+        wrist.turn(0);
+        wrist.resetEncoder();
     }
 
     @Override

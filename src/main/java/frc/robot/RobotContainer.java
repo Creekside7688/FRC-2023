@@ -7,6 +7,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.ControlConstants;
@@ -52,13 +53,17 @@ public class RobotContainer {
     private final Wrist wrist = new Wrist();
 
     private final Drive drive = new Drive(driveTrain);
-    private final DriveDistance driveDistance = new DriveDistance(driveTrain, 500);
+    private final DriveDistance driveDistance = new DriveDistance(driveTrain, 400);
 
     private final CloseClaw closeClaw = new CloseClaw(hand);
     private final OpenClaw openClaw = new OpenClaw(hand);
 
     private final AprilTagAlign aprilTagAlign = new AprilTagAlign(driveTrain);
     private final MoveArm moveArm = new MoveArm(arm, wrist);
+
+
+    private final OpenArm openArmAfter = new OpenArm(arm, wrist);
+    private final WristLeveller levelWristAfter = new WristLeveller(wrist, arm);
 
     private final CloseArm closeArm = new CloseArm(arm, wrist);
     private final OpenArm openArm = new OpenArm(arm, wrist);
@@ -68,7 +73,7 @@ public class RobotContainer {
         configureBindings();
 
         driveTrain.setDefaultCommand(drive);
-        arm.setDefaultCommand(moveArm);
+        //arm.setDefaultCommand(moveArm);
         // wrist.setDefaultCommand(levelWrist);
     }
 
@@ -83,9 +88,10 @@ public class RobotContainer {
 
         // USE X AND Y BUTTONS TO TEST COMMANDS
 
-        // dpadLeft.onTrue(openarm.andThen(levelWrist));
+        //dpadLeft.onTrue(openArmAfter.andThen(levelWristAfter));
         dpadDown.onTrue(moveArm);
         x_Button.onTrue(closeArm);
+
     }
 
     /**
@@ -94,7 +100,8 @@ public class RobotContainer {
      * @return the command to run in autonomous
      */
     public Command getAutonomousCommand() {
-        return openArm.andThen(driveDistance).andThen(levelWrist);
+        //return driveDistance;
+        return openArm.andThen(driveDistance);
     }
 
     private static final boolean ltAsButton() {

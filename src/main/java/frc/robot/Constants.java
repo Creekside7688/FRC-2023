@@ -41,7 +41,7 @@ public final class Constants {
         public static final int HAND_PORT = 3;
         public static final double OPEN_SPEED = -0.5;
         public static final double CLOSE_SPEED = 1;
-        public static final double HOLD_SPEED = 0.9;
+        public static final double HOLD_SPEED = 1;
         public static final double HOLD_TIME = 1.5;
         public static final double DELAY_CHECK = 0.05;
         public static final double DEADZONE_OFFSET = 0.0005;

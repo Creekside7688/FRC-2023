@@ -5,6 +5,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.DriveTrain;
@@ -25,13 +26,14 @@ public class Drive extends CommandBase {
     public void execute() {
         double speed = RobotContainer.driverController.getRawAxis(XboxController.Axis.kLeftY.value);
         double rotation = RobotContainer.driverController.getRawAxis(XboxController.Axis.kRightX.value);
-
         if(Math.abs(speed) < 0.15) {
             speed = 0;
         }
         if(Math.abs(rotation) < 0.15) {
             rotation = 0;
         }
+
+        // speed = Math.pow(speed, 2) * Math.signum(spe // Squareaq the input for greater control at lower speeds.
 
         driveTrain.arcadeDrive(speed, rotation);
     }

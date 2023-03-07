@@ -25,6 +25,7 @@ public class CloseClaw extends CommandBase {
     public void initialize() {
         time.reset();
         time.start();
+        claw.runClaw(0);
     }
 
     @Override
