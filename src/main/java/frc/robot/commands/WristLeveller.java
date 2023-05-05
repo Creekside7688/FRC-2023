@@ -23,7 +23,7 @@ public class WristLeveller extends CommandBase {
         pidController = new PIDController(0.05, 0, 0);
 
         pidController.setTolerance(3, 0.1);
-        pidController.setSetpoint(-65);
+        pidController.setSetpoint(-63);
         addRequirements(wrist);
         addRequirements(arm);
     }

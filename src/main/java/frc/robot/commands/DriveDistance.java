@@ -28,7 +28,7 @@ public class DriveDistance extends CommandBase {
 
     @Override
     public void execute() {
-        driveTrain.arcadeDrive(-0.4, 0);
+        driveTrain.arcadeDrive(-0.2, 0);
         SmartDashboard.putNumber("encoder drive distance", driveTrain.getEncoderAverage());
     }
 
@@ -39,6 +39,14 @@ public class DriveDistance extends CommandBase {
 
     @Override
     public boolean isFinished() {
-        return driveTrain.getEncoderAverage() < -distance;
+        if(driveTrain.getEncoderAverage() < -distance) {
+            return true;
+        }
+
+        if(driveTrain.getPitch() > 5) {
+            return true;
+        }
+
+        return false;
     }
 }

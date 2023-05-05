@@ -13,6 +13,7 @@ public class CloseArm extends CommandBase {
     private final Arm myArm;
     private double speedMulti = 1;
     private final Wrist wrist;
+    
 
     public CloseArm(Arm arm, Wrist wrist) {
         myArm = arm;
@@ -25,21 +26,24 @@ public class CloseArm extends CommandBase {
     public void initialize() {
         //myArm.resetEncoder();
         //wrist.resetEncoder();
+           
         wrist.turn(0.1);
     }
 
     @Override
     public void execute() {
         myArm.turn(0.3 * speedMulti);
-        SmartDashboard.putNumber("encoder move arm", myArm.getEncoderAbsoluteDegrees());
+        SmartDashboard.putNumber(" arm degrees", myArm.getEncoderAbsoluteDegrees());
 
     }
 
     @Override
     public void end(boolean interrupted) {
+        myArm.resetEncoder();
         myArm.turn(0);
         wrist.turn(0);
         wrist.resetEncoder();
+        SmartDashboard.putBoolean("close arm end", true);
     }
 
     @Override

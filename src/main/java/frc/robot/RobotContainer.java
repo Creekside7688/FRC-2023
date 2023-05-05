@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.ControlConstants;
 import frc.robot.commands.AprilTagAlign;
+import frc.robot.commands.Balancer;
 import frc.robot.commands.CloseArm;
 import frc.robot.commands.CloseClaw;
 import frc.robot.commands.Drive;
@@ -20,9 +21,11 @@ import frc.robot.commands.MoveArm;
 import frc.robot.commands.OpenArm;
 import frc.robot.commands.OpenClaw;
 import frc.robot.commands.WristLeveller;
+import frc.robot.commands.blinker;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Claw;
 import frc.robot.subsystems.DriveTrain;
+import frc.robot.subsystems.RGB;
 import frc.robot.subsystems.Wrist;
 
 public class RobotContainer {
@@ -54,6 +57,7 @@ public class RobotContainer {
 
     private final Drive drive = new Drive(driveTrain);
     private final DriveDistance driveDistance = new DriveDistance(driveTrain, 400);
+    private final Balancer balance = new Balancer(driveTrain);
 
     private final CloseClaw closeClaw = new CloseClaw(hand);
     private final OpenClaw openClaw = new OpenClaw(hand);
@@ -69,19 +73,24 @@ public class RobotContainer {
     private final OpenArm openArm = new OpenArm(arm, wrist);
     private final WristLeveller levelWrist = new WristLeveller(wrist, arm);
 
+    private final RGB ledStrips = new RGB();
+    private final blinker ledCommand = new blinker(ledStrips);
+    
     public RobotContainer() {
         configureBindings();
 
-        driveTrain.setDefaultCommand(drive);
+        //driveTrain.setDefaultCommand(drive);
+        ledStrips.setDefaultCommand(ledCommand);
         //arm.setDefaultCommand(moveArm);
         // wrist.setDefaultCommand(levelWrist);
     }
 
     private void configureBindings() {
-        b_Button.onTrue(openClaw);
-        a_Button.onTrue(closeClaw);
+        //b_Button.onTrue(openClaw);
+        //a_Button.onTrue(closeClaw);
+        //y_Button.onTrue(openArm.andThen(levelWrist));
 
-        rs_Button.onTrue(aprilTagAlign);
+        //rs_Button.onTrue(aprilTagAlign);
 
         // lb_Button.whileTrue(Commands.run(() -> moveArm.setTargetAngle(moveArm.getTargetAngle() - ArmConstants.MANUAL_DEGREES_MOVEMENT_PER_SECOND)));
         // lt_Trigger.whileTrue(Commands.run(() -> moveArm.setTargetAngle(moveArm.getTargetAngle() + ArmConstants.MANUAL_DEGREES_MOVEMENT_PER_SECOND)));
@@ -89,8 +98,9 @@ public class RobotContainer {
         // USE X AND Y BUTTONS TO TEST COMMANDS
 
         //dpadLeft.onTrue(openArmAfter.andThen(levelWristAfter));
-        dpadDown.onTrue(moveArm);
-        x_Button.onTrue(closeArm);
+        //dpadDown.onTrue(moveArm);
+        //x_Button.onTrue(closeArm);
+        //dpadLeft.onTrue(driveDistance);
 
     }
 
@@ -101,7 +111,7 @@ public class RobotContainer {
      */
     public Command getAutonomousCommand() {
         //return driveDistance;
-        return openArm.andThen(driveDistance);
+        return null;
     }
 
     private static final boolean ltAsButton() {

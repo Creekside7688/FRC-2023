@@ -4,6 +4,7 @@
 
 package frc.robot.commands;
 
+
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.Joystick;
@@ -71,7 +72,7 @@ public class MoveArm extends CommandBase {
 
         double armSpeed = -MathUtil.clamp(armOutput + minPower, -0.4, 0);
 
-        SmartDashboard.putNumber("encoder move arm", arm.getEncoderAbsoluteDegrees());
+        SmartDashboard.putNumber(" arm degrees", arm.getEncoderAbsoluteDegrees());
 
         wristPIDController.setSetpoint(arm.getEncoder());
 

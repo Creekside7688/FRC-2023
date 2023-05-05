@@ -4,6 +4,8 @@
 
 package frc.robot.commands;
 
+import java.util.random.RandomGenerator.ArbitrarilyJumpableGenerator;
+
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -13,14 +15,16 @@ import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Wrist;
 
 public class OpenArm extends CommandBase {
-    private final Arm arm;
+    private final Arm myArm;
     private final PIDController pidController;
     private double direction = -1;
-    private Wrist wrist;
+    private double currentPos = 0;
+    private Wrist myWrist;
+    
 
     public OpenArm(Arm arm, Wrist wrist) {
-        this.arm = arm;
-        this.wrist = wrist;
+        myArm = arm;
+        myWrist = wrist;
 
         pidController = new PIDController(ArmConstants.KP, ArmConstants.KI, ArmConstants.KD);
         pidController.setSetpoint(140);
@@ -32,31 +36,39 @@ public class OpenArm extends CommandBase {
 
     @Override
     public void initialize() {
-        arm.resetEncoder();
-        wrist.resetEncoder();
-        wrist.turn(0.07);
+        myArm.resetEncoder();
+        //currentPos = myArm.getEncoderAbsoluteDegrees();
+        //wrist.resetEncoder();
+        //wrist.turn(0.07);
+        pidController.reset();
+        
+        SmartDashboard.putBoolean("state initialize", true);
     }
 
     @Override
     public void execute() {
-        double output = pidController.calculate(arm.getEncoderAbsoluteDegrees());
-        arm.turn(MathUtil.clamp(output, 0, 0.35) * direction);
-        SmartDashboard.putNumber("degrees", arm.getEncoderAbsoluteDegrees());
+        currentPos = myArm.getEncoderAbsoluteDegrees();
+        double output = pidController.calculate(currentPos);
+        myArm.turn(MathUtil.clamp(output, 0, 0.35) * direction);
+        SmartDashboard.putNumber("arm speed", output);
+        SmartDashboard.putNumber(" arm degrees", currentPos);
     }
 
     @Override
     public void end(boolean interrupted) {
-        arm.turn(.01);
-        arm.resetEncoder();
-        SmartDashboard.putString("is finished?", "yes");
+        myArm.stop();
+        SmartDashboard.putBoolean("state initialize", false);
+        myArm.resetEncoder();
+        
     }
 
     @Override
     public boolean isFinished() {
-        if(arm.getEncoderAbsoluteDegrees() > 135) {
-            direction = 0;
-        }
+        //if(currentPos > 135) {
+            
+        //}
 
-        return arm.getEncoderAbsoluteDegrees() > 250;
+        SmartDashboard.putNumber("end condition", currentPos);
+        return currentPos > 135;
     }
 }
