@@ -7,6 +7,8 @@ package frc.robot;
 public final class Constants {
     public static class ControlConstants {
         public static final int JOYSTICK_PORT = 0;
+        public static final double DEAD_BAND = 0.15;
+        public static final double OFFSET = 0.1;
     }
 
     public static class DriveTrainConstants {

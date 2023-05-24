@@ -4,15 +4,22 @@
 
 package frc.robot.commands;
 
+import com.ctre.phoenix.motorcontrol.LimitSwitchNormal;
+
+import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
+import frc.robot.Constants.ControlConstants;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.RGB;
 
 public class Drive extends CommandBase {
     private final DriveTrain driveTrain;
+    private final SlewRateLimiter limiter = new SlewRateLimiter(3);
+
     private final RGB leds;
     public Drive(DriveTrain d, RGB l) {
         driveTrain = d;
@@ -29,14 +36,18 @@ public class Drive extends CommandBase {
     public void execute() {
         double speed = RobotContainer.driverController.getRawAxis(XboxController.Axis.kLeftY.value);
         double rotation = RobotContainer.driverController.getRawAxis(XboxController.Axis.kRightX.value);
-        if(Math.abs(speed) < 0.15) {
-            speed = 0;
-        }
-        if(Math.abs(rotation) < 0.15) {
-            rotation = 0;
-        }
 
-        // speed = Math.pow(speed, 2) * Math.signum(spe // Squareaq the input for greater control at lower speeds.
+        speed = MathUtil.applyDeadband(speed, ControlConstants.DEAD_BAND);
+        rotation = MathUtil.applyDeadband(rotation, ControlConstants.DEAD_BAND);
+
+        speed = Math.pow(speed, 3);
+        rotation = Math.pow(rotation, 3);
+
+        speed += Math.abs(speed) != 0 ? Math.signum(speed) * ControlConstants.OFFSET : 0.0;
+        rotation += Math.abs(rotation) != 0 ? Math.signum(rotation) * ControlConstants.OFFSET : 0.0;
+
+        speed = limiter.calculate(speed);
+        rotation = limiter.calculate(rotation);
 
         driveTrain.arcadeDrive(speed, rotation);
         leds.speedColor(speed, rotation);

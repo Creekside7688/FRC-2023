@@ -104,7 +104,7 @@ public class DriveTrain extends SubsystemBase {
     }
 
     public void arcadeDrive(double speed, double rotation) {
-        diffdrive.arcadeDrive(filter.calculate(speed * LIMIT_SPEED), -rotation * 0.6, false);
+        diffdrive.arcadeDrive(speed, rotation, false);
     }
 
     public void tankDrive(double leftSpeed, double rightSpeed) {
