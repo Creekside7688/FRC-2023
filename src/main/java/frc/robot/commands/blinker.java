@@ -24,14 +24,7 @@ public class blinker extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    ledStrips.changeColor(true, true, false);
-    Timer.delay(1);
-    ledStrips.changeColor(false, true, true);
-    Timer.delay(1);
-    ledStrips.changeColor(false, true, false);
-    Timer.delay(1);
-    ledStrips.changeColor(false, false, false);
-    Timer.delay(1);
+   //ledStrips.speedColor(0.2);
   }
 
   // Called once the command ends or is interrupted.

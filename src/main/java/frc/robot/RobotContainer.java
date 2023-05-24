@@ -54,8 +54,10 @@ public class RobotContainer {
     public final DriveTrain driveTrain = new DriveTrain();
     private final Claw hand = new Claw();
     private final Wrist wrist = new Wrist();
+    private final RGB ledStrips = new RGB();
+    private final blinker ledCommand = new blinker(ledStrips);
 
-    private final Drive drive = new Drive(driveTrain);
+    private final Drive drive = new Drive(driveTrain, ledStrips);
     private final DriveDistance driveDistance = new DriveDistance(driveTrain, 400);
     private final Balancer balance = new Balancer(driveTrain);
 
@@ -73,22 +75,21 @@ public class RobotContainer {
     private final OpenArm openArm = new OpenArm(arm, wrist);
     private final WristLeveller levelWrist = new WristLeveller(wrist, arm);
 
-    private final RGB ledStrips = new RGB();
-    private final blinker ledCommand = new blinker(ledStrips);
+    
     
     public RobotContainer() {
         configureBindings();
 
-        //driveTrain.setDefaultCommand(drive);
-        ledStrips.setDefaultCommand(ledCommand);
+        driveTrain.setDefaultCommand(drive);
+        //ledStrips.setDefaultCommand(ledCommand);
         //arm.setDefaultCommand(moveArm);
         // wrist.setDefaultCommand(levelWrist);
     }
 
     private void configureBindings() {
-        //b_Button.onTrue(openClaw);
-        //a_Button.onTrue(closeClaw);
-        //y_Button.onTrue(openArm.andThen(levelWrist));
+        b_Button.onTrue(openClaw);
+        a_Button.onTrue(closeClaw);
+        y_Button.onTrue(openArm.andThen(levelWrist));
 
         //rs_Button.onTrue(aprilTagAlign);
 
@@ -97,9 +98,9 @@ public class RobotContainer {
 
         // USE X AND Y BUTTONS TO TEST COMMANDS
 
-        //dpadLeft.onTrue(openArmAfter.andThen(levelWristAfter));
-        //dpadDown.onTrue(moveArm);
-        //x_Button.onTrue(closeArm);
+        dpadLeft.onTrue(openArmAfter.andThen(levelWristAfter));
+        dpadDown.onTrue(moveArm);
+        x_Button.onTrue(closeArm);
         //dpadLeft.onTrue(driveDistance);
 
     }

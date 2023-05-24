@@ -9,12 +9,15 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.DriveTrain;
+import frc.robot.subsystems.RGB;
 
 public class Drive extends CommandBase {
     private final DriveTrain driveTrain;
-
-    public Drive(DriveTrain d) {
+    private final RGB leds;
+    public Drive(DriveTrain d, RGB l) {
         driveTrain = d;
+        leds = l;
+        addRequirements(leds);
         addRequirements(driveTrain);
     }
 
@@ -36,6 +39,7 @@ public class Drive extends CommandBase {
         // speed = Math.pow(speed, 2) * Math.signum(spe // Squareaq the input for greater control at lower speeds.
 
         driveTrain.arcadeDrive(speed, rotation);
+        leds.speedColor(speed, rotation);
     }
 
     @Override

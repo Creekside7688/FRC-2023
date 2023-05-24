@@ -44,5 +44,20 @@ public class RGB extends SubsystemBase {
     }
   }
 
-  
+  public void speedColor(double speed, double rotation){
+    double newSpeed = Math.abs(speed);
+    if(newSpeed == 0){
+      changeColor(true, true, true);
+    }else if(newSpeed < 0.25){
+      changeColor(false, true, false);
+    }else if(newSpeed < .4){
+      changeColor(false, true, false);
+    }else if(newSpeed < .60){
+      changeColor(true, true, false);
+    }else if(newSpeed < 1){
+      changeColor(true, false, false);
+    }
+    
+   
+  }  
 }
