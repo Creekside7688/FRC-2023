@@ -10,8 +10,6 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import com.kauailabs.navx.frc.AHRS;
-
-import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
@@ -46,8 +44,6 @@ public class DriveTrain extends SubsystemBase {
     private final Encoder lEncoder;
     private final Encoder rEncoder;
 
-    private final SlewRateLimiter filter;
-
     private final NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
 
     public boolean isCoast = false;
@@ -77,7 +73,6 @@ public class DriveTrain extends SubsystemBase {
         leftmotor.setInverted(false);
         rightmotor.setInverted(true);
 
-        filter = new SlewRateLimiter(2);
         diffdrive = new DifferentialDrive(leftmotor, rightmotor);
 
         lEncoder = new Encoder(LEFT_ENCODER[0], LEFT_ENCODER[1], false);

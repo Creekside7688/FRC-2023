@@ -4,7 +4,6 @@
 
 package frc.robot.commands;
 
-
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.Joystick;
@@ -77,7 +76,6 @@ public class MoveArm extends CommandBase {
         wristPIDController.setSetpoint(arm.getEncoder());
 
         double wristOutput = wristPIDController.calculate(wrist.getDegrees());
-
 
         wrist.turn(wristOutput);
         arm.turn(armSpeed);

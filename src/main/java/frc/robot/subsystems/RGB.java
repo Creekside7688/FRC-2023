@@ -9,55 +9,54 @@ import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class RGB extends SubsystemBase {
-  /** Creates a new RGB. */
-  private final Relay redRelay = new Relay(0);
-  private final Relay greenRelay = new Relay(1);
-  private final Relay blueRelay = new Relay(2);
+    /** Creates a new RGB. */
+    private final Relay redRelay = new Relay(0);
+    private final Relay greenRelay = new Relay(1);
+    private final Relay blueRelay = new Relay(2);
 
-  public RGB() {
-    redRelay.set(Value.kOff);
-    greenRelay.set(Value.kOff);
-    blueRelay.set(Value.kOff);
-  }
-
-  @Override
-  public void periodic() {
-    // This method will be called once per scheduler run
-  }
-  public void changeColor(boolean red, boolean green, boolean blue){
-    if(red){
-      redRelay.set(Value.kForward);
-    }else{
-      redRelay.set(Value.kOff);
+    public RGB() {
+        redRelay.set(Value.kOff);
+        greenRelay.set(Value.kOff);
+        blueRelay.set(Value.kOff);
     }
 
-    if(green){
-      greenRelay.set(Value.kForward);
-    }else{
-      greenRelay.set(Value.kOff);
+    @Override
+    public void periodic() {
     }
 
-    if(blue){
-      blueRelay.set(Value.kForward);
-    }else{
-      blueRelay.set(Value.kOff);
-    }
-  }
+    public void changeColor(boolean red, boolean green, boolean blue) {
+        if(red) {
+            redRelay.set(Value.kForward);
+        } else {
+            redRelay.set(Value.kOff);
+        }
 
-  public void speedColor(double speed, double rotation){
-    double newSpeed = Math.abs(speed);
-    if(newSpeed == 0){
-      changeColor(true, true, true);
-    }else if(newSpeed < 0.25){
-      changeColor(false, true, false);
-    }else if(newSpeed < .4){
-      changeColor(false, true, false);
-    }else if(newSpeed < .60){
-      changeColor(true, true, false);
-    }else if(newSpeed < 1){
-      changeColor(true, false, false);
+        if(green) {
+            greenRelay.set(Value.kForward);
+        } else {
+            greenRelay.set(Value.kOff);
+        }
+
+        if(blue) {
+            blueRelay.set(Value.kForward);
+        } else {
+            blueRelay.set(Value.kOff);
+        }
     }
-    
-   
-  }  
+
+    /**
+     * @param speed The speed of the robot in centimetres per second.
+     */
+    public void speedColor(double speed) {
+        double newSpeed = Math.abs(speed);
+        if(newSpeed == 0) {
+            changeColor(true, true, true);
+        } else if(newSpeed < 50) {
+            changeColor(false, true, false);
+        } else if(newSpeed < 100) {
+            changeColor(true, true, false);
+        } else {
+            changeColor(true, false, false);
+        }
+    }
 }

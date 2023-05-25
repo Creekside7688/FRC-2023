@@ -13,7 +13,6 @@ public class CloseArm extends CommandBase {
     private final Arm myArm;
     private double speedMulti = 1;
     private final Wrist wrist;
-    
 
     public CloseArm(Arm arm, Wrist wrist) {
         myArm = arm;
@@ -24,9 +23,9 @@ public class CloseArm extends CommandBase {
 
     @Override
     public void initialize() {
-        //myArm.resetEncoder();
-        //wrist.resetEncoder();
-           
+        // myArm.resetEncoder();
+        // wrist.resetEncoder();
+
         wrist.turn(0.1);
     }
 

@@ -47,7 +47,6 @@ public class Arm extends SubsystemBase {
         motors.set(speed);
     }
 
-
     public double getEncoderAbsoluteDegrees() {
         return encoder.getDistance();
     }

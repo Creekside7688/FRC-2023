@@ -22,7 +22,7 @@ public class DriveDistance extends CommandBase {
     @Override
     public void initialize() {
         driveTrain.resetEncoders();
-        
+
         driveTrain.setBrake();
     }
 

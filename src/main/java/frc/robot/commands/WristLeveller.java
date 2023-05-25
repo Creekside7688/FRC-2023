@@ -13,12 +13,10 @@ import frc.robot.subsystems.Wrist;
 
 public class WristLeveller extends CommandBase {
     private final Wrist wrist;
-    private final Arm arm;
     private final PIDController pidController;
 
     public WristLeveller(Wrist wrist, Arm arm) {
         this.wrist = wrist;
-        this.arm = arm;
 
         pidController = new PIDController(0.05, 0, 0);
 
@@ -33,7 +31,7 @@ public class WristLeveller extends CommandBase {
         wrist.resetEncoder();
         wrist.turn(0);
         pidController.reset();
-        
+
     }
 
     @Override
@@ -41,7 +39,6 @@ public class WristLeveller extends CommandBase {
         double output = pidController.calculate(wrist.getDegrees());
         SmartDashboard.putNumber("wrist wspeed", MathUtil.clamp(output, -0.4, 0.4));
         wrist.turn(MathUtil.clamp(output, -0.5, 0.5));
-
 
         SmartDashboard.putNumber("wrist encoder value: ", wrist.getDegrees());
     }

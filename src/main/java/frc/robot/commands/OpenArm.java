@@ -4,8 +4,6 @@
 
 package frc.robot.commands;
 
-import java.util.random.RandomGenerator.ArbitrarilyJumpableGenerator;
-
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -19,12 +17,9 @@ public class OpenArm extends CommandBase {
     private final PIDController pidController;
     private double direction = -1;
     private double currentPos = 0;
-    private Wrist myWrist;
-    
 
     public OpenArm(Arm arm, Wrist wrist) {
         myArm = arm;
-        myWrist = wrist;
 
         pidController = new PIDController(ArmConstants.KP, ArmConstants.KI, ArmConstants.KD);
         pidController.setSetpoint(140);
@@ -37,11 +32,11 @@ public class OpenArm extends CommandBase {
     @Override
     public void initialize() {
         myArm.resetEncoder();
-        //currentPos = myArm.getEncoderAbsoluteDegrees();
-        //wrist.resetEncoder();
-        //wrist.turn(0.07);
+        // currentPos = myArm.getEncoderAbsoluteDegrees();
+        // wrist.resetEncoder();
+        // wrist.turn(0.07);
         pidController.reset();
-        
+
         SmartDashboard.putBoolean("state initialize", true);
     }
 
@@ -59,14 +54,14 @@ public class OpenArm extends CommandBase {
         myArm.stop();
         SmartDashboard.putBoolean("state initialize", false);
         myArm.resetEncoder();
-        
+
     }
 
     @Override
     public boolean isFinished() {
-        //if(currentPos > 135) {
-            
-        //}
+        // if(currentPos > 135) {
+
+        // }
 
         SmartDashboard.putNumber("end condition", currentPos);
         return currentPos > 135;

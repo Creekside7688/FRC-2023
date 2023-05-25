@@ -4,7 +4,6 @@
 
 package frc.robot.commands;
 
-
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants.HandConstants;
 import frc.robot.subsystems.Claw;
@@ -30,7 +29,7 @@ public class OpenClaw extends CommandBase {
     public void end(boolean interrupted) {
         claw.runClaw(0);
         claw.resetEncoder();
-        
+
     }
 
     @Override

@@ -13,8 +13,8 @@ public class Balancer extends CommandBase {
 
   private boolean isBalanced = false;
 
-  public Balancer(DriveTrain d) {
-    driveTrain = d;
+  public Balancer(DriveTrain driveTrain) {
+    this.driveTrain = driveTrain;
     addRequirements(driveTrain);
   }
 

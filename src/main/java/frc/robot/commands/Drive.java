@@ -4,8 +4,6 @@
 
 package frc.robot.commands;
 
-import com.ctre.phoenix.motorcontrol.LimitSwitchNormal;
-
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.wpilibj.XboxController;
@@ -21,6 +19,7 @@ public class Drive extends CommandBase {
     private final SlewRateLimiter limiter = new SlewRateLimiter(3);
 
     private final RGB leds;
+
     public Drive(DriveTrain d, RGB l) {
         driveTrain = d;
         leds = l;
@@ -50,7 +49,8 @@ public class Drive extends CommandBase {
         rotation = limiter.calculate(rotation);
 
         driveTrain.arcadeDrive(speed, rotation);
-        leds.speedColor(speed, rotation);
+        leds.speedColor((driveTrain.getLeftEncoder().getRate() + driveTrain.getRightEncoder().getRate()) / 2);
+        SmartDashboard.putNumber("Speed", (driveTrain.getLeftEncoder().getRate() + driveTrain.getRightEncoder().getRate()) / 2);
     }
 
     @Override
